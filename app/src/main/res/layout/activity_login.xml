@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:fancy="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:gravity="center_horizontal"
@@ -9,16 +12,11 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    android:id="@+id/main_layout"
+    android:background="#E1EFEF"
     tools:context=".login.LoginActivity">
 
     <!-- Login progress -->
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:adjustViewBounds="true"
-        android:layout_margin="@dimen/activity_vertical_margin"
-        android:src="@drawable/logo"/>
+
 
     <ProgressBar
         android:id="@+id/login_progress"
@@ -37,13 +35,21 @@
             android:id="@+id/email_login_form"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:orientation="vertical"
             android:paddingLeft="@dimen/spacing_xxl"
-            android:paddingRight="@dimen/spacing_xxl"
-            android:orientation="vertical">
+            android:paddingRight="@dimen/spacing_xxl">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="@dimen/spacing_m"
+                android:adjustViewBounds="true"
+                android:src="@drawable/logo" />
 
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                app:hintTextAppearance="@style/TextAppearence.TextInputLayout.Orange">
 
                 <AutoCompleteTextView
                     android:id="@+id/email"
@@ -58,7 +64,8 @@
 
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                app:hintTextAppearance="@style/TextAppearence.TextInputLayout.Orange">
 
                 <EditText
                     android:id="@+id/password"
@@ -74,27 +81,28 @@
 
             </android.support.design.widget.TextInputLayout>
 
-            <Button
+            <mehdi.sakout.fancybuttons.FancyButton
                 android:id="@+id/email_sign_in_button"
-                style="?android:textAppearanceSmall"
+                fancy:fb_textFont="fonts/pt_mono_bold.ttf"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:layout_marginLeft="@dimen/spacing_xl"
-                android:layout_marginRight="@dimen/spacing_xl"
+                android:layout_height="40dp"
+                android:layout_marginTop="@dimen/spacing_m"
                 android:text="@string/sing_in"
-                android:textStyle="bold" />
+                fancy:fb_textSize="@dimen/text_l"
+                fancy:fb_defaultColor="@color/colorPrimary"
+                fancy:fb_radius="5dp" />
 
-            <Button
+            <mehdi.sakout.fancybuttons.FancyButton
                 android:id="@+id/sign_up"
-                style="?android:textAppearanceSmall"
+                fancy:fb_textFont="fonts/pt_mono_bold.ttf"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:layout_marginLeft="@dimen/spacing_xl"
-                android:layout_marginRight="@dimen/spacing_xl"
+                android:layout_height="40dp"
+                android:layout_marginTop="@dimen/spacing_m"
                 android:text="@string/register"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                fancy:fb_textSize="@dimen/text_l"
+                fancy:fb_defaultColor="@color/colorPrimary"
+                fancy:fb_radius="5dp" />
 
         </LinearLayout>
     </ScrollView>

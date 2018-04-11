@@ -43,6 +43,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
+import mehdi.sakout.fancybuttons.FancyButton;
 import gravityfalls.library.R;
 import gravityfalls.library.utils.SnackbarHelper;
 
@@ -71,13 +72,13 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     @BindView(R.id.password)
     EditText mPasswordView;
     @BindView(R.id.email_sign_in_button)
-    Button mEmailSignInButton;
+    FancyButton mEmailSignInButton;
     @BindView(R.id.login_progress)
     View mProgressView;
     @BindView(R.id.login_form)
     View mLoginFormView;
     @BindView(R.id.sign_up)
-    Button mSign_up;
+    FancyButton mSign_up;
     @BindView(R.id.main_layout)
     LinearLayout main_layout;
     /**

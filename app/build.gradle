@@ -19,6 +19,9 @@ android {
 }
 
 dependencies {
+    implementation("com.mikepenz:materialdrawer:6.0.7@aar") {
+        transitive = true
+    }
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation 'com.android.support:appcompat-v7:27.1.1'
     implementation 'com.android.support:design:27.1.1'

@@ -18,4 +18,5 @@
     <string name="account_alreadt_exists">Аккаунт с таким email адресом уже существует</string>
     <string name="error_on_registration">Ошибка при регистрации</string>
     <string name="error_sign_in">Ошибка при входе</string>
+    <string name="private_cab">Личный кабинет</string>
 </resources>

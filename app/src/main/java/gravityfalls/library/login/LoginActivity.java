@@ -6,6 +6,7 @@ import android.annotation.TargetApi;
 import android.app.LoaderManager.LoaderCallbacks;
 import android.content.Context;
 import android.content.CursorLoader;
+import android.content.Intent;
 import android.content.Loader;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
@@ -41,9 +42,10 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
+import gravityfalls.library.main.MainActivity;
+import mehdi.sakout.fancybuttons.FancyButton;
 import gravityfalls.library.R;
 import gravityfalls.library.utils.SnackbarHelper;
-import mehdi.sakout.fancybuttons.FancyButton;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 import static android.Manifest.permission.READ_CONTACTS;
@@ -406,6 +408,10 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     }
 
     private void updateUI(FirebaseUser currentUser) {
+        if (currentUser != null) {
+            Intent i = new Intent(this, MainActivity.class);
+            startActivity(i);
+        }
     }
 
     @Override

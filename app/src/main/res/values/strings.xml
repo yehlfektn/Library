@@ -19,4 +19,6 @@
     <string name="error_on_registration">Ошибка при регистрации</string>
     <string name="error_sign_in">Ошибка при входе</string>
     <string name="no_network_connection">Проверьте подключение к интернету</string>
+    <string name="private_cab">Личный кабинет</string>
+    <string name="library">Библиотека</string>
 </resources>

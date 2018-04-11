@@ -8,6 +8,7 @@ import android.support.v7.widget.Toolbar;
 
 import com.mikepenz.materialdrawer.Drawer;
 import com.mikepenz.materialdrawer.DrawerBuilder;
+import com.mikepenz.materialdrawer.model.PrimaryDrawerItem;
 import com.mikepenz.materialdrawer.model.SectionDrawerItem;
 
 import butterknife.ButterKnife;
@@ -34,9 +35,14 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(mToolbar);
         setTitle("");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        DrawerBuilder mDrawerBuilder = new DrawerBuilder().withActivity(this).withToolbar(mToolbar);
+        DrawerBuilder mDrawerBuilder = new DrawerBuilder().withActivity(this).withToolbar(mToolbar)
+                .withTranslucentStatusBar(false);
 
-        mDrawerBuilder.addDrawerItems(new SectionDrawerItem().withName(R.string.private_cab).withTypeface(Typeface.defaultFromStyle(Typeface.BOLD)));
+        mDrawerBuilder.addDrawerItems(new PrimaryDrawerItem().withName(R.string.private_cab)
+                .withTypeface(Typeface.defaultFromStyle(Typeface.BOLD)).withIcon(R.drawable.boy));
+        mDrawerBuilder.addDrawerItems(new PrimaryDrawerItem().withName(R.string.library)
+                .withTypeface(Typeface.defaultFromStyle(Typeface.BOLD)).withIcon(R.drawable.library));
+
         unbinder = ButterKnife.bind(this);
         mDrawer = mDrawerBuilder.build();
     }

@@ -4,6 +4,7 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
 import android.app.LoaderManager.LoaderCallbacks;
+import android.content.Context;
 import android.content.CursorLoader;
 import android.content.Loader;
 import android.content.pm.PackageManager;
@@ -46,6 +47,7 @@ import butterknife.Unbinder;
 import mehdi.sakout.fancybuttons.FancyButton;
 import gravityfalls.library.R;
 import gravityfalls.library.utils.SnackbarHelper;
+import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 import static android.Manifest.permission.READ_CONTACTS;
 
@@ -469,6 +471,11 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             mAuthTask = null;
             showProgress(false);
         }
+    }
+
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
     }
 }
 

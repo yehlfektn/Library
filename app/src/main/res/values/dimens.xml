@@ -10,4 +10,11 @@
     <dimen name="spacing_l">24dp</dimen>
     <dimen name="spacing_xl">32dp</dimen>
     <dimen name="spacing_xxl">48dp</dimen>
+
+
+    <dimen name="text_s">12sp</dimen>
+    <dimen name="text_m">14dp</dimen>
+    <dimen name="text_l">16sp</dimen>
+    <dimen name="text_xl">20sp</dimen>
+    <dimen name="text_xxl">24dp</dimen>
 </resources>

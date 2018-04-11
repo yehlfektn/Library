@@ -3,17 +3,18 @@
 
     <!-- Strings related to login -->
     <string name="prompt_email">Email</string>
-    <string name="prompt_password">Password (optional)</string>
-    <string name="action_sign_in">Sign in or register</string>
+    <string name="prompt_password">Пароль</string>
+    <string name="action_sign_in">Войти</string>
     <string name="action_sign_in_short">Sign in</string>
-    <string name="error_invalid_email">This email address is invalid</string>
-    <string name="error_invalid_password">This password is too short</string>
-    <string name="error_incorrect_password">This password is incorrect</string>
-    <string name="error_field_required">This field is required</string>
-    <string name="permission_rationale">"Contacts permissions are needed for providing email
-        completions."
+    <string name="error_invalid_email">Этот email адрес не действителен</string>
+    <string name="error_invalid_password">Пароль слишком маленький</string>
+    <string name="error_incorrect_password">Пароль не действителен</string>
+    <string name="error_field_required">Нужно заполнить поле</string>
+    <string name="permission_rationale">"Нужны разрешение на контакты, чтобы заполнить email"
     </string>
     <string name="register">Регистрация</string>
     <string name="sing_in">Войти</string>
     <string name="password">Пароль</string>
+    <string name="account_alreadt_exists">Аккаунт с таким email адресом уже существует</string>
+    <string name="error_on_registration">Ошибка при регистрации</string>
 </resources>

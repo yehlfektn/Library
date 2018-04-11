@@ -1,4 +1,4 @@
-package gravityfalls.library;
+package gravityfalls.library.login;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
@@ -26,6 +26,7 @@ import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -42,6 +43,8 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
+import gravityfalls.library.R;
+import gravityfalls.library.utils.SnackbarHelper;
 
 import static android.Manifest.permission.READ_CONTACTS;
 
@@ -75,6 +78,8 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     View mLoginFormView;
     @BindView(R.id.sign_up)
     Button mSign_up;
+    @BindView(R.id.main_layout)
+    LinearLayout main_layout;
     /**
      * Keep track of the login task to ensure we can cancel it if requested.
      */
@@ -174,19 +179,18 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                                 Log.e(TAG, "createUserWithEmail:success");
                                 FirebaseUser user = mAuth.getCurrentUser();
                                 updateUI(user);
-                            } else {
-                                // If sign in fails, display a message to the user.
-                                Log.e(TAG, "createUserWithEmail:failure", task.getException());
-                                Toast.makeText(LoginActivity.this, "Authentication failed.",
-                                        Toast.LENGTH_SHORT).show();
-                                updateUI(null);
                             }
                         }
                     }).addOnFailureListener(this, new OnFailureListener() {
                 @Override
                 public void onFailure(@NonNull Exception e) {
                     showProgress(false);
-                    Log.e(TAG, "createUserWithEmail:failure", e);
+                    Log.e(TAG, "From onFailure", e);
+                    if (e.getMessage().contains("The email address is already in use by another account")){
+                        showError(getString(R.string.account_alreadt_exists));
+                    }else {
+                        showError(getString(R.string.error_on_registration));
+                    }
                 }
             });
         }
@@ -199,6 +203,11 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
         getLoaderManager().initLoader(0, null, this);
     }
+
+    public void showError(String error) {
+        SnackbarHelper.getSnackBar(main_layout, error).show();
+    }
+
 
     private boolean mayRequestContacts() {
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {

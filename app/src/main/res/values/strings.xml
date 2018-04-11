@@ -21,4 +21,5 @@
     <string name="no_network_connection">Проверьте подключение к интернету</string>
     <string name="private_cab">Личный кабинет</string>
     <string name="library">Библиотека</string>
+    <string name="exit">Выйти</string>
 </resources>

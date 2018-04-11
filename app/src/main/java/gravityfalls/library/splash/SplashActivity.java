@@ -16,6 +16,7 @@ import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import gravityfalls.library.R;
 import gravityfalls.library.login.LoginActivity;
+import gravityfalls.library.main.MainActivity;
 
 public class SplashActivity extends AppCompatActivity {
 
@@ -37,6 +38,8 @@ public class SplashActivity extends AppCompatActivity {
                 FirebaseUser currentUser = mAuth.getCurrentUser();
                 if (currentUser != null){
                     Log.e("SplashActivity","CurrentUser is not null");
+                    Intent i = new Intent(SplashActivity.this, MainActivity.class).addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+                    startActivity(i);
                 }else {
                     Log.e("SplashActivity","CurrentUser is null");
                     Intent i = new Intent(SplashActivity.this, LoginActivity.class).addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);

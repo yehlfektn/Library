@@ -35,6 +35,10 @@ import com.google.firebase.auth.FirebaseUser;
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.Unbinder;
+
 import static android.Manifest.permission.READ_CONTACTS;
 
 /**
@@ -61,16 +65,22 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
     // UI references.
     private AutoCompleteTextView mEmailView;
-    private EditText mPasswordView;
+
+    @BindView(R.id.password)
+    EditText mPasswordView;
     private View mProgressView;
     private View mLoginFormView;
 
     private FirebaseAuth mAuth;
 
+    private Unbinder unbinder;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
+        unbinder = ButterKnife.bind(this);
 
         mAuth = FirebaseAuth.getInstance();
         
@@ -78,7 +88,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         mEmailView =  findViewById(R.id.email);
         populateAutoComplete();
 
-        mPasswordView =  findViewById(R.id.password);
+        //mPasswordView =  findViewById(R.id.password);
         mPasswordView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView textView, int id, KeyEvent keyEvent) {
@@ -363,6 +373,12 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     }
 
     private void updateUI(FirebaseUser currentUser) {
+    }
+
+    @Override
+    protected void onDestroy() {
+        unbinder.unbind();
+        super.onDestroy();
     }
 }
 

@@ -15,4 +15,5 @@
     </string>
     <string name="register">Регистрация</string>
     <string name="sing_in">Войти</string>
+    <string name="password">Пароль</string>
 </resources>

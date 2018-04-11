@@ -11,7 +11,6 @@ import android.content.Loader;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.ContactsContract;
@@ -26,11 +25,9 @@ import android.view.View.OnClickListener;
 import android.view.inputmethod.EditorInfo;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -80,9 +77,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     LinearLayout main_layout;
 
     private FirebaseAuth mAuth;
-
     private Unbinder unbinder;
-
     private String TAG = "MainActivity";
 
     @Override
@@ -137,7 +132,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         View focusView = null;
 
         // Check for a valid password, if the user entered one.
-        if (!TextUtils.isEmpty(password) && !isPasswordValid(password)) {
+        if (TextUtils.isEmpty(password) && !isPasswordValid(password)) {
             mPasswordView.setError(getString(R.string.error_invalid_password));
             focusView = mPasswordView;
             cancel = true;
@@ -181,9 +176,11 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                 public void onFailure(@NonNull Exception e) {
                     showProgress(false);
                     Log.e(TAG, "From onFailure", e);
-                    if (e.getMessage().contains("The email address is already in use by another account")){
+                    if (e.getMessage().contains("The email address is already in use by another account")) {
                         showError(getString(R.string.account_alreadt_exists));
-                    }else {
+                    } else if (e.getMessage().contains("A network error (such as timeout, interrupted connection or unreachable host) has occurred")) {
+                        showError(getString(R.string.no_network_connection));
+                    } else {
                         showError(getString(R.string.error_on_registration));
                     }
                 }
@@ -258,7 +255,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         View focusView = null;
 
         // Check for a valid password, if the user entered one.
-        if (!TextUtils.isEmpty(password) && !isPasswordValid(password)) {
+        if (TextUtils.isEmpty(password) && !isPasswordValid(password)) {
             mPasswordView.setError(getString(R.string.error_invalid_password));
             focusView = mPasswordView;
             cancel = true;
@@ -299,9 +296,12 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                 @Override
                 public void onFailure(@NonNull Exception e) {
                     Log.e(TAG, "signInWithEmail:failure", e);
-                    if (e.getMessage().contains("The password is invalid")){
+                    if (e.getMessage().contains("The password is invalid")) {
                         showError(getString(R.string.error_incorrect_password));
-                    }else {
+                    } else if (e.getMessage().contains("A network error (such as timeout, interrupted connection or unreachable host) has occurred")) {
+                        showError(getString(R.string.no_network_connection));
+                    }
+                    {
                         showError(getString(R.string.error_sign_in));
                     }
                     showProgress(false);
@@ -420,6 +420,11 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         super.onDestroy();
     }
 
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
+    }
+
     private interface ProfileQuery {
         String[] PROJECTION = {
                 ContactsContract.CommonDataKinds.Email.ADDRESS,
@@ -430,9 +435,5 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         int IS_PRIMARY = 1;
     }
 
-    @Override
-    protected void attachBaseContext(Context newBase) {
-        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
-    }
 }
 

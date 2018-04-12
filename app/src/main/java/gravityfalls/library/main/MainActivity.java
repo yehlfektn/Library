@@ -12,6 +12,8 @@ import android.view.View;
 import com.azoft.carousellayoutmanager.CarouselLayoutManager;
 import com.azoft.carousellayoutmanager.CarouselZoomPostLayoutListener;
 import com.azoft.carousellayoutmanager.CenterScrollListener;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -21,10 +23,8 @@ import com.mikepenz.materialdrawer.AccountHeader;
 import com.mikepenz.materialdrawer.AccountHeaderBuilder;
 import com.mikepenz.materialdrawer.Drawer;
 import com.mikepenz.materialdrawer.DrawerBuilder;
-import com.mikepenz.materialdrawer.model.ExpandableDrawerItem;
 import com.mikepenz.materialdrawer.model.PrimaryDrawerItem;
 import com.mikepenz.materialdrawer.model.ProfileDrawerItem;
-import com.mikepenz.materialdrawer.model.SectionDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IProfile;
 
@@ -44,95 +44,112 @@ import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 public class MainActivity extends AppCompatActivity {
 
-    Unbinder unbinder;
-    Drawer mDrawer;
+    @BindView(R.id.recycler_view)
+    RecyclerView recyclerView;
+    @BindView(R.id.toolbar)
     Toolbar mToolbar;
+    private Unbinder unbinder;
+    private Drawer mDrawer;
     private DatabaseReference mDatabase;
+    private FirebaseUser user;
     private MainAdapter adapter;
     private String TAG = "MainActivity";
     private ArrayList<Book> arrayList = new ArrayList<>();
 
-    @BindView(R.id.recycler_view)
-    RecyclerView recyclerView;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        //set layout of activity
         setContentView(R.layout.activity_main);
 
-        mToolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(mToolbar);
-        setTitle("");
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        //initialize toolbar and bind views with Butterknife
+        initToolbar();
 
+        //initialize FireBase and retrieve data
+        initFireBase();
+
+        //set up RecyclerView
         setUpRecyclerView();
 
-        DrawerBuilder mDrawerBuilder = new DrawerBuilder().withActivity(this).withToolbar(mToolbar)
-                .withTranslucentStatusBar(false);
+        //initialize Drawer and populate with user data
+        initDrawer();
+    }
 
-
-        AccountHeader headerResult = new AccountHeaderBuilder()
-                .withActivity(this)
-                .withHeaderBackground(R.drawable.book)
-                .addProfiles(
-                        new ProfileDrawerItem().withName("Mike Penz").withEmail("mikepenz@gmail.com").withIcon(getResources().getDrawable(R.drawable.boy))
-                )
-                .withOnAccountHeaderListener(new AccountHeader.OnAccountHeaderListener() {
-                    @Override
-                    public boolean onProfileChanged(View view, IProfile profile, boolean currentProfile) {
-                        return false;
-                    }
-                })
-                .withSelectionListEnabledForSingleProfile(false)
-                .build();
-
-        mDrawerBuilder.withAccountHeader(headerResult).addDrawerItems(new ProfileDrawerItem().withName(R.string.library)
-                .withTypeface(Typeface.defaultFromStyle(Typeface.BOLD)).withIcon(R.drawable.library))
-                .addDrawerItems(new PrimaryDrawerItem().withName(R.string.exit)
-                .withTypeface(Typeface.defaultFromStyle(Typeface.BOLD)).withIcon(R.drawable.exit)).withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
-            @Override
-            public boolean onItemClick(View view, int position, IDrawerItem drawerItem) {
-                return false;
-            }
-        });
-
-        unbinder = ButterKnife.bind(this);
-        mDrawer = mDrawerBuilder.build();
-
+    private void initFireBase() {
         mDatabase = FirebaseDatabase.getInstance().getReference();
-
-        /*Book book = new Book("Chinua Achebe","Nigeria","images/things-fall-apart.jpg","link","English",209,"Things Fall Apart","1958");
-        mDatabase.child("books").child("1").setValue(book);*/
+        user = FirebaseAuth.getInstance().getCurrentUser();
 
         ValueEventListener booksListener = new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                for (DataSnapshot child: dataSnapshot.getChildren()){
+                for (DataSnapshot child : dataSnapshot.getChildren()) {
                     Book book = child.getValue(Book.class);
                     if (book != null) {
                         arrayList.add(book);
-                        Log.e(TAG,"Array list size: "+arrayList.size());
+                        Log.e(TAG, "Array list size: " + arrayList.size());
                     }
                 }
-                setUpRecyclerView();
                 adapter.notifyDataSetChanged();
             }
+
             @Override
             public void onCancelled(DatabaseError databaseError) {
-                Log.e(TAG,"Error: "+databaseError.getMessage());
+                Log.e(TAG, "Error: " + databaseError.getMessage());
             }
         };
-        mDatabase.child("books").addListenerForSingleValueEvent(booksListener);
+        mDatabase.child("books").addValueEventListener(booksListener);
+    }
+
+    private void initDrawer() {
+        if (user != null) {
+            DrawerBuilder mDrawerBuilder = new DrawerBuilder().withActivity(this).withToolbar(mToolbar)
+                    .withTranslucentStatusBar(false);
+
+
+            AccountHeader headerResult = new AccountHeaderBuilder()
+                    .withActivity(this)
+                    .withHeaderBackground(R.drawable.book)
+                    .addProfiles(
+                            new ProfileDrawerItem().withName(user.getDisplayName()).withEmail(user.getEmail()).withIcon(getResources().getDrawable(R.drawable.boy))
+                    )
+                    .withOnAccountHeaderListener(new AccountHeader.OnAccountHeaderListener() {
+                        @Override
+                        public boolean onProfileChanged(View view, IProfile profile, boolean currentProfile) {
+                            return false;
+                        }
+                    })
+                    .withSelectionListEnabledForSingleProfile(false)
+                    .build();
+
+            mDrawerBuilder.withAccountHeader(headerResult).addDrawerItems(new ProfileDrawerItem().withName(R.string.library)
+                    .withTypeface(Typeface.defaultFromStyle(Typeface.BOLD)).withIcon(R.drawable.library))
+                    .addDrawerItems(new PrimaryDrawerItem().withName(R.string.exit)
+                            .withTypeface(Typeface.defaultFromStyle(Typeface.BOLD)).withIcon(R.drawable.exit)).withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
+                @Override
+                public boolean onItemClick(View view, int position, IDrawerItem drawerItem) {
+                    return false;
+                }
+            });
+            mDrawer = mDrawerBuilder.build();
+        }
+    }
+
+    private void initToolbar() {
+        unbinder = ButterKnife.bind(this);
+        setSupportActionBar(mToolbar);
+        setTitle("");
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
     }
 
     private void setUpRecyclerView() {
-        CarouselLayoutManager layoutManager = new CarouselLayoutManager(CarouselLayoutManager.HORIZONTAL,true);
+        CarouselLayoutManager layoutManager = new CarouselLayoutManager(CarouselLayoutManager.HORIZONTAL, true);
         layoutManager.setPostLayoutListener(new CarouselZoomPostLayoutListener());
 
         recyclerView = findViewById(R.id.recycler_view);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setHasFixedSize(true);
-        adapter = new MainAdapter(arrayList,this);
+        adapter = new MainAdapter(arrayList, this);
         recyclerView.setAdapter(adapter);
         recyclerView.addOnScrollListener(new CenterScrollListener());
     }

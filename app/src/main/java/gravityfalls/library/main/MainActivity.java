@@ -4,9 +4,19 @@ import android.content.Context;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 
+import com.azoft.carousellayoutmanager.CarouselLayoutManager;
+import com.azoft.carousellayoutmanager.CarouselZoomPostLayoutListener;
+import com.azoft.carousellayoutmanager.CenterScrollListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.mikepenz.materialdrawer.AccountHeader;
 import com.mikepenz.materialdrawer.AccountHeaderBuilder;
 import com.mikepenz.materialdrawer.Drawer;
@@ -18,9 +28,14 @@ import com.mikepenz.materialdrawer.model.SectionDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IProfile;
 
+import java.util.ArrayList;
+
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import gravityfalls.library.R;
+import gravityfalls.library.adapters.MainAdapter;
+import gravityfalls.library.objects.Book;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 /**
@@ -32,6 +47,13 @@ public class MainActivity extends AppCompatActivity {
     Unbinder unbinder;
     Drawer mDrawer;
     Toolbar mToolbar;
+    private DatabaseReference mDatabase;
+    private MainAdapter adapter;
+    private String TAG = "MainActivity";
+    private ArrayList<Book> arrayList = new ArrayList<>();
+
+    @BindView(R.id.recycler_view)
+    RecyclerView recyclerView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +64,9 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(mToolbar);
         setTitle("");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        setUpRecyclerView();
+
         DrawerBuilder mDrawerBuilder = new DrawerBuilder().withActivity(this).withToolbar(mToolbar)
                 .withTranslucentStatusBar(false);
 
@@ -73,6 +98,43 @@ public class MainActivity extends AppCompatActivity {
 
         unbinder = ButterKnife.bind(this);
         mDrawer = mDrawerBuilder.build();
+
+        mDatabase = FirebaseDatabase.getInstance().getReference();
+
+        /*Book book = new Book("Chinua Achebe","Nigeria","images/things-fall-apart.jpg","link","English",209,"Things Fall Apart","1958");
+        mDatabase.child("books").child("1").setValue(book);*/
+
+        ValueEventListener booksListener = new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot child: dataSnapshot.getChildren()){
+                    Book book = child.getValue(Book.class);
+                    if (book != null) {
+                        arrayList.add(book);
+                        Log.e(TAG,"Array list size: "+arrayList.size());
+                    }
+                }
+                setUpRecyclerView();
+                adapter.notifyDataSetChanged();
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                Log.e(TAG,"Error: "+databaseError.getMessage());
+            }
+        };
+        mDatabase.child("books").addListenerForSingleValueEvent(booksListener);
+    }
+
+    private void setUpRecyclerView() {
+        CarouselLayoutManager layoutManager = new CarouselLayoutManager(CarouselLayoutManager.HORIZONTAL,true);
+        layoutManager.setPostLayoutListener(new CarouselZoomPostLayoutListener());
+
+        recyclerView = findViewById(R.id.recycler_view);
+        recyclerView.setLayoutManager(layoutManager);
+        recyclerView.setHasFixedSize(true);
+        adapter = new MainAdapter(arrayList,this);
+        recyclerView.setAdapter(adapter);
+        recyclerView.addOnScrollListener(new CenterScrollListener());
     }
 
     @Override

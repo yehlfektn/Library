@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.widget.FrameLayout;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -36,15 +35,13 @@ public class SplashActivity extends AppCompatActivity {
             public void run() {
                 mAuth = FirebaseAuth.getInstance();
                 FirebaseUser currentUser = mAuth.getCurrentUser();
+                Intent i;
                 if (currentUser != null){
-                    Log.e("SplashActivity","CurrentUser is not null");
-                    Intent i = new Intent(SplashActivity.this, MainActivity.class).addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
-                    startActivity(i);
+                    i = new Intent(SplashActivity.this, MainActivity.class).addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
                 }else {
-                    Log.e("SplashActivity","CurrentUser is null");
-                    Intent i = new Intent(SplashActivity.this, LoginActivity.class).addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
-                    startActivity(i);
+                    i = new Intent(SplashActivity.this, LoginActivity.class).addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
                 }
+                startActivity(i);
             }
         }, 1000);
     }

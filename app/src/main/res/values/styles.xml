@@ -9,6 +9,7 @@
         <item name="colorControlNormal">#c5c5c5</item>
         <item name="colorControlActivated">@color/colorPrimary</item>
         <item name="colorControlHighlight">@color/colorAccent</item>
+        <item name="android:textColorPrimary">@android:color/white</item>
     </style>
 
     <style name="AppTheme.NoActionBar" parent="AppTheme">

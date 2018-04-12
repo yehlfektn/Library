@@ -121,6 +121,8 @@ public class MainActivity extends AppCompatActivity {
 
     private void initDrawer() {
         if (user != null) {
+            Log.e(TAG,"user is not null");
+            Log.e(TAG,"userID: "+user.getUid());
             if (user.getPhotoUrl() != null){
                 DrawerWithProfilePhoto();
             }else {

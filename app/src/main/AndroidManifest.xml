@@ -40,6 +40,9 @@
             </intent-filter>
         </activity>
 
+        <activity
+            android:name=".main.BookDetailsActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
     </application>
 
 </manifest>

@@ -25,6 +25,7 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation 'com.android.support:appcompat-v7:27.1.1'
     implementation 'com.android.support:design:27.1.1'
+    implementation 'com.android.support:support-v4:27.1.1'
     implementation 'com.google.firebase:firebase-auth:12.0.1'
     implementation 'com.github.medyo:fancybuttons:1.8.4'
     implementation 'uk.co.chrisjenx:calligraphy:2.3.0'

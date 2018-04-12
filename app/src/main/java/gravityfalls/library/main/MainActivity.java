@@ -1,17 +1,25 @@
 package gravityfalls.library.main;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
+import android.widget.FrameLayout;
+import android.widget.LinearLayout;
 
 import com.azoft.carousellayoutmanager.CarouselLayoutManager;
 import com.azoft.carousellayoutmanager.CarouselZoomPostLayoutListener;
 import com.azoft.carousellayoutmanager.CenterScrollListener;
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.target.SimpleTarget;
+import com.bumptech.glide.request.transition.Transition;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -36,6 +44,7 @@ import butterknife.Unbinder;
 import gravityfalls.library.R;
 import gravityfalls.library.adapters.MainAdapter;
 import gravityfalls.library.objects.Book;
+import gravityfalls.library.utils.Helper;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 /**
@@ -48,6 +57,10 @@ public class MainActivity extends AppCompatActivity {
     RecyclerView recyclerView;
     @BindView(R.id.toolbar)
     Toolbar mToolbar;
+    @BindView(R.id.main_layout)
+    LinearLayout mainLayout;
+    @BindView(R.id.progress_overlay)
+    FrameLayout progressOverlay;
     private Unbinder unbinder;
     private Drawer mDrawer;
     private DatabaseReference mDatabase;
@@ -61,6 +74,12 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         //set layout of activity
         setContentView(R.layout.activity_main);
+
+        //BindViews
+        unbinder = ButterKnife.bind(this);
+
+        //show Loading View
+        showLoad();
 
         //initialize toolbar and bind views with Butterknife
         initToolbar();
@@ -86,7 +105,7 @@ public class MainActivity extends AppCompatActivity {
                     Book book = child.getValue(Book.class);
                     if (book != null) {
                         arrayList.add(book);
-                        Log.e(TAG, "Array list size: " + arrayList.size());
+                        //Log.e(TAG, "Array list size: " + arrayList.size());
                     }
                 }
                 adapter.notifyDataSetChanged();
@@ -102,43 +121,85 @@ public class MainActivity extends AppCompatActivity {
 
     private void initDrawer() {
         if (user != null) {
-            DrawerBuilder mDrawerBuilder = new DrawerBuilder().withActivity(this).withToolbar(mToolbar)
-                    .withTranslucentStatusBar(false);
-            
-            AccountHeader headerResult = new AccountHeaderBuilder()
-                    .withActivity(this)
-                    .withHeaderBackground(R.drawable.book)
-                    .addProfiles(
-                            new ProfileDrawerItem().withName(user.getDisplayName()).withEmail(user.getEmail()).withIcon(getResources().getDrawable(R.drawable.boy))
-                    )
-                    .withOnAccountHeaderListener(new AccountHeader.OnAccountHeaderListener() {
-                        @Override
-                        public boolean onProfileChanged(View view, IProfile profile, boolean currentProfile) {
-                            return false;
-                        }
-                    })
-                    .withSelectionListEnabledForSingleProfile(false)
-                    .build();
-
-            mDrawerBuilder.withAccountHeader(headerResult).addDrawerItems(new ProfileDrawerItem().withName(R.string.library)
-                    .withTypeface(Typeface.defaultFromStyle(Typeface.BOLD)).withIcon(R.drawable.library))
-                    .addDrawerItems(new PrimaryDrawerItem().withName(R.string.exit)
-                            .withTypeface(Typeface.defaultFromStyle(Typeface.BOLD)).withIcon(R.drawable.exit)).withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
-                @Override
-                public boolean onItemClick(View view, int position, IDrawerItem drawerItem) {
-                    return false;
-                }
-            });
-            mDrawer = mDrawerBuilder.build();
+            if (user.getPhotoUrl() != null){
+                DrawerWithProfilePhoto();
+            }else {
+                DrawerWithoutProfilePhoto();
+                closeLoad();
+            }
         }
     }
 
+    private void DrawerWithProfilePhoto() {
+        Glide.with(this).asBitmap().load(user.getPhotoUrl()).into(new SimpleTarget<Bitmap>() {
+            @Override
+            public void onResourceReady(@NonNull Bitmap resource, @Nullable Transition<? super Bitmap> transition) {
+                DrawerBuilder mDrawerBuilder = new DrawerBuilder().withActivity(MainActivity.this).withToolbar(mToolbar)
+                        .withTranslucentStatusBar(false);
+                AccountHeader headerResult = new AccountHeaderBuilder()
+                        .withActivity(MainActivity.this)
+                        .withHeaderBackground(R.drawable.book)
+                        .addProfiles(
+                                new ProfileDrawerItem().withName(user.getDisplayName()).withEmail(user.getEmail()).withIcon(resource)
+                        )
+                        .withOnAccountHeaderListener(new AccountHeader.OnAccountHeaderListener() {
+                            @Override
+                            public boolean onProfileChanged(View view, IProfile profile, boolean currentProfile) {
+                                return false;
+                            }
+                        })
+                        .withSelectionListEnabledForSingleProfile(false)
+                        .build();
+
+                mDrawerBuilder.withAccountHeader(headerResult).addDrawerItems(new ProfileDrawerItem().withName(R.string.library)
+                        .withTypeface(Typeface.defaultFromStyle(Typeface.BOLD)).withIcon(R.drawable.library))
+                        .addDrawerItems(new PrimaryDrawerItem().withName(R.string.exit)
+                                .withTypeface(Typeface.defaultFromStyle(Typeface.BOLD)).withIcon(R.drawable.exit)).withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
+                    @Override
+                    public boolean onItemClick(View view, int position, IDrawerItem drawerItem) {
+                        return false;
+                    }
+                });
+                mDrawer = mDrawerBuilder.build();
+                closeLoad();
+            }
+        });
+    }
+
+    private void DrawerWithoutProfilePhoto(){
+        DrawerBuilder mDrawerBuilder = new DrawerBuilder().withActivity(this).withToolbar(mToolbar)
+                .withTranslucentStatusBar(false);
+        AccountHeader headerResult = new AccountHeaderBuilder()
+                .withActivity(this)
+                .withHeaderBackground(R.drawable.book)
+                .addProfiles(
+                        new ProfileDrawerItem().withName(user.getDisplayName()).withEmail(user.getEmail()).withIcon(getResources().getDrawable(R.drawable.boy))
+                )
+                .withOnAccountHeaderListener(new AccountHeader.OnAccountHeaderListener() {
+                    @Override
+                    public boolean onProfileChanged(View view, IProfile profile, boolean currentProfile) {
+                        return false;
+                    }
+                })
+                .withSelectionListEnabledForSingleProfile(false)
+                .build();
+
+        mDrawerBuilder.withAccountHeader(headerResult).addDrawerItems(new ProfileDrawerItem().withName(R.string.library)
+                .withTypeface(Typeface.defaultFromStyle(Typeface.BOLD)).withIcon(R.drawable.library))
+                .addDrawerItems(new PrimaryDrawerItem().withName(R.string.exit)
+                        .withTypeface(Typeface.defaultFromStyle(Typeface.BOLD)).withIcon(R.drawable.exit)).withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
+            @Override
+            public boolean onItemClick(View view, int position, IDrawerItem drawerItem) {
+                return false;
+            }
+        });
+        mDrawer = mDrawerBuilder.build();
+    }
+
     private void initToolbar() {
-        unbinder = ButterKnife.bind(this);
         setSupportActionBar(mToolbar);
         setTitle("");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
     }
 
     private void setUpRecyclerView() {
@@ -151,6 +212,16 @@ public class MainActivity extends AppCompatActivity {
         adapter = new MainAdapter(arrayList, this);
         recyclerView.setAdapter(adapter);
         recyclerView.addOnScrollListener(new CenterScrollListener());
+    }
+
+    private void showLoad() {
+        mainLayout.setVisibility(View.GONE);
+        Helper.animateView(progressOverlay, View.VISIBLE, 0.4f, 200);
+    }
+
+    private void closeLoad() {
+        Helper.animateView(progressOverlay, View.GONE, 0.4f, 0);
+        mainLayout.setVisibility(View.VISIBLE);
     }
 
     @Override

@@ -35,7 +35,6 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.ViewHolder> {
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         Book item = mItems.get(position);
-        Log.e("MainAdapter","onBindViewHolder: "+item.getTitle());
         holder.mText.setText(item.getTitle());
         Glide.with(mContext).load(item.getImageLink()).into(holder.mView);
     }

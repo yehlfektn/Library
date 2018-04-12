@@ -104,8 +104,7 @@ public class MainActivity extends AppCompatActivity {
         if (user != null) {
             DrawerBuilder mDrawerBuilder = new DrawerBuilder().withActivity(this).withToolbar(mToolbar)
                     .withTranslucentStatusBar(false);
-
-
+            
             AccountHeader headerResult = new AccountHeaderBuilder()
                     .withActivity(this)
                     .withHeaderBackground(R.drawable.book)

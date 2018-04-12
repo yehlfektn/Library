@@ -22,4 +22,5 @@
     <string name="private_cab">Личный кабинет</string>
     <string name="library">Библиотека</string>
     <string name="exit">Выйти</string>
+    <string name="can_not_authorize_with_google">На данный момент невозможно авторизоваться через систему Гугл</string>
 </resources>

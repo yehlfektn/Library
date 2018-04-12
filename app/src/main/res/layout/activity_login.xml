@@ -104,6 +104,15 @@
                 fancy:fb_defaultColor="@color/colorPrimary"
                 fancy:fb_radius="5dp" />
 
+            <com.google.android.gms.common.SignInButton
+                android:id="@+id/sign_in_button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_m"/>
+
         </LinearLayout>
+
+
+
     </ScrollView>
 </LinearLayout>

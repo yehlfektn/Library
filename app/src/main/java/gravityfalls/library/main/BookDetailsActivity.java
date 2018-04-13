@@ -2,6 +2,8 @@ package gravityfalls.library.main;
 
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.design.widget.CollapsingToolbarLayout;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
@@ -31,10 +33,12 @@ public class BookDetailsActivity extends AppCompatActivity {
     @BindView(R.id.txt_author)
     TextView author;
     @BindView(R.id.txt_year)
-            TextView year;
+    TextView year;
     @BindView(R.id.txt_description)
-            TextView description;
+    TextView description;
 
+    @BindView(R.id.collapsing_toolbar)
+    CollapsingToolbarLayout collapsingToolbarLayout;
     Unbinder unbinder;
     private String TAG = "BookDetailsActivity";
 
@@ -50,6 +54,7 @@ public class BookDetailsActivity extends AppCompatActivity {
         getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         toolbar.setTitleTextColor(Color.WHITE);
+        collapsingToolbarLayout.setCollapsedTitleTextColor(ContextCompat.getColor(this,R.color.white));
 
         if (getIntent().getExtras() != null) {
             Book book = getIntent().getExtras().getParcelable("data");

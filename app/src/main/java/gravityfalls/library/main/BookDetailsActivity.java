@@ -1,6 +1,6 @@
 package gravityfalls.library.main;
 
-import android.graphics.Color;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -15,6 +15,8 @@ import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import gravityfalls.library.R;
 import gravityfalls.library.objects.Book;
+import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
+import uk.co.chrisjenx.calligraphy.CalligraphyUtils;
 
 /**
  * Created by Nurdaulet Kenges on 12.04.2018.
@@ -26,14 +28,12 @@ public class BookDetailsActivity extends AppCompatActivity {
     ImageView imageView;
     @BindView(R.id.toolbar)
     Toolbar toolbar;
-    @BindView(R.id.txt_title)
-    TextView title;
     @BindView(R.id.txt_author)
     TextView author;
     @BindView(R.id.txt_year)
-            TextView year;
+    TextView year;
     @BindView(R.id.txt_description)
-            TextView description;
+    TextView description;
 
     Unbinder unbinder;
     private String TAG = "BookDetailsActivity";
@@ -46,17 +46,15 @@ public class BookDetailsActivity extends AppCompatActivity {
         unbinder = ButterKnife.bind(this);
 
         setSupportActionBar(toolbar);
-
         getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        toolbar.setTitleTextColor(Color.WHITE);
 
         if (getIntent().getExtras() != null) {
             Book book = getIntent().getExtras().getParcelable("data");
             if (book!=null) {
                 setTitle(book.getTitle());
                 Glide.with(this).load(book.getImageLink()).into(imageView);
-                title.setText(book.getTitle());
+                //CalligraphyUtils.applyFontToTextView(this, title, "fonts/mono_bold.ttf");
                 author.setText(book.getAuthor());
                 year.setText(book.getYear());
                 description.setText(book.getShort_description());
@@ -78,5 +76,10 @@ public class BookDetailsActivity extends AppCompatActivity {
     protected void onDestroy() {
         unbinder.unbind();
         super.onDestroy();
+    }
+
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
     }
 }

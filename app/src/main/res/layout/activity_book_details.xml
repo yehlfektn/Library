@@ -24,7 +24,7 @@
                 android:id="@+id/layout_background"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/colorPrimary"
+                android:background="@drawable/bookdetails_background"
                 android:gravity="center_horizontal"
                 android:orientation="vertical"
                 android:paddingLeft="16dp"
@@ -37,7 +37,9 @@
                     android:layout_height="200dp"
                     android:layout_marginBottom="70dp"
                     android:layout_marginTop="40dp"
-                    android:scaleType="centerCrop" />
+                    android:adjustViewBounds="true"
+                    android:background="@android:color/transparent"
+                    android:scaleType="fitXY" />
             </LinearLayout>
 
             <android.support.v7.widget.Toolbar
@@ -63,7 +65,7 @@
             android:orientation="vertical">
 
             <TextView
-                style="@style/ProximaRegular"
+                style="@style/ProximaHeader"
                 android:id="@+id/txt_author"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -73,7 +75,7 @@
                 tools:text="Author"/>
 
             <TextView
-                style="@style/ProximaRegular"
+                style="@style/ProximaHeader"
                 android:id="@+id/txt_year"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

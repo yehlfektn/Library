@@ -63,8 +63,9 @@
             android:layout_height="1dp"
             android:background="@color/divider"/>
 
-
-
-
+        <ListView
+            android:id="@+id/listView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
     </LinearLayout>
 </LinearLayout>

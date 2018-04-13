@@ -19,10 +19,11 @@
 
     <style name="TextAppearence.TextInputLayout.Orange" parent="@android:style/TextAppearance">
         <item name="android:textColor">@color/colorPrimary</item>
+        <item name="android:textColorHighlight">@color/colorPrimary</item>
         <item name="android:textSize">16sp</item>
     </style>
 
-    <style name="TextAppearence.TextInputLayout.Green" parent="@android:style/TextAppearance">
+    <style name="TextAppearence.TextInputLayout.Blue" parent="@android:style/TextAppearance">
         <item name="android:textColor">@color/colorAccent</item>
         <item name="android:textSize">16sp</item>
     </style>

@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
+import android.view.MenuItem;
 import android.widget.FrameLayout;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -44,6 +46,18 @@ public class SplashActivity extends AppCompatActivity {
                 startActivity(i);
             }
         }, 1000);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                finish();
+                break;
+            default:
+                break;
+        }
+        return false;
     }
 
     @Override

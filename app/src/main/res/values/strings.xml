@@ -7,11 +7,10 @@
     <string name="action_sign_in">Войти</string>
     <string name="action_sign_in_short">Sign in</string>
     <string name="error_invalid_email">Этот email адрес не действителен</string>
-    <string name="error_invalid_password">Пароль слишком маленький</string>
-    <string name="error_incorrect_password">Пароль не действителен</string>
+    <string name="error_invalid_password">Пароль слишком короткий</string>
+    <string name="error_incorrect_password">Пароль не подходит</string>
     <string name="error_field_required">Нужно заполнить поле</string>
-    <string name="permission_rationale">"Нужны разрешение на контакты, чтобы заполнить email"
-    </string>
+    <string name="permission_rationale">"Нужно разрешение на контакты, чтобы заполнить email"</string>
     <string name="register">Регистрация</string>
     <string name="sing_in">Войти</string>
     <string name="password">Пароль</string>
@@ -22,5 +21,8 @@
     <string name="private_cab">Личный кабинет</string>
     <string name="library">Библиотека</string>
     <string name="exit">Выйти</string>
+    <string name="yes">Да</string>
+    <string name="no">Нет</string>
+    <string name="wanna_exit">Вы действительно хотите выйти из аккаунта?</string>
     <string name="can_not_authorize_with_google">На данный момент невозможно авторизоваться через систему Гугл</string>
 </resources>

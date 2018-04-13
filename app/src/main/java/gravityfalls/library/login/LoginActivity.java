@@ -50,16 +50,17 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
-import gravityfalls.library.main.MainActivity;
-import mehdi.sakout.fancybuttons.FancyButton;
 import gravityfalls.library.R;
+import gravityfalls.library.main.MainActivity;
 import gravityfalls.library.utils.SnackbarHelper;
+import mehdi.sakout.fancybuttons.FancyButton;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 import static android.Manifest.permission.READ_CONTACTS;
 
 /**
  * A login screen that offers login via email/password.
+ * Also offers google sign in
  */
 public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<Cursor> {
 
@@ -330,8 +331,9 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                         showError(getString(R.string.error_incorrect_password));
                     } else if (e.getMessage().contains("A network error (such as timeout, interrupted connection or unreachable host) has occurred")) {
                         showError(getString(R.string.no_network_connection));
-                    }
-                    {
+                    } else if (e.getMessage().contains("There is no user record corresponding to this identifier")){
+                        showError(getString(R.string.no_such_user));
+                    }else {
                         showError(getString(R.string.error_sign_in));
                     }
                     showProgress(false);

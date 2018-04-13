@@ -12,6 +12,7 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.text.Html;
 import android.util.Log;
 import android.view.View;
 import android.widget.FrameLayout;
@@ -53,7 +54,7 @@ import gravityfalls.library.utils.Helper;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 /**
- * Created by 777 on 12.04.2018.
+ * Created by Ilyas Turimbetov on 12.04.2018.
  */
 
 public class MainActivity extends AppCompatActivity {
@@ -177,7 +178,7 @@ public class MainActivity extends AppCompatActivity {
                 switch (position) {
                     case 3:
                         AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
-                        builder.setMessage(R.string.wanna_exit);
+                        builder.setMessage(Html.fromHtml("<font color='#000000'>"+getString(R.string.wanna_exit)+"</font>"));
                         builder.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
                                 // User clicked OK button

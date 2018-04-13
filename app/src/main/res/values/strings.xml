@@ -25,4 +25,5 @@
     <string name="no">Нет</string>
     <string name="wanna_exit">Вы действительно хотите выйти из аккаунта?</string>
     <string name="can_not_authorize_with_google">На данный момент невозможно авторизоваться через систему Гугл</string>
+    <string name="no_such_user">Такой пользователь не найден</string>
 </resources>

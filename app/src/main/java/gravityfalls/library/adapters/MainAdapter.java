@@ -18,6 +18,9 @@ import gravityfalls.library.R;
 import gravityfalls.library.main.BookDetailsActivity;
 import gravityfalls.library.objects.Book;
 
+/**
+ * Created by Nurdaulet Kenges on 12.04.2018.
+ */
 
 public class MainAdapter extends RecyclerView.Adapter<MainAdapter.ViewHolder> {
     private ArrayList<Book> mItems;

@@ -4,6 +4,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -14,6 +15,10 @@ import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import gravityfalls.library.R;
 import gravityfalls.library.objects.Book;
+
+/**
+ * Created by Nurdaulet Kenges on 12.04.2018.
+ */
 
 public class BookDetailsActivity extends AppCompatActivity {
 
@@ -58,6 +63,15 @@ public class BookDetailsActivity extends AppCompatActivity {
             }
         }
 
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if (id == android.R.id.home) {
+            finish();
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     @Override

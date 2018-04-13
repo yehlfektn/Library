@@ -74,7 +74,7 @@ public class MainActivity extends AppCompatActivity {
     private MainAdapter adapter;
     private String TAG = "MainActivity";
 
-    private Drawer.OnDrawerItemClickListener mLlistener;
+    private AccountHeaderBuilder headerBuilder;
     private ArrayList<Book> arrayList = new ArrayList<>();
 
     @Override
@@ -129,7 +129,42 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initDrawer() {
-        mLlistener = new Drawer.OnDrawerItemClickListener() {
+
+        DrawerBuilder mDrawerBuilder = new DrawerBuilder().withActivity(MainActivity.this).withToolbar(mToolbar)
+                .withTranslucentStatusBar(false);
+        headerBuilder = new AccountHeaderBuilder()
+                .withActivity(MainActivity.this)
+                .withHeaderBackground(R.drawable.book)
+                .withOnAccountHeaderProfileImageListener(new AccountHeader.OnAccountHeaderProfileImageListener() {
+                    @Override
+                    public boolean onProfileImageClick(View view, IProfile profile, boolean current) {
+                        Intent i = new Intent(getApplicationContext(), ProfileActivity.class);
+                        startActivity(i);
+                        return false;
+                    }
+
+                    @Override
+                    public boolean onProfileImageLongClick(View view, IProfile profile, boolean current) {
+                        return false;
+                    }
+                })
+                .withSelectionListEnabledForSingleProfile(false);
+
+        if (user != null) {
+            Log.e(TAG, "user is not null");
+            Log.e(TAG, "userID: " + user.getUid());
+            if (user.getPhotoUrl() != null) {
+                DrawerWithProfilePhoto();
+            } else {
+                DrawerWithoutProfilePhoto();
+                closeLoad();
+            }
+        }
+
+        mDrawerBuilder.withAccountHeader(headerBuilder.build()).addDrawerItems(new ProfileDrawerItem().withName(R.string.library)
+                        .withTypeface(Typeface.defaultFromStyle(Typeface.BOLD)).withIcon(R.drawable.library), new DividerDrawerItem(),
+                new PrimaryDrawerItem().withName(R.string.exit)
+                        .withTypeface(Typeface.defaultFromStyle(Typeface.BOLD)).withIcon(R.drawable.exit)).withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
             @Override
             public boolean onItemClick(View view, int position, IDrawerItem drawerItem) {
                 switch (position) {
@@ -161,71 +196,29 @@ public class MainActivity extends AppCompatActivity {
                 }
                 return false;
             }
-        };
-        if (user != null) {
-            Log.e(TAG, "user is not null");
-            Log.e(TAG, "userID: " + user.getUid());
-            if (user.getPhotoUrl() != null) {
-                DrawerWithProfilePhoto();
-            } else {
-                DrawerWithoutProfilePhoto();
-                closeLoad();
-            }
-        }
+        }).build();
+
     }
 
     private void DrawerWithProfilePhoto() {
-        Glide.with(this).asBitmap().load(user.getPhotoUrl()).into(new SimpleTarget<Bitmap>() {
-            @Override
-            public void onResourceReady(@NonNull Bitmap resource, @Nullable Transition<? super Bitmap> transition) {
-                DrawerBuilder mDrawerBuilder = new DrawerBuilder().withActivity(MainActivity.this).withToolbar(mToolbar)
-                        .withTranslucentStatusBar(false);
-                AccountHeader headerResult = new AccountHeaderBuilder()
-                        .withActivity(MainActivity.this)
-                        .withHeaderBackground(R.drawable.book)
-                        .addProfiles(
-                                new ProfileDrawerItem().withName(user.getDisplayName()).withEmail(user.getEmail()).withIcon(resource)
-                        )
-                        .withOnAccountHeaderListener(new AccountHeader.OnAccountHeaderListener() {
-                            @Override
-                            public boolean onProfileChanged(View view, IProfile profile, boolean currentProfile) {
-                                return false;
-                            }
-                        })
-                        .withSelectionListEnabledForSingleProfile(false)
-                        .build();
-
-                mDrawerBuilder.withAccountHeader(headerResult).addDrawerItems(new ProfileDrawerItem().withName(R.string.library)
-                        .withTypeface(Typeface.defaultFromStyle(Typeface.BOLD)).withIcon(R.drawable.library))
-                        .addDrawerItems(new PrimaryDrawerItem().withName(R.string.exit)
-                                .withTypeface(Typeface.defaultFromStyle(Typeface.BOLD)).withIcon(R.drawable.exit)).withOnDrawerItemClickListener(mLlistener);
-            }
-        });
+        if  (headerBuilder != null) {
+            Glide.with(this).asBitmap().load(user.getPhotoUrl()).into(new SimpleTarget<Bitmap>() {
+                @Override
+                public void onResourceReady(@NonNull Bitmap resource, @Nullable Transition<? super Bitmap> transition) {
+                    headerBuilder.addProfiles(
+                            new ProfileDrawerItem().withName(user.getDisplayName()).withEmail(user.getEmail()).withIcon(resource)
+                    );
+                }
+            });
+        }
     }
 
     private void DrawerWithoutProfilePhoto() {
-        DrawerBuilder mDrawerBuilder = new DrawerBuilder().withActivity(this).withToolbar(mToolbar)
-                .withTranslucentStatusBar(false);
-        AccountHeader headerResult = new AccountHeaderBuilder()
-                .withActivity(this)
-                .withHeaderBackground(R.drawable.book)
-                .addProfiles(
-                        new ProfileDrawerItem().withName(user.getDisplayName()).withEmail(user.getEmail()).withIcon(getResources().getDrawable(R.drawable.boy))
-                )
-                .withOnAccountHeaderListener(new AccountHeader.OnAccountHeaderListener() {
-                    @Override
-                    public boolean onProfileChanged(View view, IProfile profile, boolean currentProfile) {
-                        return false;
-                    }
-                })
-                .withSelectionListEnabledForSingleProfile(false)
-                .build();
-
-        mDrawerBuilder.withAccountHeader(headerResult).addDrawerItems(new ProfileDrawerItem().withName(R.string.library)
-                .withTypeface(Typeface.defaultFromStyle(Typeface.BOLD)).withIcon(R.drawable.library), new DividerDrawerItem(),
-                new PrimaryDrawerItem().withName(R.string.exit)
-                .withTypeface(Typeface.defaultFromStyle(Typeface.BOLD)).withIcon(R.drawable.exit)).withOnDrawerItemClickListener(mLlistener);
-        mDrawer = mDrawerBuilder.build();
+        if  (headerBuilder != null) {
+            headerBuilder.addProfiles(
+                    new ProfileDrawerItem().withName(user.getDisplayName()).withEmail(user.getEmail()).withIcon(getResources().getDrawable(R.drawable.boy))
+            );
+        }
     }
 
     private void initToolbar() {

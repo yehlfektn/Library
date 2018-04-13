@@ -76,6 +76,7 @@ public class MainActivity extends AppCompatActivity {
 
     private AccountHeaderBuilder headerBuilder;
     private ArrayList<Book> arrayList = new ArrayList<>();
+    DrawerBuilder mDrawerBuilder;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -130,7 +131,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void initDrawer() {
 
-        DrawerBuilder mDrawerBuilder = new DrawerBuilder().withActivity(MainActivity.this).withToolbar(mToolbar)
+        mDrawerBuilder = new DrawerBuilder().withActivity(MainActivity.this).withToolbar(mToolbar)
                 .withTranslucentStatusBar(false);
         headerBuilder = new AccountHeaderBuilder()
                 .withActivity(MainActivity.this)
@@ -157,10 +158,16 @@ public class MainActivity extends AppCompatActivity {
                 DrawerWithProfilePhoto();
             } else {
                 DrawerWithoutProfilePhoto();
+                makeDrawer();
                 closeLoad();
             }
         }
 
+
+
+    }
+
+    private void makeDrawer(){
         mDrawerBuilder.withAccountHeader(headerBuilder.build()).addDrawerItems(new ProfileDrawerItem().withName(R.string.library)
                         .withTypeface(Typeface.defaultFromStyle(Typeface.BOLD)).withIcon(R.drawable.library), new DividerDrawerItem(),
                 new PrimaryDrawerItem().withName(R.string.exit)
@@ -197,7 +204,6 @@ public class MainActivity extends AppCompatActivity {
                 return false;
             }
         }).build();
-
     }
 
     private void DrawerWithProfilePhoto() {
@@ -208,6 +214,8 @@ public class MainActivity extends AppCompatActivity {
                     headerBuilder.addProfiles(
                             new ProfileDrawerItem().withName(user.getDisplayName()).withEmail(user.getEmail()).withIcon(resource)
                     );
+                    makeDrawer();
+                    closeLoad();
                 }
             });
         }

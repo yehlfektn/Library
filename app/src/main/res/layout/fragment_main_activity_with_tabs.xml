@@ -28,14 +28,14 @@
 
             <TextView
                 android:id="@+id/title_main"
-                fontPath="fonts/ProximaNova-Semibold.ttf"
+                style="@style/ProximaHeader"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ellipsize="end"
                 android:gravity="center"
                 android:maxLines="3"
                 android:textColor="@color/black"
-                android:textSize="16sp"
+                android:textSize="20sp"
                 tools:text="My Title" />
 
             <TextView
@@ -45,7 +45,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:gravity="center"
-                android:textSize="20sp"
+                android:textSize="18sp"
                 tools:text="Author" />
 
             <TextView
@@ -55,7 +55,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:gravity="center"
-                android:textSize="20sp"
+                android:textSize="18sp"
                 tools:text="1986" />
 
             <TextView

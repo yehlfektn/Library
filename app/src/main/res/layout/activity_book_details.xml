@@ -70,8 +70,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                android:gravity="center"
+                android:gravity="start"
                 android:textSize="20sp"
+                android:paddingStart="16dp"
+                android:paddingEnd="16dp"
                 tools:text="Author"/>
 
             <TextView
@@ -80,9 +82,47 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                android:gravity="center"
+                android:gravity="start"
                 android:textSize="20sp"
+                android:paddingStart="16dp"
+                android:paddingEnd="16dp"
                 tools:text="1986"/>
+
+            <TextView
+                style="@style/ProximaHeader"
+                android:id="@+id/txt_language"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:gravity="start"
+                android:textSize="20sp"
+                android:paddingStart="16dp"
+                android:paddingEnd="16dp"
+                tools:text="Русский"/>
+
+            <TextView
+                style="@style/ProximaHeader"
+                android:id="@+id/txt_pages"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:gravity="start"
+                android:textSize="20sp"
+                android:paddingStart="16dp"
+                android:paddingEnd="16dp"
+                tools:text="Количество страниц"/>
+
+            <TextView
+                style="@style/ProximaHeader"
+                android:id="@+id/txt_country"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:gravity="start"
+                android:textSize="20sp"
+                android:paddingStart="16dp"
+                android:paddingEnd="16dp"
+                tools:text="Страна"/>
 
 
             <TextView

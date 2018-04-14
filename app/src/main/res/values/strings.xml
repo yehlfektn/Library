@@ -34,4 +34,9 @@
     <string name="section_format">Hello World from section: %1$d</string>
     <string name="notifications_admin_channel_name">Admin_notification_channel</string>
     <string name="can_not_load_data">Ошибка сети, Проверьте подключение к интернету</string>
+    <string name="books_author">Автор: %s</string>
+    <string name="books_year">Год выпуска: %s</string>
+    <string name="books_language">Язык: %s</string>
+    <string name="books_pages">Количество страниц: %d</string>
+    <string name="books_country">Страна: %s</string>
 </resources>

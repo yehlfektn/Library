@@ -1,7 +1,6 @@
 package gravityfalls.library.main;
 
 import android.content.Context;
-import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -23,7 +22,6 @@ import gravityfalls.library.R;
 import gravityfalls.library.objects.Book;
 import gravityfalls.library.utils.Helper;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
-import uk.co.chrisjenx.calligraphy.CalligraphyUtils;
 
 /**
  * Created by Nurdaulet Kenges on 12.04.2018.
@@ -41,6 +39,12 @@ public class BookDetailsActivity extends AppCompatActivity {
     TextView year;
     @BindView(R.id.txt_description)
     TextView description;
+    @BindView(R.id.txt_language)
+    TextView language;
+    @BindView(R.id.txt_pages)
+    TextView pages;
+    @BindView(R.id.txt_country)
+    TextView country;
 
     Unbinder unbinder;
     private String TAG = "BookDetailsActivity";
@@ -76,8 +80,11 @@ public class BookDetailsActivity extends AppCompatActivity {
 
 
                 //CalligraphyUtils.applyFontToTextView(this, title, "fonts/mono_bold.ttf");
-                author.setText(book.getAuthor());
-                year.setText(book.getYear());
+                author.setText(getString(R.string.books_author,book.getAuthor()));
+                year.setText(getString(R.string.books_year,book.getYear()));
+                language.setText(getString(R.string.books_language,book.getLanguage()));
+                pages.setText(getString(R.string.books_pages,book.getPages()));
+                country.setText(getString(R.string.books_country,book.getCountry()));
                 description.setText(book.getShort_description());
             }
         }

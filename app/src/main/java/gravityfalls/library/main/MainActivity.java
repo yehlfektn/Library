@@ -86,6 +86,7 @@ public class MainActivity extends AppCompatActivity {
         initDrawer();
 
         //initialize Drawer selection
+        if (mDrawer!=null)
         mDrawer.setSelectionAtPosition(2);
     }
 
@@ -224,6 +225,7 @@ public class MainActivity extends AppCompatActivity {
                             new ProfileDrawerItem().withName(name).withEmail(user.getEmail()).withIcon(resource)
                     );
                     makeDrawer();
+                    mDrawer.setSelectionAtPosition(2);
                 }
 
                 @Override

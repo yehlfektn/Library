@@ -253,7 +253,7 @@
                         style="@style/ProximaHeaderReg"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
+                        android:layout_gravity="top"
                         android:layout_marginLeft="16dp"
                         android:text="Статус:" />
 
@@ -263,7 +263,34 @@
                         android:textColor="@color/colorAccent"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
+                        android:layout_gravity="start"
+                        android:layout_margin="8dp"
+                        android:gravity="start"
+                        android:textSize="20sp"
+                        tools:text="" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/date_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        style="@style/ProximaHeaderReg"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="top"
+                        android:layout_marginLeft="16dp"
+                        android:text="Дата взятия:" />
+
+                    <TextView
+                        android:id="@+id/txt_date"
+                        style="@style/ProximaHeader"
+                        android:textColor="@color/colorAccent"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="start"
                         android:layout_margin="8dp"
                         android:gravity="start"
                         android:textSize="20sp"

@@ -48,4 +48,5 @@
     <string name="name">Имя</string>
     <string name="family_name">Фамилия</string>
     <string name="cancel">Отмена</string>
+    <string name="book_is_currently_in">Находится у пользователя %s</string>
 </resources>

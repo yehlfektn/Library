@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -36,6 +37,7 @@ import gravityfalls.library.utils.Helper;
 import gravityfalls.library.utils.SnackbarHelper;
 import mehdi.sakout.fancybuttons.FancyButton;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
+import uk.co.chrisjenx.calligraphy.CalligraphyUtils;
 
 /**
  * Created by Nurdaulet Kenges on 12.04.2018.
@@ -137,13 +139,14 @@ public class BookDetailsActivity extends AppCompatActivity {
 
 
                 //CalligraphyUtils.applyFontToTextView(this, title, "fonts/mono_bold.ttf");
-                author.setText(getString(R.string.books_author, book.getAuthor()));
-                year.setText(getString(R.string.books_year, book.getYear()));
-                language.setText(getString(R.string.books_language, book.getLanguage()));
-                pages.setText(getString(R.string.books_pages, book.getPages()));
-                country.setText(getString(R.string.books_country, book.getCountry()));
+                author.setText(book.getAuthor());
+                year.setText(book.getYear());
+                language.setText(book.getLanguage());
+                pages.setText(book.getPages() + "");
+                country.setText(book.getCountry());
                 description.setText(book.getShort_description());
-                status.setText(book.isAvailable() ? getString(R.string.books_status, "Доступен") : getString(R.string.books_status, "Не доступен"));
+                status.setText(book.isAvailable() ? "Доступен" : "Не доступен");
+                status.setTextColor(book.isAvailable() ? ContextCompat.getColor(this, R.color.colorAccent) : ContextCompat.getColor(this, R.color.colorPrimary));
                 get_book.setVisibility(book.isAvailable() ? View.VISIBLE : View.GONE);
                 if (book.getOnUser().equals(user.getUid()))
                     return_book.setVisibility(View.VISIBLE);

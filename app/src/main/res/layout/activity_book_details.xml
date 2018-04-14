@@ -74,116 +74,223 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
 
-                <TextView
-                    style="@style/ProximaHeader"
-                    android:id="@+id/txt_author"
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:gravity="start"
-                    android:textSize="20sp"
-                    android:paddingStart="16dp"
-                    android:paddingEnd="16dp"
-                    tools:text="Author"/>
+                    android:background="@color/lightestBlue"
+                    android:orientation="horizontal">
 
-                <TextView
-                    style="@style/ProximaHeader"
-                    android:id="@+id/txt_year"
+                    <TextView
+                        style="@style/ProximaHeaderReg"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="16dp"
+                        android:text="Автор:" />
+
+                    <TextView
+                        android:id="@+id/txt_author"
+                        style="@style/ProximaHeader"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_margin="8dp"
+                        android:gravity="start"
+                        android:textSize="20sp"
+                        tools:text="Author" />
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/divider" />
+
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:gravity="start"
-                    android:textSize="20sp"
-                    android:paddingStart="16dp"
-                    android:paddingEnd="16dp"
-                    tools:text="1986"/>
+                    android:background="@color/lightestBlue"
+                    android:orientation="horizontal">
 
-                <TextView
-                    style="@style/ProximaHeader"
-                    android:id="@+id/txt_language"
+                    <TextView
+                        style="@style/ProximaHeaderReg"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="16dp"
+                        android:text="Год:" />
+
+                    <TextView
+                        android:id="@+id/txt_year"
+                        style="@style/ProximaHeader"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_margin="8dp"
+                        android:gravity="start"
+                        android:textSize="20sp"
+                        tools:text="Author" />
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/divider" />
+
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:gravity="start"
-                    android:textSize="20sp"
-                    android:paddingStart="16dp"
-                    android:paddingEnd="16dp"
-                    tools:text="Русский"/>
+                    android:background="@color/lightestBlue"
+                    android:orientation="horizontal">
 
-                <TextView
-                    style="@style/ProximaHeader"
-                    android:id="@+id/txt_pages"
+                    <TextView
+                        style="@style/ProximaHeaderReg"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="16dp"
+                        android:text="Язык:" />
+
+                    <TextView
+                        android:id="@+id/txt_language"
+                        style="@style/ProximaHeader"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_margin="8dp"
+                        android:gravity="start"
+                        android:textSize="20sp"
+                        tools:text="Author" />
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/divider" />
+
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:gravity="start"
-                    android:textSize="20sp"
-                    android:paddingStart="16dp"
-                    android:paddingEnd="16dp"
-                    tools:text="Количество страниц"/>
+                    android:background="@color/lightestBlue"
+                    android:orientation="horizontal">
 
-                <TextView
-                    style="@style/ProximaHeader"
-                    android:id="@+id/txt_country"
+                    <TextView
+                        style="@style/ProximaHeaderReg"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="16dp"
+                        android:text="Количество страниц:" />
+
+                    <TextView
+                        android:id="@+id/txt_pages"
+                        style="@style/ProximaHeader"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_margin="8dp"
+                        android:gravity="start"
+                        android:textSize="20sp"
+                        tools:text="Author" />
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/divider" />
+
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:gravity="start"
-                    android:textSize="20sp"
-                    android:paddingStart="16dp"
-                    android:paddingEnd="16dp"
-                    tools:text="Страна"/>
+                    android:background="@color/lightestBlue"
+                    android:orientation="horizontal">
 
+                    <TextView
+                        style="@style/ProximaHeaderReg"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="16dp"
+                        android:text="Страна:" />
+
+                    <TextView
+                        android:id="@+id/txt_country"
+                        style="@style/ProximaHeader"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_margin="8dp"
+                        android:gravity="start"
+                        android:textSize="20sp"
+                        tools:text="Author" />
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/divider" />
 
                 <TextView
-                    style="@style/ProximaRegular"
                     android:id="@+id/txt_description"
+                    style="@style/ProximaRegular"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
                     android:gravity="start"
                     android:padding="16dp"
-                    tools:text="Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum "/>
+                    tools:text="Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum " />
 
-                <TextView
-                    style="@style/ProximaHeader"
-                    android:id="@+id/txt_status"
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginBottom="16dp"
-                    android:gravity="start"
-                    android:textSize="20sp"
-                    android:paddingStart="16dp"
-                    android:paddingEnd="16dp"
-                    tools:text="Статус"/>
+                    android:orientation="horizontal">
+
+                    <TextView
+                        style="@style/ProximaHeaderReg"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="16dp"
+                        android:text="Статус:" />
+
+                    <TextView
+                        android:id="@+id/txt_status"
+                        style="@style/ProximaHeader"
+                        android:textColor="@color/colorAccent"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_margin="8dp"
+                        android:gravity="start"
+                        android:textSize="20sp"
+                        tools:text="" />
+                </LinearLayout>
 
                 <mehdi.sakout.fancybuttons.FancyButton
                     android:id="@+id/get_book"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="16dp"
                     android:layout_gravity="center"
+                    android:layout_marginBottom="16dp"
                     android:text="@string/get_book"
                     android:textSize="20sp"
                     fancy:fb_defaultColor="@color/colorPrimary"
                     fancy:fb_focusColor="@color/colorAccent"
-                    fancy:fb_radius="10dp"
+                    fancy:fb_radius="5dp"
                     fancy:fb_textFont="fonts/ProximaNova-Regular.ttf" />
 
                 <mehdi.sakout.fancybuttons.FancyButton
                     android:id="@+id/return_book"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="16dp"
                     android:layout_gravity="center"
+                    android:layout_marginBottom="16dp"
                     android:text="@string/return_book"
                     android:textSize="20sp"
-                    fancy:fb_defaultColor="@color/colorPrimary"
-                    fancy:fb_focusColor="@color/colorAccent"
-                    fancy:fb_radius="10dp"
-                    fancy:fb_textFont="fonts/ProximaNova-Regular.ttf"
-                    android:visibility="gone"/>
+                    android:visibility="gone"
+                    fancy:fb_defaultColor="@color/colorAccent"
+                    fancy:fb_focusColor="@color/colorPrimary"
+                    fancy:fb_radius="5dp"
+                    fancy:fb_textFont="fonts/ProximaNova-Regular.ttf" />
 
             </LinearLayout>
 

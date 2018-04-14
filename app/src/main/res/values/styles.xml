@@ -54,4 +54,10 @@
         <item name="android:textSize">20sp</item>
     </style>
 
+    <style name="ProximaHeaderReg">
+        <item name="fontPath">fonts/ProximaNova-Regular.ttf</item>
+        <item name="android:textColor">@android:color/black</item>
+        <item name="android:textSize">20sp</item>
+    </style>
+
 </resources>

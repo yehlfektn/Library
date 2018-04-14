@@ -14,8 +14,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
-import android.widget.FrameLayout;
-import android.widget.LinearLayout;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.SimpleTarget;
@@ -23,7 +21,6 @@ import com.bumptech.glide.request.transition.Transition;
 import com.gigamole.navigationtabstrip.NavigationTabStrip;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DatabaseReference;
 import com.mikepenz.materialdrawer.AccountHeader;
 import com.mikepenz.materialdrawer.AccountHeaderBuilder;
 import com.mikepenz.materialdrawer.Drawer;
@@ -40,7 +37,6 @@ import butterknife.Unbinder;
 import gravityfalls.library.R;
 import gravityfalls.library.adapters.SectionsPagerAdapter;
 import gravityfalls.library.login.LoginActivity;
-import gravityfalls.library.utils.Helper;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 /**
@@ -51,25 +47,13 @@ public class MainActivity extends AppCompatActivity {
 
     @BindView(R.id.toolbar)
     Toolbar mToolbar;
-    @BindView(R.id.main_layout)
-    LinearLayout mainLayout;
-    @BindView(R.id.progress_overlay)
-    FrameLayout progressOverlay;
-
-
+    DrawerBuilder mDrawerBuilder;
+    SectionsPagerAdapter mSectionsPagerAdapter;
     private Unbinder unbinder;
     private FirebaseAuth mAuth;
-    private Drawer mDrawer;
-    private DatabaseReference mDatabase;
     private FirebaseUser user;
-
     private String TAG = "MainActivity";
-
     private AccountHeaderBuilder headerBuilder;
-    DrawerBuilder mDrawerBuilder;
-
-    SectionsPagerAdapter mSectionsPagerAdapter;
-
     private ViewPager mViewPager;
 
     @Override
@@ -83,9 +67,6 @@ public class MainActivity extends AppCompatActivity {
 
         //initialize View Pager
         initViewPager();
-
-        //show Loading View
-        showLoad();
 
         //initialize toolbar and bind views with Butterknife
         initToolbar();
@@ -118,8 +99,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-
-
     private void initDrawer() {
 
         mDrawerBuilder = new DrawerBuilder().withActivity(MainActivity.this).withToolbar(mToolbar)
@@ -150,7 +129,6 @@ public class MainActivity extends AppCompatActivity {
             } else {
                 DrawerWithoutProfilePhoto();
                 makeDrawer();
-                closeLoad();
             }
         }
     }
@@ -204,7 +182,6 @@ public class MainActivity extends AppCompatActivity {
                             new ProfileDrawerItem().withName(user.getDisplayName()).withEmail(user.getEmail()).withIcon(resource)
                     );
                     makeDrawer();
-                    closeLoad();
                 }
             });
         }
@@ -222,17 +199,6 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(mToolbar);
         setTitle("");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-    }
-
-
-    private void showLoad() {
-        mainLayout.setVisibility(View.GONE);
-        Helper.animateView(progressOverlay, View.VISIBLE, 0.4f, 200);
-    }
-
-    private void closeLoad() {
-        Helper.animateView(progressOverlay, View.GONE, 0.4f, 0);
-        mainLayout.setVisibility(View.VISIBLE);
     }
 
     @Override

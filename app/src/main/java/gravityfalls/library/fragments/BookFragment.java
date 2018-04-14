@@ -12,6 +12,8 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.azoft.carousellayoutmanager.CarouselLayoutManager;
@@ -31,6 +33,8 @@ import butterknife.Unbinder;
 import gravityfalls.library.R;
 import gravityfalls.library.adapters.MainAdapter;
 import gravityfalls.library.objects.Book;
+import gravityfalls.library.utils.Helper;
+import gravityfalls.library.utils.SnackbarHelper;
 
 /**
  * A placeholder fragment containing a simple view.
@@ -55,6 +59,11 @@ public class BookFragment extends Fragment {
     TextView author;
     @BindView(R.id.txt_year)
     TextView year;
+
+    @BindView(R.id.progress_overlay)
+    FrameLayout progressOverlay;
+    @BindView(R.id.main_layout)
+    LinearLayout mainLayout;
 
     private DatabaseReference mDatabase;
     private ArrayList<Book> arrayList = new ArrayList<>();
@@ -91,6 +100,8 @@ public class BookFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         unbinder = ButterKnife.bind(this,rootView);
 
+        showLoad(true);
+
         //initialize FireBase and retrieve data
         initFireBase();
 
@@ -107,6 +118,7 @@ public class BookFragment extends Fragment {
         ValueEventListener booksListener = new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
+                arrayList.clear();
                 for (DataSnapshot child : dataSnapshot.getChildren()) {
                     Book book = child.getValue(Book.class);
                     if (book != null) {
@@ -115,11 +127,16 @@ public class BookFragment extends Fragment {
                     }
                 }
                 adapter.notifyDataSetChanged();
+                showLoad(false);
             }
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
                 Log.e(TAG, "Error: " + databaseError.getMessage());
+                if (mainLayout!=null) {
+                    SnackbarHelper.getSnackBar(mainLayout, getString(R.string.can_not_load_data));
+                }
+                showLoad(false);
             }
         };
         mDatabase.child("books").addValueEventListener(booksListener);
@@ -164,11 +181,11 @@ public class BookFragment extends Fragment {
             public void run() {
                 //Log.e(TAG,"Runnable started");
                 if (arrayList.size()!=0) {
+                    Log.e(TAG, "size of ArrayList: " + arrayList.size());
                     if (title!=null) {
                         final int position = ((CarouselLayoutManager) recyclerView.getLayoutManager()).getCenterItemPosition();
                         Log.e(TAG,"inside arrayList"+position);
                         if (position != -1) {
-                            Log.e(TAG, "size of ArrayList: " + arrayList.size());
                             title.setText(arrayList.get(position).getTitle());
                             description.setText(arrayList.get(position).getShort_description());
                             author.setText(arrayList.get(position).getAuthor());
@@ -182,6 +199,13 @@ public class BookFragment extends Fragment {
         };
         handler = new Handler();
         handler.postDelayed(runnable,1000);
+    }
+
+    private void showLoad(boolean b) {
+        if (progressOverlay!=null) {
+            Helper.animateView(progressOverlay, b ? View.VISIBLE : View.GONE, 0.4f, 0);
+            mainLayout.setVisibility(b ? View.GONE : View.VISIBLE);
+        }
     }
 
     @Override
@@ -199,6 +223,7 @@ public class BookFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
+        adapter.notifyDataSetChanged();
         handler = new Handler();
         handler.postDelayed(runnable,1000);
     }

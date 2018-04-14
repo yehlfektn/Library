@@ -61,10 +61,6 @@
             </intent-filter>
         </service>
 
-        <activity
-            android:name=".main.MainActivityWithTabs"
-            android:label="@string/title_activity_main_with_tabs"
-            android:theme="@style/AppTheme.NoActionBar"/>
     </application>
 
 </manifest>

@@ -6,8 +6,6 @@
 
     <include layout="@layout/toolbar" />
 
-    <include layout="@layout/progress_overlay" />
-
     <LinearLayout
         android:id="@+id/main_layout"
         android:orientation="vertical"

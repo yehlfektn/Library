@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -24,6 +25,7 @@ import butterknife.Unbinder;
 import gravityfalls.library.R;
 import gravityfalls.library.adapters.ProfileBooksAdapter;
 import gravityfalls.library.objects.Book;
+import gravityfalls.library.utils.SnackbarHelper;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 /**
@@ -38,6 +40,8 @@ public class ProfileActivity extends AppCompatActivity {
 
     @BindView(R.id.listView)
     ListView listView;
+    @BindView(R.id.main_layout)
+    LinearLayout mainLayout;
 
     private FirebaseAuth mAuth;
     private DatabaseReference mDatabase;
@@ -82,6 +86,7 @@ public class ProfileActivity extends AppCompatActivity {
             @Override
             public void onCancelled(DatabaseError databaseError) {
                 Log.e(TAG, "Error: " + databaseError.getMessage());
+                SnackbarHelper.getSnackBar(mainLayout,getString(R.string.can_not_load_data));
             }
         };
         mDatabase.child("books").addValueEventListener(booksListener);

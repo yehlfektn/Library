@@ -139,10 +139,13 @@ public class BookFragment extends Fragment {
                 showLoad(false);
             }
         };
-        String genre = "";
+        String genre;
         switch (getArguments().getInt(ARG_CATEGORY)){
             case 3:
                 genre = "fantasy";
+                break;
+            case 4:
+                genre = "detective";
                 break;
             default:
                 genre = "books";

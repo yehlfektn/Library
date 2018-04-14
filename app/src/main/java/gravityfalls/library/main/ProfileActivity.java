@@ -86,6 +86,7 @@ public class ProfileActivity extends AppCompatActivity {
             @Override
             public void onCancelled(DatabaseError databaseError) {
                 Log.e(TAG, "Error: " + databaseError.getMessage());
+                if (mainLayout != null)
                 SnackbarHelper.getSnackBar(mainLayout,getString(R.string.can_not_load_data));
             }
         };

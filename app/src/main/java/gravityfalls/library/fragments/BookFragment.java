@@ -189,10 +189,10 @@ public class BookFragment extends Fragment {
             public void run() {
                 //Log.e(TAG,"Runnable started");
                 if (arrayList.size()!=0) {
-                    Log.e(TAG, "size of ArrayList: " + arrayList.size());
+                    //Log.e(TAG, "size of ArrayList: " + arrayList.size());
                     if (title!=null) {
                         final int position = ((CarouselLayoutManager) recyclerView.getLayoutManager()).getCenterItemPosition();
-                        Log.e(TAG,"inside arrayList"+position);
+                        //Log.e(TAG,"inside arrayList"+position);
                         if (position != -1) {
                             title.setText(arrayList.get(position).getTitle());
                             description.setText(arrayList.get(position).getShort_description());

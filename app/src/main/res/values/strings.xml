@@ -39,4 +39,6 @@
     <string name="books_language">Язык: %s</string>
     <string name="books_pages">Количество страниц: %d</string>
     <string name="books_country">Страна: %s</string>
+    <string name="books_status">Статус: %s</string>
+    <string name="get_book">Взять книгу</string>
 </resources>

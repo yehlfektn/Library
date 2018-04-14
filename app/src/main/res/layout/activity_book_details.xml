@@ -59,82 +59,113 @@
         android:fillViewport="true"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
+
         <LinearLayout
+            android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:layout_height="wrap_content">
 
-            <TextView
-                style="@style/ProximaHeader"
-                android:id="@+id/txt_author"
+            <include layout="@layout/progress_overlay" />
+
+            <LinearLayout
+                android:id="@+id/main_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:gravity="start"
-                android:textSize="20sp"
-                android:paddingStart="16dp"
-                android:paddingEnd="16dp"
-                tools:text="Author"/>
+                android:orientation="vertical">
 
-            <TextView
-                style="@style/ProximaHeader"
-                android:id="@+id/txt_year"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:gravity="start"
-                android:textSize="20sp"
-                android:paddingStart="16dp"
-                android:paddingEnd="16dp"
-                tools:text="1986"/>
+                <TextView
+                    style="@style/ProximaHeader"
+                    android:id="@+id/txt_author"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:gravity="start"
+                    android:textSize="20sp"
+                    android:paddingStart="16dp"
+                    android:paddingEnd="16dp"
+                    tools:text="Author"/>
 
-            <TextView
-                style="@style/ProximaHeader"
-                android:id="@+id/txt_language"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:gravity="start"
-                android:textSize="20sp"
-                android:paddingStart="16dp"
-                android:paddingEnd="16dp"
-                tools:text="Русский"/>
+                <TextView
+                    style="@style/ProximaHeader"
+                    android:id="@+id/txt_year"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:gravity="start"
+                    android:textSize="20sp"
+                    android:paddingStart="16dp"
+                    android:paddingEnd="16dp"
+                    tools:text="1986"/>
 
-            <TextView
-                style="@style/ProximaHeader"
-                android:id="@+id/txt_pages"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:gravity="start"
-                android:textSize="20sp"
-                android:paddingStart="16dp"
-                android:paddingEnd="16dp"
-                tools:text="Количество страниц"/>
+                <TextView
+                    style="@style/ProximaHeader"
+                    android:id="@+id/txt_language"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:gravity="start"
+                    android:textSize="20sp"
+                    android:paddingStart="16dp"
+                    android:paddingEnd="16dp"
+                    tools:text="Русский"/>
 
-            <TextView
-                style="@style/ProximaHeader"
-                android:id="@+id/txt_country"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:gravity="start"
-                android:textSize="20sp"
-                android:paddingStart="16dp"
-                android:paddingEnd="16dp"
-                tools:text="Страна"/>
+                <TextView
+                    style="@style/ProximaHeader"
+                    android:id="@+id/txt_pages"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:gravity="start"
+                    android:textSize="20sp"
+                    android:paddingStart="16dp"
+                    android:paddingEnd="16dp"
+                    tools:text="Количество страниц"/>
+
+                <TextView
+                    style="@style/ProximaHeader"
+                    android:id="@+id/txt_country"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:gravity="start"
+                    android:textSize="20sp"
+                    android:paddingStart="16dp"
+                    android:paddingEnd="16dp"
+                    tools:text="Страна"/>
 
 
-            <TextView
-                style="@style/ProximaRegular"
-                android:id="@+id/txt_description"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:gravity="start"
-                android:padding="16dp"
-                tools:text="Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum "/>
+                <TextView
+                    style="@style/ProximaRegular"
+                    android:id="@+id/txt_description"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:gravity="start"
+                    android:padding="16dp"
+                    tools:text="Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum "/>
+
+                <TextView
+                    style="@style/ProximaHeader"
+                    android:id="@+id/txt_status"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:gravity="start"
+                    android:textSize="20sp"
+                    android:paddingStart="16dp"
+                    android:paddingEnd="16dp"
+                    tools:text="Статус"/>
+
+                <Button
+                    android:id="@+id/get_book"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/get_book"/>
+
+            </LinearLayout>
+
 
         </LinearLayout>
+
     </android.support.v4.widget.NestedScrollView>
 </android.support.design.widget.CoordinatorLayout>

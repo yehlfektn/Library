@@ -1,7 +1,6 @@
 package gravityfalls.library.adapters;
 
 import android.content.Context;
-import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -37,15 +36,13 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.ViewHolder> {
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
+    public void onBindViewHolder(ViewHolder holder, final int position) {
         final Book item = mItems.get(position);
         Glide.with(mContext).load(item.getImageLink()).into(holder.mView);
         holder.linearLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(mContext, BookDetailsActivity.class);
-                i.putExtra("data",item);
-                mContext.startActivity(i);
+                mContext.startActivity(BookDetailsActivity.getIntent(mContext,item,String.valueOf(position)));
             }
         });
     }

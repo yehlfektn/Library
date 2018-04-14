@@ -2,7 +2,6 @@ package gravityfalls.library.adapters;
 
 
 import android.content.Context;
-import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,7 +19,6 @@ import gravityfalls.library.main.BookDetailsActivity;
 import gravityfalls.library.objects.Book;
 
 public class ProfileBooksAdapter extends BaseAdapter {
-
     private ViewHolder holder;
     private ArrayList<Book> mItems;
     private Context mContext;
@@ -33,7 +31,7 @@ public class ProfileBooksAdapter extends BaseAdapter {
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(final int position, View convertView, ViewGroup parent) {
         final Book item = mItems.get(position);
         if (convertView == null) {
             holder = new ViewHolder();
@@ -54,9 +52,7 @@ public class ProfileBooksAdapter extends BaseAdapter {
         convertView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(mContext, BookDetailsActivity.class);
-                i.putExtra("data",item);
-                mContext.startActivity(i);
+                mContext.startActivity(BookDetailsActivity.getIntent(mContext,item,String.valueOf(position)));
             }
         });
 

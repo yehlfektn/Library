@@ -73,6 +73,8 @@ public class BookFragment extends Fragment {
     private Handler handler = new Handler();
     private Runnable runnable;
 
+    private String category;
+
     public BookFragment() {
     }
 
@@ -139,18 +141,17 @@ public class BookFragment extends Fragment {
                 showLoad(false);
             }
         };
-        String genre;
         switch (getArguments().getInt(ARG_CATEGORY)){
             case 3:
-                genre = "fantasy";
+                category = "fantasy";
                 break;
             case 4:
-                genre = "detective";
+                category = "detective";
                 break;
             default:
-                genre = "books";
+                category = "books";
         }
-        mDatabase.child(genre).addValueEventListener(booksListener);
+        mDatabase.child(category).addValueEventListener(booksListener);
     }
 
      private void setUpRecyclerView() {

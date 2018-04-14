@@ -14,18 +14,58 @@
             android:layout_marginTop="@dimen/spacing_m"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Информация о пользователе"
+            android:text="@string/info_about_user"
             android:textColor="@color/colorPrimary"
             android:paddingLeft="16dp"
             android:paddingRight="16dp"
             android:textSize="16sp"/>
 
 
-        <TextView
-            android:layout_marginTop="8dp"
+        <LinearLayout
+            android:id="@+id/name_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Нурдаулет"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/name"
+                android:layout_marginTop="8dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/unknown"
+                android:textColor="@color/black"
+                android:paddingLeft="16dp"
+                android:paddingRight="16dp"
+                android:textSize="16sp"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/name"
+                android:paddingLeft="16dp"
+                android:paddingRight="16dp"
+                android:textSize="16sp"/>
+        </LinearLayout>
+
+
+        <View
+            android:layout_marginTop="@dimen/spacing_xs"
+            android:layout_marginBottom="@dimen/spacing_xs"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/divider"/>
+
+        <LinearLayout
+            android:id="@+id/family_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/family_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/unknown"
             android:textColor="@color/black"
             android:paddingLeft="16dp"
             android:paddingRight="16dp"
@@ -34,10 +74,11 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Имя"
+            android:text="@string/family_name"
             android:paddingLeft="16dp"
             android:paddingRight="16dp"
             android:textSize="16sp"/>
+        </LinearLayout>
 
         <View
             android:layout_marginTop="@dimen/spacing_xs"
@@ -47,30 +88,7 @@
             android:background="@color/divider"/>
 
         <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Кенес"
-            android:textColor="@color/black"
-            android:paddingLeft="16dp"
-            android:paddingRight="16dp"
-            android:textSize="16sp"/>
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Фамилия"
-            android:paddingLeft="16dp"
-            android:paddingRight="16dp"
-            android:textSize="16sp"/>
-
-        <View
-            android:layout_marginTop="@dimen/spacing_xs"
-            android:layout_marginBottom="@dimen/spacing_xs"
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@color/divider"/>
-
-        <TextView
+            android:id="@+id/profile_email"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="nurdaulet2009@mail.ru"

@@ -43,4 +43,9 @@
     <string name="get_book">Взять книгу</string>
     <string name="return_">Вернуть</string>
     <string name="return_book">Вернуть книгу</string>
+    <string name="info_about_user">Информация о пользователе</string>
+    <string name="unknown">Не известно</string>
+    <string name="name">Имя</string>
+    <string name="family_name">Фамилия</string>
+    <string name="cancel">Отмена</string>
 </resources>

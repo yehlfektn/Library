@@ -180,7 +180,8 @@ public class BookDetailsActivity extends AppCompatActivity {
                 Book book = dataSnapshot.getValue(Book.class);
                 if (book != null) {
                     try {
-                        status.setText(book.isAvailable() ? getString(R.string.books_status, "Доступен") : getString(R.string.books_status, "Не доступен"));
+                        status.setText(book.isAvailable() ? "Доступен" : "Не доступен");
+                        status.setTextColor(book.isAvailable() ? ContextCompat.getColor(getApplicationContext(), R.color.colorAccent) : ContextCompat.getColor(getApplicationContext(), R.color.colorPrimary));
                         get_book.setVisibility(book.isAvailable() ? View.VISIBLE : View.GONE);
                         if (book.getOnUser().equals(user.getUid()))
                             return_book.setVisibility(View.VISIBLE);

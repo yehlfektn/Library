@@ -62,6 +62,7 @@ public class MainActivity extends AppCompatActivity {
     private AccountHeaderBuilder headerBuilder;
     private ViewPager mViewPager;
     private DatabaseReference mDatabase;
+    private Drawer mDrawer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,6 +84,9 @@ public class MainActivity extends AppCompatActivity {
 
         //initialize Drawer and populate with user data
         initDrawer();
+
+        //initialize Drawer selection
+        mDrawer.setSelectionAtPosition(2);
     }
 
     private void initFireBase() {
@@ -143,7 +147,8 @@ public class MainActivity extends AppCompatActivity {
 
     private void makeDrawer() {
         try {
-            mDrawerBuilder.withAccountHeader(headerBuilder.build()).addDrawerItems(new ProfileDrawerItem().withName(R.string.library)
+            mDrawer = mDrawerBuilder.withAccountHeader(headerBuilder.build()).addDrawerItems(new ProfileDrawerItem().withName(R.string.private_cab)
+                            .withTypeface(Typeface.defaultFromStyle(Typeface.BOLD)).withIcon(R.drawable.man), new ProfileDrawerItem().withName(R.string.library)
                             .withTypeface(Typeface.defaultFromStyle(Typeface.BOLD)).withIcon(R.drawable.library), new DividerDrawerItem(),
                     new PrimaryDrawerItem().withName(R.string.exit)
                             .withTypeface(Typeface.defaultFromStyle(Typeface.BOLD)).withIcon(R.drawable.exit)).
@@ -151,7 +156,11 @@ public class MainActivity extends AppCompatActivity {
                         @Override
                         public boolean onItemClick(View view, int position, IDrawerItem drawerItem) {
                             switch (position) {
-                                case 3:
+                                case 1:
+                                    Intent i = new Intent(getApplicationContext(), ProfileActivity.class);
+                                    startActivityForResult(i,69);
+                                    break;
+                                case 4:
                                     AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
                                     builder.setMessage(getString(R.string.wanna_exit));
                                     builder.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
@@ -167,7 +176,9 @@ public class MainActivity extends AppCompatActivity {
                                     });
                                     builder.setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
                                         public void onClick(DialogInterface dialog, int id) {
-                                            // User cancelled the dialog
+                                            if (mDrawer!=null) {
+                                                mDrawer.setSelectionAtPosition(2);
+                                            }
                                         }
                                     });
                                     AlertDialog dialog = builder.create();
@@ -256,6 +267,7 @@ public class MainActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 69){
             initDrawer();
+            mDrawer.setSelectionAtPosition(2);
         }
     }
 }

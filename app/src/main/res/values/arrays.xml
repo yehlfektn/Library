@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="titles">
+        <item>Новые</item>
+        <item>Лучшие</item>
+        <item>Мои</item>
+    </string-array>
+</resources>

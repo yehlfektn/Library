@@ -102,7 +102,6 @@ public class ProfileActivity extends AppCompatActivity {
                     if (user.getFamily_name() != null){
                         family.setText(user.getFamily_name());
                     }
-
                 }
             }
 
@@ -213,5 +212,4 @@ public class ProfileActivity extends AppCompatActivity {
     protected void attachBaseContext(Context newBase) {
         super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
     }
-
 }

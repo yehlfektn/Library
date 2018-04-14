@@ -21,6 +21,11 @@ import com.bumptech.glide.request.transition.Transition;
 import com.gigamole.navigationtabstrip.NavigationTabStrip;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.mikepenz.materialdrawer.AccountHeader;
 import com.mikepenz.materialdrawer.AccountHeaderBuilder;
 import com.mikepenz.materialdrawer.Drawer;
@@ -37,6 +42,7 @@ import butterknife.Unbinder;
 import gravityfalls.library.R;
 import gravityfalls.library.adapters.SectionsPagerAdapter;
 import gravityfalls.library.login.LoginActivity;
+import gravityfalls.library.objects.User;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 /**
@@ -55,6 +61,7 @@ public class MainActivity extends AppCompatActivity {
     private String TAG = "MainActivity";
     private AccountHeaderBuilder headerBuilder;
     private ViewPager mViewPager;
+    private DatabaseReference mDatabase;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,6 +86,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initFireBase() {
+        mDatabase = FirebaseDatabase.getInstance().getReference();
         mAuth = FirebaseAuth.getInstance();
         user = mAuth.getCurrentUser();
     }
@@ -110,7 +118,7 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public boolean onProfileImageClick(View view, IProfile profile, boolean current) {
                         Intent i = new Intent(getApplicationContext(), ProfileActivity.class);
-                        startActivity(i);
+                        startActivityForResult(i,69);
                         return false;
                     }
 
@@ -134,43 +142,47 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void makeDrawer() {
-        mDrawerBuilder.withAccountHeader(headerBuilder.build()).addDrawerItems(new ProfileDrawerItem().withName(R.string.library)
-                        .withTypeface(Typeface.defaultFromStyle(Typeface.BOLD)).withIcon(R.drawable.library), new DividerDrawerItem(),
-                new PrimaryDrawerItem().withName(R.string.exit)
-                        .withTypeface(Typeface.defaultFromStyle(Typeface.BOLD)).withIcon(R.drawable.exit)).
-                withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
-                    @Override
-                    public boolean onItemClick(View view, int position, IDrawerItem drawerItem) {
-                        switch (position) {
-                            case 3:
-                                AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
-                                builder.setMessage(getString(R.string.wanna_exit));
-                                builder.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
-                                    public void onClick(DialogInterface dialog, int id) {
-                                        // User clicked OK button
-                                        if (mAuth != null) {
-                                            mAuth.signOut();
-                                            Intent i = new Intent(MainActivity.this, LoginActivity.class);
-                                            startActivity(i);
-                                            finish();
+        try {
+            mDrawerBuilder.withAccountHeader(headerBuilder.build()).addDrawerItems(new ProfileDrawerItem().withName(R.string.library)
+                            .withTypeface(Typeface.defaultFromStyle(Typeface.BOLD)).withIcon(R.drawable.library), new DividerDrawerItem(),
+                    new PrimaryDrawerItem().withName(R.string.exit)
+                            .withTypeface(Typeface.defaultFromStyle(Typeface.BOLD)).withIcon(R.drawable.exit)).
+                    withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
+                        @Override
+                        public boolean onItemClick(View view, int position, IDrawerItem drawerItem) {
+                            switch (position) {
+                                case 3:
+                                    AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+                                    builder.setMessage(getString(R.string.wanna_exit));
+                                    builder.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
+                                        public void onClick(DialogInterface dialog, int id) {
+                                            // User clicked OK button
+                                            if (mAuth != null) {
+                                                mAuth.signOut();
+                                                Intent i = new Intent(MainActivity.this, LoginActivity.class);
+                                                startActivity(i);
+                                                finish();
+                                            }
                                         }
-                                    }
-                                });
-                                builder.setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
-                                    public void onClick(DialogInterface dialog, int id) {
-                                        // User cancelled the dialog
-                                    }
-                                });
-                                AlertDialog dialog = builder.create();
-                                dialog.show();
-                                break;
-                            default:
-                                break;
+                                    });
+                                    builder.setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
+                                        public void onClick(DialogInterface dialog, int id) {
+                                            // User cancelled the dialog
+                                        }
+                                    });
+                                    AlertDialog dialog = builder.create();
+                                    dialog.show();
+                                    break;
+                                default:
+                                    break;
 
+                            }
+                            return false;
                         }
-                        return false;
-                    }
-                }).build();
+                    }).build();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
     }
 
     private void DrawerWithProfilePhoto() {
@@ -178,20 +190,47 @@ public class MainActivity extends AppCompatActivity {
             Glide.with(this).asBitmap().load(user.getPhotoUrl()).into(new SimpleTarget<Bitmap>() {
                 @Override
                 public void onResourceReady(@NonNull Bitmap resource, @Nullable Transition<? super Bitmap> transition) {
-                    headerBuilder.addProfiles(
-                            new ProfileDrawerItem().withName(user.getDisplayName()).withEmail(user.getEmail()).withIcon(resource)
-                    );
-                    makeDrawer();
+                    retrieveUserName(resource);
                 }
             });
         }
     }
 
-    private void DrawerWithoutProfilePhoto() {
-        if (headerBuilder != null) {
+    private void retrieveUserName(@Nullable final Bitmap resource) {
+        if (resource != null) {
+            ValueEventListener booksListener = new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    User user_data = dataSnapshot.getValue(User.class);
+                    String name = "";
+                    if (user_data != null) {
+                        if (user_data.getName() != null)
+                            name += user_data.getName();
+                        if (user_data.getFamily_name() != null)
+                            name += " "+user_data.getFamily_name();
+                    }
+                    headerBuilder.addProfiles(
+                            new ProfileDrawerItem().withName(name).withEmail(user.getEmail()).withIcon(resource)
+                    );
+                    makeDrawer();
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+                    Log.e(TAG, "Error: " + databaseError.getMessage());
+                }
+            };
+            mDatabase.child("users").child(user.getUid()).addListenerForSingleValueEvent(booksListener);
+        } else {
             headerBuilder.addProfiles(
                     new ProfileDrawerItem().withName(user.getDisplayName()).withEmail(user.getEmail()).withIcon(getResources().getDrawable(R.drawable.boy))
             );
+        }
+    }
+
+    private void DrawerWithoutProfilePhoto() {
+        if (headerBuilder != null) {
+           retrieveUserName(null);
         }
     }
 
@@ -210,5 +249,13 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void attachBaseContext(Context newBase) {
         super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 69){
+            initDrawer();
+        }
     }
 }

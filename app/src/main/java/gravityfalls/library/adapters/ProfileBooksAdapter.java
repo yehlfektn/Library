@@ -91,12 +91,11 @@ public class ProfileBooksAdapter extends BaseAdapter {
         ImageView Photo;
         TextView title;
         TextView author;
-        TextView available;
         FancyButton remove;
     }
 
     public interface BooksListener {
         // you can define any parameter as per your requirement
-        public void onBookReturned();
+        void onBookReturned();
     }
 }

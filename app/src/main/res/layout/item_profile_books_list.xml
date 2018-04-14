@@ -8,7 +8,7 @@
 
     <ImageView
         android:id="@+id/imageView"
-        android:layout_width="30dp"
+        android:layout_width="50dp"
         android:layout_gravity="center_vertical"
         android:layout_height="50dp"
         android:layout_marginLeft="@dimen/spacing_m"
@@ -16,7 +16,7 @@
         android:adjustViewBounds="true"/>
 
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:orientation="vertical">
@@ -35,13 +35,6 @@
             android:layout_height="wrap_content"
             android:textColor="@color/black"
             android:text="Author"
-            fontPath="fonts/ProximaNova-Light.ttf"/>
-
-        <TextView
-            android:id="@+id/available"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="доступен"
             fontPath="fonts/ProximaNova-Light.ttf"/>
 
     </LinearLayout>

@@ -2,6 +2,7 @@ package gravityfalls.library.adapters;
 
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +16,7 @@ import com.bumptech.glide.Glide;
 import java.util.ArrayList;
 
 import gravityfalls.library.R;
+import gravityfalls.library.main.BookDetailsActivity;
 import gravityfalls.library.objects.Book;
 
 public class ProfileBooksAdapter extends BaseAdapter {
@@ -35,7 +37,7 @@ public class ProfileBooksAdapter extends BaseAdapter {
         final Book item = mItems.get(position);
         if (convertView == null) {
             holder = new ViewHolder();
-            convertView = mInflater.inflate(R.layout.profile_books_list_item, parent, false);
+            convertView = mInflater.inflate(R.layout.item_profile_books_list, parent, false);
             holder.Photo =  convertView.findViewById(R.id.imageView);
             holder.author = convertView.findViewById(R.id.author);
             holder.title = convertView.findViewById(R.id.title);
@@ -48,6 +50,16 @@ public class ProfileBooksAdapter extends BaseAdapter {
         holder.author.setText(item.getAuthor());
         
         Glide.with(mContext).load(item.getImageLink()).into(holder.Photo);
+
+        convertView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(mContext, BookDetailsActivity.class);
+                i.putExtra("data",item);
+                mContext.startActivity(i);
+            }
+        });
+
         return convertView;
     }
 

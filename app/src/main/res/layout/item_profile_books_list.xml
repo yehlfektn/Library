@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    xmlns:fancy="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="3dp">
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="30dp"
+        android:layout_gravity="center_vertical"
+        android:layout_height="50dp"
+        android:layout_marginLeft="@dimen/spacing_m"
+        android:layout_marginRight="@dimen/spacing_m"
+        android:adjustViewBounds="true"/>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Hello World Title"
+            android:textColor="@color/black"
+            fontPath="fonts/ProximaNova-Regular.ttf"/>
+
+        <TextView
+            android:id="@+id/author"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/black"
+            android:text="Author"
+            fontPath="fonts/ProximaNova-Light.ttf"/>
+
+        <TextView
+            android:id="@+id/available"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="доступен"
+            fontPath="fonts/ProximaNova-Light.ttf"/>
+
+    </LinearLayout>
+
+    <mehdi.sakout.fancybuttons.FancyButton
+        android:id="@+id/remove_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical|end|right"
+        android:layout_marginRight="@dimen/spacing_xs"
+        android:text="Вернуть"
+        android:textSize="12sp"
+        fancy:fb_defaultColor="@color/colorPrimary"
+        fancy:fb_focusColor="@color/colorAccent"
+        fancy:fb_radius="3dp"
+        fancy:fb_textFont="fonts/ProximaNova-Regular.ttf" />
+</LinearLayout>

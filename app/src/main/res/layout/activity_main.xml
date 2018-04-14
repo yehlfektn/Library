@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_height="match_parent">
 
     <include layout="@layout/progress_overlay" />
@@ -12,7 +13,25 @@
         android:layout_height="match_parent">
         <include layout="@layout/toolbar" />
 
+        <com.gigamole.navigationtabstrip.NavigationTabStrip
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:background="@color/colorAccent"
+            app:nts_color="@color/lightOrange"
+            app:nts_size="15sp"
+            app:nts_weight="3dp"
+            app:nts_factor="2.5"
+            app:nts_titles="@array/titles"
+            app:nts_type="line"
+            app:nts_gravity="bottom"
+            app:nts_typeface="fonts/ProximaNova-Semibold.ttf"
+            app:nts_corners_radius="1.5dp"
+            app:nts_animation_duration="500"
+            app:nts_active_color="@color/white"
+            app:nts_inactive_color="#c4c4c4"/>
+
         <android.support.v7.widget.RecyclerView
+            android:layout_marginTop="@dimen/spacing_m"
             android:id="@+id/recycler_view"
             android:layout_width="match_parent"
             android:layout_height="230dp"/>

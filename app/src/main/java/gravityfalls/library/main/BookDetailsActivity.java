@@ -10,6 +10,7 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -63,6 +64,8 @@ public class BookDetailsActivity extends AppCompatActivity {
     TextView country;
     @BindView(R.id.txt_status)
     TextView status;
+    @BindView(R.id.get_book)
+    Button get_book;
 
     @BindView(R.id.progress_overlay)
     FrameLayout progressOverlay;
@@ -79,7 +82,7 @@ public class BookDetailsActivity extends AppCompatActivity {
     private String TAG = "BookDetailsActivity";
 
 
-    public static Intent getIntent(Context context,Book book, String id){
+    public static Intent getIntent(Context context, Book book, String id) {
         Intent intent = new Intent(context, BookDetailsActivity.class);
         intent.putExtra(EXTRA_ID, id);
         intent.putExtra(EXTRA_DATA, book);
@@ -105,14 +108,15 @@ public class BookDetailsActivity extends AppCompatActivity {
         if (getIntent().getExtras() != null) {
             Book book = getIntent().getExtras().getParcelable(EXTRA_DATA);
             category = book.getCategory();
+            parseData(book);
             loadData();
         }
         showLoad(false);
 
     }
 
-    private void parseData(Book book){
-        if (book!=null) {
+    private void parseData(Book book) {
+        if (book != null) {
             setTitle(book.getTitle());
             try {
                 Glide.with(this).load(book.getImageLink()).into(new SimpleTarget<Drawable>() {
@@ -138,43 +142,43 @@ public class BookDetailsActivity extends AppCompatActivity {
                 country.setText(getString(R.string.books_country, book.getCountry()));
                 description.setText(book.getShort_description());
                 status.setText(book.isAvailable() ? getString(R.string.books_status, "Доступен") : getString(R.string.books_status, "Не доступен"));
+                get_book.setVisibility(book.isAvailable() ? View.VISIBLE : View.GONE);
                 category = book.getCategory();
                 Log.e(TAG, "onUser: " + book.getOnUser());
-            }catch (Exception e){
+            } catch (Exception e) {
                 e.printStackTrace();
             }
         }
     }
 
     @OnClick(R.id.get_book)
-    void onGetBookClicked(){
-        Log.e(TAG,"OnGetBook was clicked!");
-        Log.e(TAG,"category: "+category+", id: "+id);
+    void onGetBookClicked() {
+        Log.e(TAG, "OnGetBook was clicked!");
+        Log.e(TAG, "category: " + category + ", id: " + id);
         mDatabase.child(category).child(id).child("available").setValue(false);
         mDatabase.child(category).child(id).child("onUser").setValue(user.getUid());
     }
 
-    private void loadData(){
-        showLoad(true);
-        mDatabase = FirebaseDatabase.getInstance().getReference();
-
+    private void loadData() {
         ValueEventListener booksListener = new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 Book book = dataSnapshot.getValue(Book.class);
                 if (book != null) {
-                    parseData(book);
-                    Log.e(TAG,"Author: "+book.isAvailable());
-                    //Log.e(TAG, "Array list size: " + arrayList.size());
+                    try {
+                        status.setText(book.isAvailable() ? getString(R.string.books_status, "Доступен") : getString(R.string.books_status, "Не доступен"));
+                        get_book.setVisibility(book.isAvailable() ? View.VISIBLE : View.GONE);
+                    }catch (Exception e){
+                        e.printStackTrace();
+                    }
                 }
-
                 showLoad(false);
             }
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
                 Log.e(TAG, "Error: " + databaseError.getMessage());
-                if (mainLayout!=null) {
+                if (mainLayout != null) {
                     SnackbarHelper.getSnackBar(mainLayout, getString(R.string.can_not_load_data));
                 }
                 showLoad(false);
@@ -184,7 +188,7 @@ public class BookDetailsActivity extends AppCompatActivity {
     }
 
     private void showLoad(boolean b) {
-        if (progressOverlay!=null) {
+        if (progressOverlay != null) {
             Helper.animateView(progressOverlay, b ? View.VISIBLE : View.GONE, 0.4f, 0);
             mainLayout.setVisibility(b ? View.GONE : View.VISIBLE);
         }

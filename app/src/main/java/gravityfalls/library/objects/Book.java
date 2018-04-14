@@ -16,12 +16,13 @@ public class Book implements Parcelable {
     private String year;
     private String onUser;
     private String category;
+    private int position;
 
     public Book(){
 
     }
 
-    public Book(String author, boolean available, String country, String imageLink, String language, String link, int pages, String short_description, String title, String year, String onUser, String category) {
+    public Book(String author, boolean available, String country, String imageLink, String language, String link, int pages, String short_description, String title, String year, String onUser, String category, int position) {
         this.author = author;
         this.available = available;
         this.country = country;
@@ -34,6 +35,15 @@ public class Book implements Parcelable {
         this.year = year;
         this.onUser = onUser;
         this.category = category;
+        this.position = position;
+    }
+
+    public void setPosition(int position) {
+        this.position = position;
+    }
+
+    public int getPosition() {
+        return position;
     }
 
     public void setCategory(String category) {

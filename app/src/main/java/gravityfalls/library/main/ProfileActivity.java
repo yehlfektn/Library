@@ -11,6 +11,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -45,6 +46,7 @@ public class ProfileActivity extends AppCompatActivity {
 
     private FirebaseAuth mAuth;
     private DatabaseReference mDatabase;
+    private FirebaseUser user;
     private ArrayList<Book> arrayList = new ArrayList<>();
     private ProfileBooksAdapter adapter;
 
@@ -67,16 +69,28 @@ public class ProfileActivity extends AppCompatActivity {
 
 
         mDatabase = FirebaseDatabase.getInstance().getReference();
-        adapter = new ProfileBooksAdapter(arrayList,this);
-        listView.setAdapter(adapter);
+        user = FirebaseAuth.getInstance().getCurrentUser();
 
+        adapter = new ProfileBooksAdapter(arrayList, this, mDatabase, new ProfileBooksAdapter.BooksListener() {
+            @Override
+            public void onBookReturned() {
+                updateListView();
+            }
+        });
+        listView.setAdapter(adapter);
+        updateListView();
+    }
+
+    private void updateListView() {
         ValueEventListener booksListener = new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
+                arrayList.clear();
                 for (DataSnapshot child : dataSnapshot.getChildren()) {
                     Book book = child.getValue(Book.class);
                     if (book != null) {
-                        arrayList.add(book);
+                        if (book.getOnUser().equals(user.getUid()))
+                            arrayList.add(book);
                         //Log.e(TAG, "Array list size: " + arrayList.size());
                     }
                 }
@@ -87,11 +101,10 @@ public class ProfileActivity extends AppCompatActivity {
             public void onCancelled(DatabaseError databaseError) {
                 Log.e(TAG, "Error: " + databaseError.getMessage());
                 if (mainLayout != null)
-                SnackbarHelper.getSnackBar(mainLayout,getString(R.string.can_not_load_data));
+                    SnackbarHelper.getSnackBar(mainLayout,getString(R.string.can_not_load_data));
             }
         };
         mDatabase.child("books").addValueEventListener(booksListener);
-
     }
 
     @Override

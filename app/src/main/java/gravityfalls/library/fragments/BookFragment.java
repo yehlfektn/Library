@@ -139,7 +139,15 @@ public class BookFragment extends Fragment {
                 showLoad(false);
             }
         };
-        mDatabase.child("books").addValueEventListener(booksListener);
+        String genre = "";
+        switch (getArguments().getInt(ARG_CATEGORY)){
+            case 3:
+                genre = "fantasy";
+                break;
+            default:
+                genre = "books";
+        }
+        mDatabase.child(genre).addValueEventListener(booksListener);
     }
 
      private void setUpRecyclerView() {

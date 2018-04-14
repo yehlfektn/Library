@@ -2,7 +2,6 @@ package gravityfalls.library.adapters;
 
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -49,7 +48,6 @@ public class ProfileBooksAdapter extends BaseAdapter {
             holder.remove.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Log.e("ProfileBooksAdapter","item name: "+item.getTitle());
                     mDatabase.child(item.getCategory()).child(String.valueOf(item.getPosition())).child("available").setValue(true);
                     mDatabase.child(item.getCategory()).child(String.valueOf(item.getPosition())).child("onUser").setValue("none");
                     mListener.onBookReturned();

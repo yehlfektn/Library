@@ -41,4 +41,6 @@
     <string name="books_country">Страна: %s</string>
     <string name="books_status">Статус: %s</string>
     <string name="get_book">Взять книгу</string>
+    <string name="return_">Вернуть</string>
+    <string name="return_book">Вернуть книгу</string>
 </resources>

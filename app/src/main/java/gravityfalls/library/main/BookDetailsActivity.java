@@ -10,7 +10,6 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -35,6 +34,7 @@ import gravityfalls.library.R;
 import gravityfalls.library.objects.Book;
 import gravityfalls.library.utils.Helper;
 import gravityfalls.library.utils.SnackbarHelper;
+import mehdi.sakout.fancybuttons.FancyButton;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 /**
@@ -65,7 +65,9 @@ public class BookDetailsActivity extends AppCompatActivity {
     @BindView(R.id.txt_status)
     TextView status;
     @BindView(R.id.get_book)
-    Button get_book;
+    FancyButton get_book;
+    @BindView(R.id.return_book)
+    FancyButton return_book;
 
     @BindView(R.id.progress_overlay)
     FrameLayout progressOverlay;
@@ -143,6 +145,9 @@ public class BookDetailsActivity extends AppCompatActivity {
                 description.setText(book.getShort_description());
                 status.setText(book.isAvailable() ? getString(R.string.books_status, "Доступен") : getString(R.string.books_status, "Не доступен"));
                 get_book.setVisibility(book.isAvailable() ? View.VISIBLE : View.GONE);
+                if (book.getOnUser().equals(user.getUid()))
+                    return_book.setVisibility(View.VISIBLE);
+                else return_book.setVisibility(View.GONE);
                 category = book.getCategory();
                 Log.e(TAG, "onUser: " + book.getOnUser());
             } catch (Exception e) {
@@ -159,6 +164,12 @@ public class BookDetailsActivity extends AppCompatActivity {
         mDatabase.child(category).child(id).child("onUser").setValue(user.getUid());
     }
 
+    @OnClick(R.id.return_book)
+    void onBookReturnClicked(){
+        mDatabase.child(category).child(id).child("available").setValue(true);
+        mDatabase.child(category).child(id).child("onUser").setValue("none");
+    }
+
     private void loadData() {
         ValueEventListener booksListener = new ValueEventListener() {
             @Override
@@ -168,7 +179,10 @@ public class BookDetailsActivity extends AppCompatActivity {
                     try {
                         status.setText(book.isAvailable() ? getString(R.string.books_status, "Доступен") : getString(R.string.books_status, "Не доступен"));
                         get_book.setVisibility(book.isAvailable() ? View.VISIBLE : View.GONE);
-                    }catch (Exception e){
+                        if (book.getOnUser().equals(user.getUid()))
+                            return_book.setVisibility(View.VISIBLE);
+                        else return_book.setVisibility(View.GONE);
+                    } catch (Exception e) {
                         e.printStackTrace();
                     }
                 }

@@ -52,7 +52,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical|end|right"
         android:layout_marginRight="@dimen/spacing_xs"
-        android:text="Вернуть"
+        android:text="@string/return_"
         android:textSize="12sp"
         fancy:fb_defaultColor="@color/colorPrimary"
         fancy:fb_focusColor="@color/colorAccent"

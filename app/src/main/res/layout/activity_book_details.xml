@@ -3,6 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:fancy="http://schemas.android.com/apk/res-auto"
     android:background="@color/white">
 
     <android.support.design.widget.AppBarLayout
@@ -150,17 +151,39 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
+                    android:layout_marginBottom="16dp"
                     android:gravity="start"
                     android:textSize="20sp"
                     android:paddingStart="16dp"
                     android:paddingEnd="16dp"
                     tools:text="Статус"/>
 
-                <Button
+                <mehdi.sakout.fancybuttons.FancyButton
                     android:id="@+id/get_book"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/get_book"/>
+                    android:layout_marginBottom="16dp"
+                    android:layout_gravity="center"
+                    android:text="@string/get_book"
+                    android:textSize="20sp"
+                    fancy:fb_defaultColor="@color/colorPrimary"
+                    fancy:fb_focusColor="@color/colorAccent"
+                    fancy:fb_radius="10dp"
+                    fancy:fb_textFont="fonts/ProximaNova-Regular.ttf" />
+
+                <mehdi.sakout.fancybuttons.FancyButton
+                    android:id="@+id/return_book"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="16dp"
+                    android:layout_gravity="center"
+                    android:text="@string/return_book"
+                    android:textSize="20sp"
+                    fancy:fb_defaultColor="@color/colorPrimary"
+                    fancy:fb_focusColor="@color/colorAccent"
+                    fancy:fb_radius="10dp"
+                    fancy:fb_textFont="fonts/ProximaNova-Regular.ttf"
+                    android:visibility="gone"/>
 
             </LinearLayout>
 

@@ -71,6 +71,11 @@ public class ProfileActivity extends AppCompatActivity {
         mDatabase = FirebaseDatabase.getInstance().getReference();
         user = FirebaseAuth.getInstance().getCurrentUser();
 
+        setAdapter();
+        updateListView();
+    }
+
+    private void setAdapter() {
         adapter = new ProfileBooksAdapter(arrayList, this, mDatabase, new ProfileBooksAdapter.BooksListener() {
             @Override
             public void onBookReturned() {
@@ -78,7 +83,6 @@ public class ProfileActivity extends AppCompatActivity {
             }
         });
         listView.setAdapter(adapter);
-        updateListView();
     }
 
     private void updateListView() {
@@ -94,7 +98,7 @@ public class ProfileActivity extends AppCompatActivity {
                         //Log.e(TAG, "Array list size: " + arrayList.size());
                     }
                 }
-                adapter.notifyDataSetChanged();
+                setAdapter();
             }
 
             @Override

@@ -1,6 +1,5 @@
 package gravityfalls.library.main;
 
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -8,19 +7,19 @@ import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.TabLayout;
+import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
-import android.widget.FrameLayout;
-import android.widget.LinearLayout;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.bumptech.glide.request.transition.Transition;
-import com.gigamole.navigationtabstrip.NavigationTabStrip;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
@@ -34,75 +33,47 @@ import com.mikepenz.materialdrawer.model.ProfileDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IProfile;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.Unbinder;
 import gravityfalls.library.R;
 import gravityfalls.library.adapters.SectionsPagerAdapter;
 import gravityfalls.library.login.LoginActivity;
-import gravityfalls.library.utils.Helper;
-import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
-/**
- * Created by Nurdaulet Kenges on 12.04.2018.
- */
+public class MainActivityWithTabs extends AppCompatActivity {
 
-public class MainActivity extends AppCompatActivity {
+    /**
+     * The {@link android.support.v4.view.PagerAdapter} that will provide
+     * fragments for each of the sections. We use a
+     * {@link FragmentPagerAdapter} derivative, which will keep every
+     * loaded fragment in memory. If this becomes too memory intensive, it
+     * may be best to switch to a
+     * {@link android.support.v4.app.FragmentStatePagerAdapter}.
+     */
+    private SectionsPagerAdapter mSectionsPagerAdapter;
 
-    @BindView(R.id.toolbar)
-    Toolbar mToolbar;
-    @BindView(R.id.main_layout)
-    LinearLayout mainLayout;
-    @BindView(R.id.progress_overlay)
-    FrameLayout progressOverlay;
-
-
-    private Unbinder unbinder;
-    private FirebaseAuth mAuth;
-    private Drawer mDrawer;
-    private DatabaseReference mDatabase;
-    private FirebaseUser user;
-
-    private String TAG = "MainActivity";
+    /**
+     * The {@link ViewPager} that will host the section contents.
+     */
+    private ViewPager mViewPager;
 
     private AccountHeaderBuilder headerBuilder;
     DrawerBuilder mDrawerBuilder;
+    Toolbar mToolbar;
 
-    SectionsPagerAdapter mSectionsPagerAdapter;
-
-    private ViewPager mViewPager;
+    private DatabaseReference mDatabase;
+    private FirebaseUser user;
+    private FirebaseAuth mAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //set layout of activity
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_main_with_tabs);
 
-        //BindViews
-        unbinder = ButterKnife.bind(this);
+        mToolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(mToolbar);
+        setTitle("");
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        //initialize View Pager
-        initViewPager();
-
-        //show Loading View
-        showLoad();
-
-        //initialize toolbar and bind views with Butterknife
-        initToolbar();
-
-        //initialize fireBase
-        initFireBase();
-
-        //initialize Drawer and populate with user data
         initDrawer();
-    }
 
-    private void initFireBase() {
-        mAuth = FirebaseAuth.getInstance();
-        user = mAuth.getCurrentUser();
-    }
-
-    private void initViewPager() {
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
@@ -111,21 +82,44 @@ public class MainActivity extends AppCompatActivity {
         mViewPager = findViewById(R.id.container);
         mViewPager.setAdapter(mSectionsPagerAdapter);
 
-        NavigationTabStrip tabLayout = findViewById(R.id.tabs);
+        TabLayout tabLayout = findViewById(R.id.tabs);
 
-        mViewPager.addOnPageChangeListener(tabLayout);
-        tabLayout.setViewPager(mViewPager);
+        mViewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
+        tabLayout.addOnTabSelectedListener(new TabLayout.ViewPagerOnTabSelectedListener(mViewPager));
+
+        mAuth = FirebaseAuth.getInstance();
+        user = mAuth.getCurrentUser();
     }
 
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_main_activity_with_tabs, menu);
+        return true;
+    }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.action_settings) {
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
 
     private void initDrawer() {
 
-        mDrawerBuilder = new DrawerBuilder().withActivity(MainActivity.this).withToolbar(mToolbar)
+        mDrawerBuilder = new DrawerBuilder().withActivity(MainActivityWithTabs.this).withToolbar(mToolbar)
                 .withTranslucentStatusBar(false);
         headerBuilder = new AccountHeaderBuilder()
-                .withActivity(MainActivity.this)
+                .withActivity(MainActivityWithTabs.this)
                 .withHeaderBackground(R.drawable.book)
                 .withOnAccountHeaderProfileImageListener(new AccountHeader.OnAccountHeaderProfileImageListener() {
                     @Override
@@ -143,14 +137,14 @@ public class MainActivity extends AppCompatActivity {
                 .withSelectionListEnabledForSingleProfile(false);
 
         if (user != null) {
-            Log.e(TAG, "user is not null");
-            Log.e(TAG, "userID: " + user.getUid());
+           /* Log.e(TAG, "user is not null");
+            Log.e(TAG, "userID: " + user.getUid());*/
             if (user.getPhotoUrl() != null) {
                 DrawerWithProfilePhoto();
             } else {
                 DrawerWithoutProfilePhoto();
                 makeDrawer();
-                closeLoad();
+                //closeLoad();
             }
         }
     }
@@ -165,14 +159,14 @@ public class MainActivity extends AppCompatActivity {
                     public boolean onItemClick(View view, int position, IDrawerItem drawerItem) {
                         switch (position) {
                             case 3:
-                                AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+                                AlertDialog.Builder builder = new AlertDialog.Builder(MainActivityWithTabs.this);
                                 builder.setMessage(getString(R.string.wanna_exit));
                                 builder.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
                                     public void onClick(DialogInterface dialog, int id) {
                                         // User clicked OK button
                                         if (mAuth != null) {
                                             mAuth.signOut();
-                                            Intent i = new Intent(MainActivity.this, LoginActivity.class);
+                                            Intent i = new Intent(MainActivityWithTabs.this, LoginActivity.class);
                                             startActivity(i);
                                             finish();
                                         }
@@ -204,7 +198,7 @@ public class MainActivity extends AppCompatActivity {
                             new ProfileDrawerItem().withName(user.getDisplayName()).withEmail(user.getEmail()).withIcon(resource)
                     );
                     makeDrawer();
-                    closeLoad();
+                    //closeLoad();
                 }
             });
         }
@@ -216,33 +210,5 @@ public class MainActivity extends AppCompatActivity {
                     new ProfileDrawerItem().withName(user.getDisplayName()).withEmail(user.getEmail()).withIcon(getResources().getDrawable(R.drawable.boy))
             );
         }
-    }
-
-    private void initToolbar() {
-        setSupportActionBar(mToolbar);
-        setTitle("");
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-    }
-
-
-    private void showLoad() {
-        mainLayout.setVisibility(View.GONE);
-        Helper.animateView(progressOverlay, View.VISIBLE, 0.4f, 200);
-    }
-
-    private void closeLoad() {
-        Helper.animateView(progressOverlay, View.GONE, 0.4f, 0);
-        mainLayout.setVisibility(View.VISIBLE);
-    }
-
-    @Override
-    protected void onDestroy() {
-        unbinder.unbind();
-        super.onDestroy();
-    }
-
-    @Override
-    protected void attachBaseContext(Context newBase) {
-        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
     }
 }

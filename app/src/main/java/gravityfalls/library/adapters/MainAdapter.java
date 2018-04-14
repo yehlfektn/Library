@@ -8,7 +8,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 
@@ -40,7 +39,6 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.ViewHolder> {
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         final Book item = mItems.get(position);
-        holder.mText.setText(item.getTitle());
         Glide.with(mContext).load(item.getImageLink()).into(holder.mView);
         holder.linearLayout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -59,13 +57,11 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.ViewHolder> {
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {
-        private TextView mText;
         private ImageView mView;
         private LinearLayout linearLayout;
 
         private ViewHolder(View view) {
             super(view);
-            mText =  view.findViewById(R.id.text_1);
             mView =  view.findViewById(R.id.image_1);
             linearLayout = view.findViewById(R.id.library_linearlayout);
         }

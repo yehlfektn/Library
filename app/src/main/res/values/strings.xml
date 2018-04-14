@@ -26,5 +26,11 @@
     <string name="wanna_exit">Вы действительно хотите выйти из аккаунта?</string>
     <string name="can_not_authorize_with_google">На данный момент невозможно авторизоваться через систему Гугл</string>
     <string name="no_such_user">Такой пользователь не найден</string>
+    <string name="title_activity_main_with_tabs">MainActivityWithTabs</string>
+    <string name="tab_text_1">Tab 1</string>
+    <string name="tab_text_2">Tab 2</string>
+    <string name="tab_text_3">Tab 3</string>
+    <string name="action_settings">Settings</string>
+    <string name="section_format">Hello World from section: %1$d</string>
     <string name="notifications_admin_channel_name">Admin_notification_channel</string>
 </resources>

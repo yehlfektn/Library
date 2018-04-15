@@ -170,11 +170,8 @@ public class BookDetailsActivity extends AppCompatActivity {
         Log.e(TAG, "OnGetBook was clicked!");
         mDatabase.child("books").child(id).child("available").setValue(false);
         mDatabase.child("books").child(id).child("onUser").setValue(user.getUid());
-        Log.e(TAG, "category: " + category + ", id: " + id);
         String date = new SimpleDateFormat("dd MMMM yyyy", new Locale("ru")).format(Calendar.getInstance().getTime());
-        mDatabase.child(category).child(id).child("available").setValue(false);
-        mDatabase.child(category).child(id).child("onUser").setValue(user.getUid());
-        mDatabase.child(category).child(id).child("date_taken").setValue(date);
+        mDatabase.child("books").child(id).child("date_taken").setValue(date);
     }
 
     @OnClick(R.id.return_book)
@@ -243,7 +240,7 @@ public class BookDetailsActivity extends AppCompatActivity {
                 showLoad(false);
             }
         };
-        mDatabase.child(category).child(id).child("date_taken").addListenerForSingleValueEvent(booksListener);
+        mDatabase.child("books").child(id).child("date_taken").addListenerForSingleValueEvent(booksListener);
     }
 
     private void updateStatus() {

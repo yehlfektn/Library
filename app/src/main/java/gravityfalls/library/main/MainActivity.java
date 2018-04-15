@@ -84,10 +84,6 @@ public class MainActivity extends AppCompatActivity {
 
         //initialize Drawer and populate with user data
         initDrawer();
-
-        //initialize Drawer selection
-        if (mDrawer!=null)
-        mDrawer.setSelectionAtPosition(2);
     }
 
     private void initFireBase() {

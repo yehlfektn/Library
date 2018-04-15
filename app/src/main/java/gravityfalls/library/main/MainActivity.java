@@ -1,5 +1,7 @@
 package gravityfalls.library.main;
 
+import android.app.Fragment;
+import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -41,6 +43,7 @@ import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import gravityfalls.library.R;
 import gravityfalls.library.adapters.SectionsPagerAdapter;
+import gravityfalls.library.fragments.BookFragment;
 import gravityfalls.library.login.LoginActivity;
 import gravityfalls.library.objects.User;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
@@ -62,6 +65,7 @@ public class MainActivity extends AppCompatActivity {
     private AccountHeaderBuilder headerBuilder;
     private ViewPager mViewPager;
     private DatabaseReference mDatabase;
+    private NavigationTabStrip tabLayout;
     private Drawer mDrawer;
 
     @Override
@@ -101,7 +105,7 @@ public class MainActivity extends AppCompatActivity {
         mViewPager = findViewById(R.id.container);
         mViewPager.setAdapter(mSectionsPagerAdapter);
 
-        NavigationTabStrip tabLayout = findViewById(R.id.tabs);
+        tabLayout = findViewById(R.id.tabs);
 
         mViewPager.addOnPageChangeListener(tabLayout);
         tabLayout.setViewPager(mViewPager);
@@ -162,7 +166,12 @@ public class MainActivity extends AppCompatActivity {
                                     Intent i = new Intent(getApplicationContext(), ProfileActivity.class);
                                     startActivityForResult(i,69);
                                     break;
-                                case 6:
+                                case 2:
+                                    tabLayout.setVisibility(View.VISIBLE);
+                                    findViewById(R.id.container_cat).setVisibility(View.GONE);
+                                    findViewById(R.id.container).setVisibility(View.VISIBLE);
+                                    break;
+                                case 9:
                                     AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
                                     builder.setMessage(getString(R.string.wanna_exit));
                                     builder.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
@@ -187,6 +196,16 @@ public class MainActivity extends AppCompatActivity {
                                     dialog.show();
                                     break;
                                 default:
+                                    BookFragment newFragment = BookFragment.newInstance(position);
+                                    android.support.v4.app.FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+
+                                    transaction.replace(R.id.container_cat, newFragment);
+                                    transaction.addToBackStack(null);
+
+                                    transaction.commit();
+
+                                    tabLayout.setVisibility(View.GONE);
+                                    findViewById(R.id.container).setVisibility(View.GONE);
                                     break;
 
                             }

@@ -48,8 +48,8 @@ public class ProfileBooksAdapter extends BaseAdapter {
             holder.remove.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    mDatabase.child(item.getCategory()).child(String.valueOf(item.getPosition())).child("available").setValue(true);
-                    mDatabase.child(item.getCategory()).child(String.valueOf(item.getPosition())).child("onUser").setValue("none");
+                    mDatabase.child("books").child(String.valueOf(item.getPosition())).child("available").setValue(true);
+                    mDatabase.child("books").child(String.valueOf(item.getPosition())).child("onUser").setValue("none");
                     mListener.onBookReturned();
                 }
             });

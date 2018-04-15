@@ -2,7 +2,7 @@
 <resources>
     <string-array name="titles">
         <item>Новые</item>
-        <item>Лучшие</item>
+        <item>Все</item>
         <item>Мои</item>
     </string-array>
 </resources>

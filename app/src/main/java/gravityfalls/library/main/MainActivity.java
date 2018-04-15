@@ -149,7 +149,12 @@ public class MainActivity extends AppCompatActivity {
         try {
             mDrawer = mDrawerBuilder.withAccountHeader(headerBuilder.build()).addDrawerItems(new ProfileDrawerItem().withName(R.string.private_cab)
                             .withTypeface(Typeface.defaultFromStyle(Typeface.BOLD)).withIcon(R.drawable.man), new ProfileDrawerItem().withName(R.string.library)
-                            .withTypeface(Typeface.defaultFromStyle(Typeface.BOLD)).withIcon(R.drawable.library), new DividerDrawerItem(),
+                            .withTypeface(Typeface.defaultFromStyle(Typeface.BOLD)).withIcon(R.drawable.library), new PrimaryDrawerItem().withName(R.string.fantasy)
+                            .withTypeface(Typeface.defaultFromStyle(Typeface.NORMAL)).withIcon(R.drawable.fantasy), new PrimaryDrawerItem().withName(R.string.detective)
+                            .withTypeface(Typeface.defaultFromStyle(Typeface.NORMAL)).withIcon(R.drawable.detective), new PrimaryDrawerItem().withName("Детские")
+                            .withTypeface(Typeface.defaultFromStyle(Typeface.NORMAL)).withIcon(R.drawable.fairy), new PrimaryDrawerItem().withName("Исторические")
+                            .withTypeface(Typeface.defaultFromStyle(Typeface.NORMAL)).withIcon(R.drawable.history), new PrimaryDrawerItem().withName("Любовные")
+                            .withTypeface(Typeface.defaultFromStyle(Typeface.NORMAL)).withIcon(R.drawable.love), new DividerDrawerItem(),
                     new PrimaryDrawerItem().withName(R.string.exit)
                             .withTypeface(Typeface.defaultFromStyle(Typeface.BOLD)).withIcon(R.drawable.exit)).
                     withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
@@ -160,7 +165,7 @@ public class MainActivity extends AppCompatActivity {
                                     Intent i = new Intent(getApplicationContext(), ProfileActivity.class);
                                     startActivityForResult(i,69);
                                     break;
-                                case 4:
+                                case 6:
                                     AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
                                     builder.setMessage(getString(R.string.wanna_exit));
                                     builder.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {

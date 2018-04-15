@@ -9,7 +9,7 @@
     <color name="lightestBlue2">#e0edf5</color>
     <color name="lightestBlue">#e0f8f5</color>
     <color name="white">#FFFFFF</color>
-    <color name="ilyas">#E1EFEF</color>
+    <color name="background">#E1EFEF</color>
     <color name="black">#000000</color>
     <color name="divider">#BDBDBD</color>
 </resources>

@@ -48,4 +48,6 @@
     <string name="name">Имя</string>
     <string name="family_name">Фамилия</string>
     <string name="cancel">Отмена</string>
+    <string name="fantasy">Фэнтези</string>
+    <string name="detective">Детектив</string>
 </resources>

@@ -19,6 +19,8 @@ import android.widget.TextView;
 import com.azoft.carousellayoutmanager.CarouselLayoutManager;
 import com.azoft.carousellayoutmanager.CarouselZoomPostLayoutListener;
 import com.azoft.carousellayoutmanager.CenterScrollListener;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -69,11 +71,10 @@ public class BookFragment extends Fragment {
     private ArrayList<Book> arrayList = new ArrayList<>();
     private String TAG = "BookFragment";
     private MainAdapter adapter;
+    private FirebaseUser user;
 
     private Handler handler = new Handler();
     private Runnable runnable;
-
-    private String category;
 
     public BookFragment() {
     }
@@ -93,6 +94,7 @@ public class BookFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        user = FirebaseAuth.getInstance().getCurrentUser();
         rootView = inflater.inflate(R.layout.fragment_main_activity_with_tabs, container, false);
         return rootView;
     }
@@ -124,7 +126,19 @@ public class BookFragment extends Fragment {
                 for (DataSnapshot child : dataSnapshot.getChildren()) {
                     Book book = child.getValue(Book.class);
                     if (book != null) {
-                        arrayList.add(book);
+                        switch (getArguments().getInt(ARG_CATEGORY)){
+                            case 0:
+                                break;
+                            case 1:
+                                arrayList.add(book);
+                                break;
+                            case 2:
+                                if (user != null && book.getOnUser().equals(user.getUid()))
+                                    arrayList.add(book);
+                                break;
+                            default:
+                                break;
+                        }
                         //Log.e(TAG, "Array list size: " + arrayList.size());
                     }
                 }
@@ -140,18 +154,7 @@ public class BookFragment extends Fragment {
                 }
                 showLoad(false);
             }
-        };
-        switch (getArguments().getInt(ARG_CATEGORY)){
-            case 3:
-                category = "fantasy";
-                break;
-            case 4:
-                category = "detective";
-                break;
-            default:
-                category = "books";
-        }
-        mDatabase.child(category).addValueEventListener(booksListener);
+        };mDatabase.child("books").addValueEventListener(booksListener);
     }
 
      private void setUpRecyclerView() {

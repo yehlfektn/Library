@@ -76,7 +76,6 @@ public class BookDetailsActivity extends AppCompatActivity {
     @BindView(R.id.main_layout)
     LinearLayout mainLayout;
 
-    private String category;
     private String id;
     private Unbinder unbinder;
     private DatabaseReference mDatabase;
@@ -111,7 +110,6 @@ public class BookDetailsActivity extends AppCompatActivity {
 
         if (getIntent().getExtras() != null) {
             Book book = getIntent().getExtras().getParcelable(EXTRA_DATA);
-            category = book.getCategory();
             parseData(book);
             loadData();
         }
@@ -151,7 +149,6 @@ public class BookDetailsActivity extends AppCompatActivity {
                 if (book.getOnUser().equals(user.getUid()))
                     return_book.setVisibility(View.VISIBLE);
                 else return_book.setVisibility(View.GONE);
-                category = book.getCategory();
                 Log.e(TAG, "onUser: " + book.getOnUser());
             } catch (Exception e) {
                 e.printStackTrace();
@@ -162,15 +159,14 @@ public class BookDetailsActivity extends AppCompatActivity {
     @OnClick(R.id.get_book)
     void onGetBookClicked() {
         Log.e(TAG, "OnGetBook was clicked!");
-        Log.e(TAG, "category: " + category + ", id: " + id);
-        mDatabase.child(category).child(id).child("available").setValue(false);
-        mDatabase.child(category).child(id).child("onUser").setValue(user.getUid());
+        mDatabase.child("books").child(id).child("available").setValue(false);
+        mDatabase.child("books").child(id).child("onUser").setValue(user.getUid());
     }
 
     @OnClick(R.id.return_book)
     void onBookReturnClicked(){
-        mDatabase.child(category).child(id).child("available").setValue(true);
-        mDatabase.child(category).child(id).child("onUser").setValue("none");
+        mDatabase.child("books").child(id).child("available").setValue(true);
+        mDatabase.child("books").child(id).child("onUser").setValue("none");
     }
 
     private void loadData() {
@@ -202,7 +198,7 @@ public class BookDetailsActivity extends AppCompatActivity {
                 showLoad(false);
             }
         };
-        mDatabase.child(category).child(id).addValueEventListener(booksListener);
+        mDatabase.child("books").child(id).addValueEventListener(booksListener);
     }
 
     private void showLoad(boolean b) {

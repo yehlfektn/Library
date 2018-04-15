@@ -90,14 +90,12 @@
 
                     <TextView
                         android:id="@+id/txt_author"
-                        style="@style/ProximaHeader"
-                        android:alpha="0.7"
+                        style="@style/ProximaHeaderBook"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
                         android:layout_margin="8dp"
                         android:gravity="start"
-                        android:textSize="20sp"
                         tools:text="Author" />
                 </LinearLayout>
 
@@ -122,14 +120,12 @@
 
                     <TextView
                         android:id="@+id/txt_year"
-                        style="@style/ProximaHeader"
-                        android:alpha="0.7"
+                        style="@style/ProximaHeaderBook"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
                         android:layout_margin="8dp"
                         android:gravity="start"
-                        android:textSize="20sp"
                         tools:text="Author" />
                 </LinearLayout>
 
@@ -154,14 +150,12 @@
 
                     <TextView
                         android:id="@+id/txt_language"
-                        style="@style/ProximaHeader"
-                        android:alpha="0.7"
+                        style="@style/ProximaHeaderBook"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
                         android:layout_margin="8dp"
                         android:gravity="start"
-                        android:textSize="20sp"
                         tools:text="Author" />
                 </LinearLayout>
 
@@ -186,14 +180,12 @@
 
                     <TextView
                         android:id="@+id/txt_pages"
-                        style="@style/ProximaHeader"
-                        android:alpha="0.7"
+                        style="@style/ProximaHeaderBook"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
                         android:layout_margin="8dp"
                         android:gravity="start"
-                        android:textSize="20sp"
                         tools:text="Author" />
                 </LinearLayout>
 
@@ -225,7 +217,6 @@
                         android:layout_gravity="center_vertical"
                         android:layout_margin="8dp"
                         android:gravity="start"
-                        android:textSize="20sp"
                         tools:text="Author" />
                 </LinearLayout>
 

@@ -98,9 +98,9 @@ public class ProfileActivity extends AppCompatActivity {
                 User user = dataSnapshot.getValue(User.class);
                 if (user != null){
                     if (user.getName() != null)
-                        name.setText(user.getName());
+                        ((TextView) findViewById(R.id.name)).setText(user.getName());
                     if (user.getFamily_name() != null){
-                        family.setText(user.getFamily_name());
+                        ((TextView) findViewById(R.id.family_name)).setText(user.getFamily_name());
                     }
                 }
             }

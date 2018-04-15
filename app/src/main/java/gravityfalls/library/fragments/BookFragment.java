@@ -128,12 +128,34 @@ public class BookFragment extends Fragment {
                     if (book != null) {
                         switch (getArguments().getInt(ARG_CATEGORY)){
                             case 0:
+                                if (book.isAvailable())
+                                    arrayList.add(book);
                                 break;
                             case 1:
                                 arrayList.add(book);
                                 break;
                             case 2:
                                 if (user != null && book.getOnUser().equals(user.getUid()))
+                                    arrayList.add(book);
+                                break;
+                            case 3:
+                                if (book.getCategory().equals("fantasy"))
+                                    arrayList.add(book);
+                                break;
+                            case 4:
+                                if (book.getCategory().equals("detective"))
+                                    arrayList.add(book);
+                                break;
+                            case 5:
+                                if (book.getCategory().equals("fairy"))
+                                    arrayList.add(book);
+                                break;
+                            case 6:
+                                if (book.getCategory().equals("history"))
+                                    arrayList.add(book);
+                                break;
+                            case 7:
+                                if (book.getCategory().equals("love"))
                                     arrayList.add(book);
                                 break;
                             default:

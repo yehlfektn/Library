@@ -194,6 +194,7 @@ public class BookDetailsActivity extends AppCompatActivity {
                             return_book.setVisibility(View.VISIBLE);
                         else return_book.setVisibility(View.GONE);
                         if (!book.isAvailable()) {
+                            status.setText("Недоступна");
                             updateStatus();
                             updateDate();
                         }

@@ -42,7 +42,7 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.ViewHolder> {
         holder.linearLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mContext.startActivity(BookDetailsActivity.getIntent(mContext,item,String.valueOf(position)));
+                mContext.startActivity(BookDetailsActivity.getIntent(mContext,item,item.getPosition() + ""));
             }
         });
     }

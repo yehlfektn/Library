@@ -16,6 +16,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
+import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.SimpleTarget;
@@ -37,6 +38,8 @@ import com.mikepenz.materialdrawer.model.PrimaryDrawerItem;
 import com.mikepenz.materialdrawer.model.ProfileDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IProfile;
+
+import org.w3c.dom.Text;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -113,7 +116,6 @@ public class MainActivity extends AppCompatActivity {
 
 
     private void initDrawer() {
-
         mDrawerBuilder = new DrawerBuilder().withActivity(MainActivity.this).withToolbar(mToolbar)
                 .withTranslucentStatusBar(false);
         headerBuilder = new AccountHeaderBuilder()
@@ -123,7 +125,7 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public boolean onProfileImageClick(View view, IProfile profile, boolean current) {
                         Intent i = new Intent(getApplicationContext(), ProfileActivity.class);
-                        startActivityForResult(i,69);
+                        startActivityForResult(i, 69);
                         return false;
                     }
 
@@ -152,21 +154,23 @@ public class MainActivity extends AppCompatActivity {
                             .withTypeface(Typeface.defaultFromStyle(Typeface.BOLD)).withIcon(R.drawable.man), new ProfileDrawerItem().withName(R.string.library)
                             .withTypeface(Typeface.defaultFromStyle(Typeface.BOLD)).withIcon(R.drawable.library), new PrimaryDrawerItem().withName(R.string.fantasy)
                             .withTypeface(Typeface.defaultFromStyle(Typeface.NORMAL)).withIcon(R.drawable.fantasy), new PrimaryDrawerItem().withName(R.string.detective)
-                            .withTypeface(Typeface.defaultFromStyle(Typeface.NORMAL)).withIcon(R.drawable.detective), new PrimaryDrawerItem().withName("Детские")
-                            .withTypeface(Typeface.defaultFromStyle(Typeface.NORMAL)).withIcon(R.drawable.fairy), new PrimaryDrawerItem().withName("Исторические")
-                            .withTypeface(Typeface.defaultFromStyle(Typeface.NORMAL)).withIcon(R.drawable.history), new PrimaryDrawerItem().withName("Любовные")
+                            .withTypeface(Typeface.defaultFromStyle(Typeface.NORMAL)).withIcon(R.drawable.detective), new PrimaryDrawerItem().withName(R.string.fairy)
+                            .withTypeface(Typeface.defaultFromStyle(Typeface.NORMAL)).withIcon(R.drawable.fairy), new PrimaryDrawerItem().withName(R.string.history)
+                            .withTypeface(Typeface.defaultFromStyle(Typeface.NORMAL)).withIcon(R.drawable.history), new PrimaryDrawerItem().withName(R.string.love)
                             .withTypeface(Typeface.defaultFromStyle(Typeface.NORMAL)).withIcon(R.drawable.love), new DividerDrawerItem(),
                     new PrimaryDrawerItem().withName(R.string.exit)
                             .withTypeface(Typeface.defaultFromStyle(Typeface.BOLD)).withIcon(R.drawable.exit)).
                     withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
                         @Override
                         public boolean onItemClick(View view, int position, IDrawerItem drawerItem) {
+                            Log.wtf("POS", position + "");
                             switch (position) {
                                 case 1:
                                     Intent i = new Intent(getApplicationContext(), ProfileActivity.class);
                                     startActivityForResult(i,69);
                                     break;
                                 case 2:
+                                    ((TextView)mToolbar.findViewById(R.id.title)).setText(R.string.library);
                                     tabLayout.setVisibility(View.VISIBLE);
                                     findViewById(R.id.container_cat).setVisibility(View.GONE);
                                     findViewById(R.id.container).setVisibility(View.VISIBLE);
@@ -204,8 +208,29 @@ public class MainActivity extends AppCompatActivity {
 
                                     transaction.commit();
 
+                                    String title = getString(R.string.library);
+                                    switch (position) {
+                                        case 3:
+                                            title = getString(R.string.fantasy);
+                                            break;
+                                        case 4:
+                                            title = getString(R.string.detective);
+                                            break;
+                                        case 5:
+                                            title = getString(R.string.fairy);
+                                            break;
+                                        case 6:
+                                            title = getString(R.string.history);
+                                            break;
+                                        case 7:
+                                            title = getString(R.string.love);
+                                            break;
+                                    }
+                                    ((TextView)mToolbar.findViewById(R.id.title)).setText(title);
+
                                     tabLayout.setVisibility(View.GONE);
                                     findViewById(R.id.container).setVisibility(View.GONE);
+                                    findViewById(R.id.container_cat).setVisibility(View.VISIBLE);
                                     break;
 
                             }

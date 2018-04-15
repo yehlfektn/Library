@@ -51,4 +51,7 @@
     <string name="book_is_currently_in">Находится у пользователя %s</string>
     <string name="fantasy">Фэнтези</string>
     <string name="detective">Детектив</string>
+    <string name="fairy">Детские</string>
+    <string name="history">Исторические</string>
+    <string name="love">Любовные</string>
 </resources>

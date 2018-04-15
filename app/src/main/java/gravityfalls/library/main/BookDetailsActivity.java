@@ -27,12 +27,17 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Locale;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
 import gravityfalls.library.R;
 import gravityfalls.library.objects.Book;
+import gravityfalls.library.objects.User;
 import gravityfalls.library.utils.Helper;
 import gravityfalls.library.utils.SnackbarHelper;
 import mehdi.sakout.fancybuttons.FancyButton;
@@ -70,6 +75,10 @@ public class BookDetailsActivity extends AppCompatActivity {
     FancyButton get_book;
     @BindView(R.id.return_book)
     FancyButton return_book;
+    @BindView(R.id.date_layout)
+    LinearLayout date_layout;
+    @BindView(R.id.txt_date)
+    TextView date;
 
     @BindView(R.id.progress_overlay)
     FrameLayout progressOverlay;
@@ -161,6 +170,11 @@ public class BookDetailsActivity extends AppCompatActivity {
         Log.e(TAG, "OnGetBook was clicked!");
         mDatabase.child("books").child(id).child("available").setValue(false);
         mDatabase.child("books").child(id).child("onUser").setValue(user.getUid());
+        Log.e(TAG, "category: " + category + ", id: " + id);
+        String date = new SimpleDateFormat("dd MMMM yyyy", new Locale("ru")).format(Calendar.getInstance().getTime());
+        mDatabase.child(category).child(id).child("available").setValue(false);
+        mDatabase.child(category).child(id).child("onUser").setValue(user.getUid());
+        mDatabase.child(category).child(id).child("date_taken").setValue(date);
     }
 
     @OnClick(R.id.return_book)
@@ -176,12 +190,18 @@ public class BookDetailsActivity extends AppCompatActivity {
                 Book book = dataSnapshot.getValue(Book.class);
                 if (book != null) {
                     try {
-                        status.setText(book.isAvailable() ? "Доступен" : "Не доступен");
                         status.setTextColor(book.isAvailable() ? ContextCompat.getColor(getApplicationContext(), R.color.colorAccent) : ContextCompat.getColor(getApplicationContext(), R.color.colorPrimary));
                         get_book.setVisibility(book.isAvailable() ? View.VISIBLE : View.GONE);
                         if (book.getOnUser().equals(user.getUid()))
                             return_book.setVisibility(View.VISIBLE);
                         else return_book.setVisibility(View.GONE);
+                        if (!book.isAvailable()) {
+                            updateStatus();
+                            updateDate();
+                        }
+                        else
+                            status.setText("Доступна");
+                            date_layout.setVisibility(View.GONE);
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
@@ -199,6 +219,62 @@ public class BookDetailsActivity extends AppCompatActivity {
             }
         };
         mDatabase.child("books").child(id).addValueEventListener(booksListener);
+    }
+
+    private void updateDate() {
+        ValueEventListener booksListener = new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                String date_ = dataSnapshot.getValue(String.class);
+                if (date_!=null){
+                    date_layout.setVisibility(View.VISIBLE);
+                    date.setText(date_);
+                }else {
+                    date_layout.setVisibility(View.GONE);
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                Log.e(TAG, "Error: " + databaseError.getMessage());
+                if (mainLayout != null) {
+                    SnackbarHelper.getSnackBar(mainLayout, getString(R.string.can_not_load_data));
+                }
+                showLoad(false);
+            }
+        };
+        mDatabase.child(category).child(id).child("date_taken").addListenerForSingleValueEvent(booksListener);
+    }
+
+    private void updateStatus() {
+        ValueEventListener booksListener = new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                User user_data = dataSnapshot.getValue(User.class);
+                String name = "";
+                if (user_data!=null){
+                    if (user_data.getName()!=null){
+                        name += user_data.getName();
+                    }
+                    if (user_data.getFamily_name() !=null){
+                        name += " "+user_data.getFamily_name();
+                    }
+                    status.setText(getString(R.string.book_is_currently_in,name));
+                }
+                showLoad(false);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                Log.e(TAG, "Error: " + databaseError.getMessage());
+                if (mainLayout != null) {
+                    SnackbarHelper.getSnackBar(mainLayout, getString(R.string.can_not_load_data));
+                }
+                showLoad(false);
+            }
+        };
+        mDatabase.child("users").child(user.getUid()).addListenerForSingleValueEvent(booksListener);
+
     }
 
     private void showLoad(boolean b) {

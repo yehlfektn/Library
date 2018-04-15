@@ -84,9 +84,6 @@ public class MainActivity extends AppCompatActivity {
 
         //initialize Drawer and populate with user data
         initDrawer();
-
-        //initialize Drawer selection
-        mDrawer.setSelectionAtPosition(2);
     }
 
     private void initFireBase() {
@@ -229,6 +226,7 @@ public class MainActivity extends AppCompatActivity {
                             new ProfileDrawerItem().withName(name).withEmail(user.getEmail()).withIcon(resource)
                     );
                     makeDrawer();
+                    mDrawer.setSelectionAtPosition(2);
                 }
 
                 @Override

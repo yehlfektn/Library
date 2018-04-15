@@ -10,7 +10,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.google.firebase.database.DatabaseReference;
 
 import java.util.ArrayList;
 
@@ -24,14 +23,12 @@ public class ProfileBooksAdapter extends BaseAdapter {
     private ArrayList<Book> mItems;
     private Context mContext;
     private LayoutInflater mInflater;
-    private DatabaseReference mDatabase;
     private BooksListener mListener;
 
-    public ProfileBooksAdapter(ArrayList<Book> items, Context context, DatabaseReference database, BooksListener listener) {
+    public ProfileBooksAdapter(ArrayList<Book> items, Context context,  BooksListener listener) {
         mItems = items;
         mContext = context;
         mInflater = LayoutInflater.from(context);
-        mDatabase = database;
         mListener = listener;
     }
 
@@ -45,12 +42,11 @@ public class ProfileBooksAdapter extends BaseAdapter {
             holder.author = convertView.findViewById(R.id.author);
             holder.title = convertView.findViewById(R.id.title);
             holder.remove = convertView.findViewById(R.id.remove_button);
+            holder.date = convertView.findViewById(R.id.date);
             holder.remove.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    mDatabase.child("books").child(String.valueOf(item.getPosition())).child("available").setValue(true);
-                    mDatabase.child("books").child(String.valueOf(item.getPosition())).child("onUser").setValue("none");
-                    mListener.onBookReturned();
+                    mListener.onBookReturned(item.getPosition());
                 }
             });
             convertView.setTag(holder);
@@ -58,6 +54,7 @@ public class ProfileBooksAdapter extends BaseAdapter {
             holder = (ViewHolder) convertView.getTag();
         }
 
+        holder.date.setText(item.getDate_taken());
         holder.title.setText(item.getTitle());
         holder.author.setText(item.getAuthor());
         Glide.with(mContext).load(item.getImageLink()).into(holder.Photo);
@@ -91,11 +88,12 @@ public class ProfileBooksAdapter extends BaseAdapter {
         ImageView Photo;
         TextView title;
         TextView author;
+        TextView date;
         FancyButton remove;
     }
 
     public interface BooksListener {
         // you can define any parameter as per your requirement
-        void onBookReturned();
+        void onBookReturned(int position);
     }
 }

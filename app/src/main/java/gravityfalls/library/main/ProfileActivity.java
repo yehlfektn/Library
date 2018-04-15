@@ -118,10 +118,12 @@ public class ProfileActivity extends AppCompatActivity {
 
     private void setAdapter() {
         try {
-            adapter = new ProfileBooksAdapter(arrayList, this, mDatabase, new ProfileBooksAdapter.BooksListener() {
+            adapter = new ProfileBooksAdapter(arrayList, this, new ProfileBooksAdapter.BooksListener() {
                 @Override
-                public void onBookReturned() {
-                    updateListView();
+                public void onBookReturned(int position) {
+                    mDatabase.child("books").child(String.valueOf(position)).child("available").setValue(true);
+                    mDatabase.child("books").child(String.valueOf(position)).child("onUser").setValue("none");
+                    //updateListView();
                 }
             });
             listView.setAdapter(adapter);
@@ -138,11 +140,12 @@ public class ProfileActivity extends AppCompatActivity {
                 for (DataSnapshot child : dataSnapshot.getChildren()) {
                     Book book = child.getValue(Book.class);
                     if (book != null) {
+                        Log.e(TAG,"Book: ");
                         if (book.getOnUser().equals(user.getUid()))
                             arrayList.add(book);
-                        //Log.e(TAG, "Array list size: " + arrayList.size());
                     }
                 }
+                Log.e(TAG, "Array list size: " + arrayList.size());
                 setAdapter();
             }
 
@@ -196,6 +199,7 @@ public class ProfileActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         unbinder.unbind();
+        adapter = null;
         super.onDestroy();
     }
 

@@ -42,7 +42,6 @@ import gravityfalls.library.utils.Helper;
 import gravityfalls.library.utils.SnackbarHelper;
 import mehdi.sakout.fancybuttons.FancyButton;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
-import uk.co.chrisjenx.calligraphy.CalligraphyUtils;
 
 /**
  * Created by Nurdaulet Kenges on 12.04.2018.
@@ -89,6 +88,7 @@ public class BookDetailsActivity extends AppCompatActivity {
     private Unbinder unbinder;
     private DatabaseReference mDatabase;
     private FirebaseUser user;
+    private String uID;
 
 
     private String TAG = "BookDetailsActivity";
@@ -155,6 +155,7 @@ public class BookDetailsActivity extends AppCompatActivity {
                 status.setText(book.isAvailable() ? "Доступен" : "Не доступен");
                 status.setTextColor(book.isAvailable() ? ContextCompat.getColor(this, R.color.colorAccent) : ContextCompat.getColor(this, R.color.colorPrimary));
                 get_book.setVisibility(book.isAvailable() ? View.VISIBLE : View.GONE);
+                uID = book.getOnUser();
                 if (book.getOnUser().equals(user.getUid()))
                     return_book.setVisibility(View.VISIBLE);
                 else return_book.setVisibility(View.GONE);
@@ -256,6 +257,7 @@ public class BookDetailsActivity extends AppCompatActivity {
                     if (user_data.getFamily_name() !=null){
                         name += " "+user_data.getFamily_name();
                     }
+                    if (status!=null)
                     status.setText(getString(R.string.book_is_currently_in,name));
                 }
                 showLoad(false);
@@ -270,8 +272,7 @@ public class BookDetailsActivity extends AppCompatActivity {
                 showLoad(false);
             }
         };
-        mDatabase.child("users").child(user.getUid()).addListenerForSingleValueEvent(booksListener);
-
+        mDatabase.child("users").child(uID).addListenerForSingleValueEvent(booksListener);
     }
 
     private void showLoad(boolean b) {
@@ -293,6 +294,7 @@ public class BookDetailsActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         unbinder.unbind();
+        mDatabase = null;
         super.onDestroy();
     }
 

@@ -147,9 +147,9 @@ public class MainActivity extends AppCompatActivity {
     private void makeDrawer() {
         try {
             mDrawer = mDrawerBuilder.withAccountHeader(headerBuilder.build()).addDrawerItems(new ProfileDrawerItem().withName(R.string.private_cab)
-                            .withTypeface(Typeface.defaultFromStyle(Typeface.BOLD)).withIcon(R.drawable.man), new ProfileDrawerItem().withName("День Рождения Эли")
-                            .withTypeface(Typeface.defaultFromStyle(Typeface.BOLD)).withIcon(R.drawable.cake), new ProfileDrawerItem().withName("Той Динки")
-                            .withTypeface(Typeface.defaultFromStyle(Typeface.NORMAL)).withIcon(R.drawable.love), new ProfileDrawerItem().withName("Добавить новое событие")
+                            .withTypeface(Typeface.defaultFromStyle(Typeface.BOLD)).withIcon(R.drawable.man), new ProfileDrawerItem().withName("Той Динки")
+                            .withTypeface(Typeface.defaultFromStyle(Typeface.NORMAL)).withIcon(R.drawable.love), new ProfileDrawerItem().withName("День Рождения Эли")
+                            .withTypeface(Typeface.defaultFromStyle(Typeface.BOLD)).withIcon(R.drawable.cake), new ProfileDrawerItem().withName("Добавить новое событие")
                             .withTypeface(Typeface.defaultFromStyle(Typeface.NORMAL)).withIcon(R.drawable.add_new), new DividerDrawerItem(),
                     new PrimaryDrawerItem().withName(R.string.exit)
                             .withTypeface(Typeface.defaultFromStyle(Typeface.BOLD)).withIcon(R.drawable.exit)).
@@ -163,7 +163,7 @@ public class MainActivity extends AppCompatActivity {
                                     startActivityForResult(i,69);
                                     break;
                                 case 2:
-                                    ((TextView)mToolbar.findViewById(R.id.title)).setText(R.string.library);
+                                    ((TextView)mToolbar.findViewById(R.id.title)).setText(R.string.toi_dinki);
                                     tabLayout.setVisibility(View.VISIBLE);
                                     findViewById(R.id.container_cat).setVisibility(View.GONE);
                                     findViewById(R.id.container).setVisibility(View.VISIBLE);

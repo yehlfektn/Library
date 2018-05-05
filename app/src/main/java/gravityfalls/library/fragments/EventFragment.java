@@ -2,23 +2,16 @@ package gravityfalls.library.fragments;
 
 
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 
-import com.azoft.carousellayoutmanager.CarouselLayoutManager;
-import com.azoft.carousellayoutmanager.CarouselZoomPostLayoutListener;
-import com.azoft.carousellayoutmanager.CenterScrollListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -33,7 +26,6 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import gravityfalls.library.R;
-import gravityfalls.library.adapters.MainAdapter;
 import gravityfalls.library.objects.Book;
 import gravityfalls.library.utils.Helper;
 import gravityfalls.library.utils.SnackbarHelper;
@@ -51,16 +43,6 @@ public class EventFragment extends Fragment {
     View rootView;
     Unbinder unbinder;
 
-    @BindView(R.id.recycler_view)
-    RecyclerView recyclerView;
-    @BindView(R.id.title_main)
-    TextView title;
-    @BindView(R.id.txt_description)
-    TextView description;
-    @BindView(R.id.txt_author)
-    TextView author;
-    @BindView(R.id.txt_year)
-    TextView year;
 
     @BindView(R.id.progress_overlay)
     FrameLayout progressOverlay;
@@ -70,11 +52,8 @@ public class EventFragment extends Fragment {
     private DatabaseReference mDatabase;
     private ArrayList<Book> arrayList = new ArrayList<>();
     private String TAG = "EventFragment";
-    private MainAdapter adapter;
     private FirebaseUser user;
 
-    private Handler handler = new Handler();
-    private Runnable runnable;
 
     public EventFragment() {
     }
@@ -104,16 +83,11 @@ public class EventFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         unbinder = ButterKnife.bind(this,rootView);
 
-        showLoad(true);
+        showLoad(false);
 
         //initialize FireBase and retrieve data
         initFireBase();
 
-        //set up RecyclerView
-        //setUpRecyclerView();
-
-        //initialize Handler
-        //initHandler();
     }
 
     private void initFireBase() {
@@ -164,7 +138,6 @@ public class EventFragment extends Fragment {
                         //Log.e(TAG, "Array list size: " + arrayList.size());
                     }
                 }
-                adapter.notifyDataSetChanged();
                 showLoad(false);
             }
 
@@ -177,65 +150,6 @@ public class EventFragment extends Fragment {
                 showLoad(false);
             }
         };mDatabase.child("books").addValueEventListener(booksListener);
-    }
-
-     private void setUpRecyclerView() {
-        CarouselLayoutManager layoutManager = new CarouselLayoutManager(CarouselLayoutManager.HORIZONTAL, true);
-        layoutManager.setPostLayoutListener(new CarouselZoomPostLayoutListener());
-
-        recyclerView.setLayoutManager(layoutManager);
-        recyclerView.setHasFixedSize(true);
-        adapter = new MainAdapter(arrayList, getActivity());
-        recyclerView.setAdapter(adapter);
-        recyclerView.addOnScrollListener(new CenterScrollListener());
-        recyclerView.addOnItemTouchListener(new RecyclerView.OnItemTouchListener() {
-             @Override
-             public boolean onInterceptTouchEvent(RecyclerView rv, MotionEvent e) {
-                 int action = e.getAction();
-                 switch (action) {
-                     case MotionEvent.ACTION_MOVE:
-                         rv.getParent().requestDisallowInterceptTouchEvent(true);
-                         break;
-                 }
-                 return false;
-             }
-
-             @Override
-             public void onTouchEvent(RecyclerView rv, MotionEvent e) {
-
-             }
-
-             @Override
-             public void onRequestDisallowInterceptTouchEvent(boolean disallowIntercept) {
-
-             }
-         });
-    }
-
-    private void initHandler() {
-        runnable = new Runnable() {
-            @Override
-            public void run() {
-                //Log.e(TAG,"Runnable started");
-                if (arrayList.size()!=0) {
-                    //Log.e(TAG, "size of ArrayList: " + arrayList.size());
-                    if (title!=null) {
-                        final int position = ((CarouselLayoutManager) recyclerView.getLayoutManager()).getCenterItemPosition();
-                        //Log.e(TAG,"inside arrayList"+position);
-                        if (position != -1) {
-                            title.setText(arrayList.get(position).getTitle());
-                            description.setText(arrayList.get(position).getShort_description());
-                            author.setText(arrayList.get(position).getAuthor());
-                            year.setText(arrayList.get(position).getYear());
-                        }
-                    }
-                }
-                if (handler!=null)
-                    handler.postDelayed(this,1000);
-            }
-        };
-        handler = new Handler();
-        handler.postDelayed(runnable,1000);
     }
 
     private void showLoad(boolean b) {
@@ -254,14 +168,11 @@ public class EventFragment extends Fragment {
     @Override
     public void onPause() {
         super.onPause();
-        handler = null;
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        adapter.notifyDataSetChanged();
-        handler = new Handler();
-        handler.postDelayed(runnable,1000);
+
     }
 }

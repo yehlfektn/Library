@@ -40,8 +40,7 @@
                     android:layout_centerInParent="true"
                     android:text="Свадьба Арман и Динары"
                     android:textColor="@color/white"
-                    android:textStyle="bold"
-                    android:textSize="20sp" />
+                    android:textSize="16sp" />
 
                 <TextView
                     android:id="@+id/time"
@@ -109,7 +108,9 @@
                         android:textColor="@color/white"
                         android:textSize="20sp" />
                 </RelativeLayout>
+
             </LinearLayout>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -126,13 +127,13 @@
                         android:layout_width="match_parent"
                         android:layout_height="120dp"
                         android:adjustViewBounds="true"
-                        android:src="@drawable/scheme" />
+                        android:src="@drawable/background_2" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerInParent="true"
-                        android:text="Схема проезда"
+                        android:text="Список Гостей"
                         android:textColor="@color/white"
                         android:textSize="20sp" />
                 </RelativeLayout>
@@ -148,39 +149,20 @@
                         android:layout_width="match_parent"
                         android:layout_height="120dp"
                         android:adjustViewBounds="true"
-                        android:src="@drawable/cortege" />
+                        android:src="@drawable/background_2" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerInParent="true"
-                        android:text="Кортеж"
+                        android:text="Организаторы"
                         android:textColor="@color/white"
                         android:textSize="20sp" />
                 </RelativeLayout>
 
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginTop="16dp">
-
-                    <ImageView
-                        android:id="@+id/image_6"
-                        android:layout_width="match_parent"
-                        android:layout_height="120dp"
-                        android:adjustViewBounds="true"
-                        android:src="@drawable/chats" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerInParent="true"
-                        android:text="Чаты"
-                        android:textColor="@color/black"
-                        android:textSize="20sp" />
-                </RelativeLayout>
             </LinearLayout>
+
+
         </LinearLayout>
     </LinearLayout>
 </android.support.v4.widget.NestedScrollView>

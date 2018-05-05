@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Library</string>
+    <string name="app_name">Event Planner</string>
 
     <!-- Strings related to login -->
     <string name="prompt_email">Email</string>
@@ -54,4 +54,6 @@
     <string name="fairy">Детские</string>
     <string name="history">Исторические</string>
     <string name="love">Любовные</string>
+
+    <string name="toi_dinki">Той Динки</string>
 </resources>

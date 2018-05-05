@@ -1,6 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-
 <android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/constraintLayout"
     android:layout_width="match_parent"
@@ -17,6 +15,7 @@
         android:orientation="vertical">
 
         <LinearLayout
+            android:id="@+id/first_chat"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:orientation="horizontal">
@@ -41,18 +40,17 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/second_chat"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_marginTop="16dp"
             android:orientation="horizontal">
-
             <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
                 android:id="@+id/image_2"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 app:civ_border_color="#FF000000"
                 app:civ_border_width="2dp" />
-
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -62,12 +60,8 @@
                 android:textColor="@color/black"
                 android:textSize="16sp"
                 android:textStyle="bold" />
-
         </LinearLayout>
-
     </LinearLayout>
-
-
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab"

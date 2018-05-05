@@ -1,0 +1,10 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item android:title="Добавить участника" app:showAsAction="never"
+        android:id="@+id/menu_add_new"/>
+
+    <item android:title="Получить ссылку на приглашение" app:showAsAction="never"
+        android:id="@+id/menu_get_link"/>
+
+</menu>

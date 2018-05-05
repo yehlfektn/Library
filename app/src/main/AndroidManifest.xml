@@ -30,6 +30,9 @@
             android:label="profile"
             android:theme="@style/AppTheme.NoActionBar"/>
         <activity
+            android:name=".main.ChatActivity"
+            android:theme="@style/AppTheme.NoActionBar"/>
+        <activity
             android:name=".splash.SplashActivity"
             android:label="@string/app_name"
             android:noHistory="true"

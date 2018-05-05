@@ -23,8 +23,10 @@ import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import butterknife.Unbinder;
 import gravityfalls.library.R;
+import gravityfalls.library.main.ChatActivity;
 import gravityfalls.library.objects.Book;
 
 /**
@@ -101,6 +103,16 @@ public class ChatsFragment extends Fragment {
             }
         });
 
+    }
+
+    @OnClick(R.id.first_chat)
+    void onFirstChatClick(){
+        getActivity().startActivity(ChatActivity.newInstance(getActivity(),"Общий чат"));
+    }
+
+    @OnClick(R.id.second_chat)
+    void onSecondChatClick(){
+        getActivity().startActivity(ChatActivity.newInstance(getActivity(),"Тамада и Айнура"));
     }
 
     private void initImages() {

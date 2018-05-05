@@ -67,7 +67,7 @@ public class MessagingService extends FirebaseMessagingService {
 
             String category  = remoteMessage.getData().get("category");
             id  = remoteMessage.getData().get("id");
-            Log.e(TAG,"Message, category: "+category+" id: "+id);
+            Log.e(TAG,"ChatMessage, category: "+category+" id: "+id);
 
             mDatabase.child(category).child(id).addValueEventListener(booksListener);
         }
@@ -109,7 +109,7 @@ public class MessagingService extends FirebaseMessagingService {
         if (remoteMessage.getNotification() != null) {
             notificationBuilder.setContentTitle(remoteMessage.getNotification().getTitle()) //the "title" value you sent in your notification
                     .setContentText(remoteMessage.getNotification().getBody()); //ditto
-            Log.wtf(TAG, "Message Notification Body: " + remoteMessage.getNotification().getBody());
+            Log.wtf(TAG, "ChatMessage Notification Body: " + remoteMessage.getNotification().getBody());
             notificationBuilder.setContentIntent(resultPendingIntent);
         }
         notificationManager.notify(notificationId /* ID of notification */, notificationBuilder.build());

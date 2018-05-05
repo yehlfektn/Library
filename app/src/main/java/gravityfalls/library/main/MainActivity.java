@@ -51,7 +51,7 @@ import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
  * Created by Nurdaulet Kenges on 12.04.2018.
  */
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements EventFragment.OnImageClickListener {
 
     @BindView(R.id.toolbar)
     Toolbar mToolbar;
@@ -300,5 +300,11 @@ public class MainActivity extends AppCompatActivity {
             initDrawer();
             mDrawer.setSelectionAtPosition(2);
         }
+    }
+
+    @Override
+    public void onImageClick(int position) {
+        Log.e(TAG,"From EventFragment position: "+position);
+        mViewPager.setCurrentItem(position);
     }
 }

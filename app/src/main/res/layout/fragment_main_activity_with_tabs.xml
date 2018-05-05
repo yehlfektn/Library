@@ -30,8 +30,7 @@
                     android:id="@+id/image_1"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:adjustViewBounds="true"
-                    android:src="@drawable/event_background" />
+                    android:adjustViewBounds="true"/>
 
                 <TextView
                     android:id="@+id/title"
@@ -40,8 +39,8 @@
                     android:layout_centerInParent="true"
                     android:text="Свадьба Арман и Динары"
                     android:textColor="@color/white"
-                    android:textStyle="bold"
-                    android:textSize="20sp" />
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/time"
@@ -76,8 +75,7 @@
                         android:id="@+id/guests"
                         android:layout_width="match_parent"
                         android:layout_height="120dp"
-                        android:adjustViewBounds="true"
-                        android:src="@drawable/background_2" />
+                        android:adjustViewBounds="true" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -98,18 +96,18 @@
                         android:id="@+id/image_3"
                         android:layout_width="match_parent"
                         android:layout_height="120dp"
-                        android:adjustViewBounds="true"
-                        android:src="@drawable/background_2" />
+                        android:adjustViewBounds="true" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerInParent="true"
-                        android:text="Организаторы"
+                        android:text="Организация"
                         android:textColor="@color/white"
                         android:textSize="20sp" />
                 </RelativeLayout>
             </LinearLayout>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -166,11 +164,10 @@
                     android:layout_marginTop="16dp">
 
                     <ImageView
-                        android:id="@+id/image_6"
+                        android:id="@+id/image_chats"
                         android:layout_width="match_parent"
                         android:layout_height="120dp"
-                        android:adjustViewBounds="true"
-                        android:src="@drawable/chats" />
+                        android:adjustViewBounds="true" />
 
                     <TextView
                         android:layout_width="wrap_content"

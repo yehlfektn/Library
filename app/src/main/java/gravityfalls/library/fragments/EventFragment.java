@@ -1,34 +1,33 @@
 package gravityfalls.library.fragments;
 
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 
+import com.bumptech.glide.Glide;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import butterknife.Unbinder;
 import gravityfalls.library.R;
 import gravityfalls.library.objects.Book;
 import gravityfalls.library.utils.Helper;
-import gravityfalls.library.utils.SnackbarHelper;
 
 /**
  * A placeholder fragment containing a simple view.
@@ -48,11 +47,24 @@ public class EventFragment extends Fragment {
     FrameLayout progressOverlay;
     @BindView(R.id.main_layout)
     LinearLayout mainLayout;
+    @BindView(R.id.image_chats)
+    ImageView imageChats;
+    @BindView(R.id.image_5)
+    ImageView imageCortege;
+    @BindView(R.id.image_1)
+    ImageView imageTitle;
+    @BindView(R.id.guests)
+    ImageView imageGuests;
+    @BindView(R.id.image_3)
+    ImageView imageOrganization;
+
 
     private DatabaseReference mDatabase;
     private ArrayList<Book> arrayList = new ArrayList<>();
     private String TAG = "EventFragment";
     private FirebaseUser user;
+
+    private OnImageClickListener mListener;
 
 
     public EventFragment() {
@@ -81,19 +93,29 @@ public class EventFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        unbinder = ButterKnife.bind(this,rootView);
+        unbinder = ButterKnife.bind(this, rootView);
 
         showLoad(false);
 
         //initialize FireBase and retrieve data
         initFireBase();
 
+        loadImages();
+
+    }
+
+    private void loadImages() {
+        Glide.with(this).load(R.drawable.chats).into(imageChats);
+        Glide.with(this).load(R.drawable.cortege).into(imageCortege);
+        Glide.with(this).load(R.drawable.event_background).into(imageTitle);
+        Glide.with(this).load(R.drawable.background_2).into(imageGuests);
+        Glide.with(this).load(R.drawable.background_2).into(imageOrganization);
     }
 
     private void initFireBase() {
         mDatabase = FirebaseDatabase.getInstance().getReference();
 
-        ValueEventListener booksListener = new ValueEventListener() {
+     /*   ValueEventListener booksListener = new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 arrayList.clear();
@@ -149,15 +171,51 @@ public class EventFragment extends Fragment {
                 }
                 showLoad(false);
             }
-        };mDatabase.child("books").addValueEventListener(booksListener);
+        };mDatabase.child("books").addValueEventListener(booksListener);*/
     }
 
     private void showLoad(boolean b) {
-        if (progressOverlay!=null) {
+        if (progressOverlay != null) {
             Helper.animateView(progressOverlay, b ? View.VISIBLE : View.GONE, 0.4f, 0);
             mainLayout.setVisibility(b ? View.GONE : View.VISIBLE);
         }
     }
+
+    @OnClick(R.id.image_chats)
+    void onChatsClick(){
+        if (mListener!=null){
+            mListener.onImageClick(1);
+        }
+    }
+
+    @OnClick(R.id.image_3)
+    void onOrganizationClick(){
+        if (mListener!=null){
+            mListener.onImageClick(2);
+        }
+    }
+
+    public interface OnImageClickListener {
+        void onImageClick(int position);
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        if (context instanceof OnImageClickListener) {
+            mListener = (OnImageClickListener) context;
+        } else {
+            throw new RuntimeException(context.toString()
+                    + " must implement OnFragmentInteractionListener");
+        }
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        mListener = null;
+    }
+
 
     @Override
     public void onDestroyView() {

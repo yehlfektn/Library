@@ -4,6 +4,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
+import gravityfalls.library.fragments.ChatsFragment;
 import gravityfalls.library.fragments.EventFragment;
 import gravityfalls.library.fragments.OrganizationFragment;
 
@@ -24,7 +25,10 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter {
         Fragment f;
         switch (position) {
             case 1:
-                f = OrganizationFragment.newInstance(1);
+                f = ChatsFragment.newInstance(1);
+                break;
+            case 2:
+                f = OrganizationFragment.newInstance(2);
                 break;
             default:
                 f = EventFragment.newInstance(position);

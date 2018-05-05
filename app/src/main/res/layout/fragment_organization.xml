@@ -159,10 +159,7 @@
                         android:textColor="@color/white"
                         android:textSize="20sp" />
                 </RelativeLayout>
-
             </LinearLayout>
-
-
         </LinearLayout>
     </LinearLayout>
 </android.support.v4.widget.NestedScrollView>

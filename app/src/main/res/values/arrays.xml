@@ -2,7 +2,7 @@
 <resources>
     <string-array name="titles">
         <item>Событие</item>
+        <item>Чаты</item>
         <item>Организация</item>
-        <item>Список гостей</item>
     </string-array>
 </resources>

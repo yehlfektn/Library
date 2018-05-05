@@ -198,6 +198,7 @@ public class BookDetailsActivity extends AppCompatActivity {
                         else return_book.setVisibility(View.GONE);
                         if (!book.isAvailable()) {
                             Log.e(TAG,"Update status called");
+                            status.setText("Недоступна");
                             updateStatus();
                             updateDate();
                         }

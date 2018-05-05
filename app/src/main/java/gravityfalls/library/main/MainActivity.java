@@ -1,7 +1,5 @@
 package gravityfalls.library.main;
 
-import android.app.Fragment;
-import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -39,14 +37,12 @@ import com.mikepenz.materialdrawer.model.ProfileDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IProfile;
 
-import org.w3c.dom.Text;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import gravityfalls.library.R;
 import gravityfalls.library.adapters.SectionsPagerAdapter;
-import gravityfalls.library.fragments.BookFragment;
+import gravityfalls.library.fragments.EventFragment;
 import gravityfalls.library.login.LoginActivity;
 import gravityfalls.library.objects.User;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
@@ -151,13 +147,10 @@ public class MainActivity extends AppCompatActivity {
     private void makeDrawer() {
         try {
             mDrawer = mDrawerBuilder.withAccountHeader(headerBuilder.build()).addDrawerItems(new ProfileDrawerItem().withName(R.string.private_cab)
-                            .withTypeface(Typeface.defaultFromStyle(Typeface.BOLD)).withIcon(R.drawable.man), new ProfileDrawerItem().withName(R.string.library)
-                            .withTypeface(Typeface.defaultFromStyle(Typeface.BOLD)).withIcon(R.drawable.library), new PrimaryDrawerItem().withName(R.string.fantasy)
-                            .withTypeface(Typeface.defaultFromStyle(Typeface.NORMAL)).withIcon(R.drawable.fantasy), new PrimaryDrawerItem().withName(R.string.detective)
-                            .withTypeface(Typeface.defaultFromStyle(Typeface.NORMAL)).withIcon(R.drawable.detective), new PrimaryDrawerItem().withName(R.string.fairy)
-                            .withTypeface(Typeface.defaultFromStyle(Typeface.NORMAL)).withIcon(R.drawable.fairy), new PrimaryDrawerItem().withName(R.string.history)
-                            .withTypeface(Typeface.defaultFromStyle(Typeface.NORMAL)).withIcon(R.drawable.history), new PrimaryDrawerItem().withName(R.string.love)
-                            .withTypeface(Typeface.defaultFromStyle(Typeface.NORMAL)).withIcon(R.drawable.love), new DividerDrawerItem(),
+                            .withTypeface(Typeface.defaultFromStyle(Typeface.BOLD)).withIcon(R.drawable.man), new ProfileDrawerItem().withName("День Рождения Эли")
+                            .withTypeface(Typeface.defaultFromStyle(Typeface.BOLD)).withIcon(R.drawable.cake), new ProfileDrawerItem().withName("Той Динки")
+                            .withTypeface(Typeface.defaultFromStyle(Typeface.NORMAL)).withIcon(R.drawable.love), new ProfileDrawerItem().withName("Добавить новое событие")
+                            .withTypeface(Typeface.defaultFromStyle(Typeface.NORMAL)).withIcon(R.drawable.add_new), new DividerDrawerItem(),
                     new PrimaryDrawerItem().withName(R.string.exit)
                             .withTypeface(Typeface.defaultFromStyle(Typeface.BOLD)).withIcon(R.drawable.exit)).
                     withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
@@ -175,7 +168,7 @@ public class MainActivity extends AppCompatActivity {
                                     findViewById(R.id.container_cat).setVisibility(View.GONE);
                                     findViewById(R.id.container).setVisibility(View.VISIBLE);
                                     break;
-                                case 9:
+                                case 6:
                                     AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
                                     builder.setMessage(getString(R.string.wanna_exit));
                                     builder.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
@@ -200,7 +193,7 @@ public class MainActivity extends AppCompatActivity {
                                     dialog.show();
                                     break;
                                 default:
-                                    BookFragment newFragment = BookFragment.newInstance(position);
+                                    EventFragment newFragment = EventFragment.newInstance(position);
                                     android.support.v4.app.FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
 
                                     transaction.replace(R.id.container_cat, newFragment);
@@ -215,15 +208,6 @@ public class MainActivity extends AppCompatActivity {
                                             break;
                                         case 4:
                                             title = getString(R.string.detective);
-                                            break;
-                                        case 5:
-                                            title = getString(R.string.fairy);
-                                            break;
-                                        case 6:
-                                            title = getString(R.string.history);
-                                            break;
-                                        case 7:
-                                            title = getString(R.string.love);
                                             break;
                                     }
                                     ((TextView)mToolbar.findViewById(R.id.title)).setText(title);

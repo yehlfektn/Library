@@ -41,7 +41,7 @@ import gravityfalls.library.utils.SnackbarHelper;
 /**
  * A placeholder fragment containing a simple view.
  */
-public class BookFragment extends Fragment {
+public class EventFragment extends Fragment {
     /**
      * The fragment argument representing the section number for this
      * fragment.
@@ -69,22 +69,22 @@ public class BookFragment extends Fragment {
 
     private DatabaseReference mDatabase;
     private ArrayList<Book> arrayList = new ArrayList<>();
-    private String TAG = "BookFragment";
+    private String TAG = "EventFragment";
     private MainAdapter adapter;
     private FirebaseUser user;
 
     private Handler handler = new Handler();
     private Runnable runnable;
 
-    public BookFragment() {
+    public EventFragment() {
     }
 
     /**
      * Returns a new instance of this fragment for the given section
      * category.
      */
-    public static BookFragment newInstance(int category) {
-        BookFragment fragment = new BookFragment();
+    public static EventFragment newInstance(int category) {
+        EventFragment fragment = new EventFragment();
         Bundle args = new Bundle();
         args.putInt(ARG_CATEGORY, category);
         fragment.setArguments(args);
@@ -110,10 +110,10 @@ public class BookFragment extends Fragment {
         initFireBase();
 
         //set up RecyclerView
-        setUpRecyclerView();
+        //setUpRecyclerView();
 
         //initialize Handler
-        initHandler();
+        //initHandler();
     }
 
     private void initFireBase() {

@@ -173,12 +173,14 @@ public class BookDetailsActivity extends AppCompatActivity {
         mDatabase.child("books").child(id).child("onUser").setValue(user.getUid());
         String date = new SimpleDateFormat("dd MMMM yyyy", new Locale("ru")).format(Calendar.getInstance().getTime());
         mDatabase.child("books").child(id).child("date_taken").setValue(date);
+        loadData();
     }
 
     @OnClick(R.id.return_book)
     void onBookReturnClicked(){
         mDatabase.child("books").child(id).child("available").setValue(true);
         mDatabase.child("books").child(id).child("onUser").setValue("none");
+        loadData();
     }
 
     private void loadData() {
@@ -188,12 +190,14 @@ public class BookDetailsActivity extends AppCompatActivity {
                 Book book = dataSnapshot.getValue(Book.class);
                 if (book != null) {
                     try {
+                        status = findViewById(R.id.txt_status);
                         status.setTextColor(book.isAvailable() ? ContextCompat.getColor(getApplicationContext(), R.color.colorAccent) : ContextCompat.getColor(getApplicationContext(), R.color.colorPrimary));
                         get_book.setVisibility(book.isAvailable() ? View.VISIBLE : View.GONE);
                         if (book.getOnUser().equals(user.getUid()))
                             return_book.setVisibility(View.VISIBLE);
                         else return_book.setVisibility(View.GONE);
                         if (!book.isAvailable()) {
+                            Log.e(TAG,"Update status called");
                             updateStatus();
                             updateDate();
                         }
@@ -216,7 +220,7 @@ public class BookDetailsActivity extends AppCompatActivity {
                 showLoad(false);
             }
         };
-        mDatabase.child("books").child(id).addValueEventListener(booksListener);
+        mDatabase.child("books").child(id).addListenerForSingleValueEvent(booksListener);
     }
 
     private void updateDate() {
@@ -257,6 +261,7 @@ public class BookDetailsActivity extends AppCompatActivity {
                     if (user_data.getFamily_name() !=null){
                         name += " "+user_data.getFamily_name();
                     }
+                    Log.e(TAG,"Status text: ");
                     if (status!=null)
                     status.setText(getString(R.string.book_is_currently_in,name));
                 }
@@ -272,6 +277,7 @@ public class BookDetailsActivity extends AppCompatActivity {
                 showLoad(false);
             }
         };
+        Log.e(TAG, "Database Called");
         mDatabase.child("users").child(uID).addListenerForSingleValueEvent(booksListener);
     }
 

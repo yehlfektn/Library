@@ -4,7 +4,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
-import gravityfalls.library.fragments.BookFragment;
+import gravityfalls.library.fragments.EventFragment;
 
 /**
  * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
@@ -19,8 +19,8 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter {
     @Override
     public Fragment getItem(int position) {
         // getItem is called to instantiate the fragment for the given page.
-        // Return a BookFragment (defined as a static inner class below).
-        return BookFragment.newInstance(position);
+        // Return a EventFragment (defined as a static inner class below).
+        return EventFragment.newInstance(position);
     }
 
     @Override

@@ -19,7 +19,7 @@
             android:background="@color/colorAccent"
             android:id="@+id/tabs"
             app:nts_color="@color/lightOrange"
-            app:nts_size="15sp"
+            app:nts_size="14sp"
             app:nts_weight="3dp"
             app:nts_factor="2.5"
             app:nts_titles="@array/titles"

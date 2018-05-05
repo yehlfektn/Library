@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string-array name="titles">
-        <item>Доступные</item>
-        <item>Все</item>
-        <item>Мои</item>
+        <item>Событие</item>
+        <item>Организация</item>
+        <item>Список гостей</item>
     </string-array>
 </resources>

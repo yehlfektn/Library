@@ -9,8 +9,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 
+import com.bumptech.glide.Glide;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
@@ -43,6 +45,10 @@ public class OrganizationFragment extends Fragment {
     FrameLayout progressOverlay;
     @BindView(R.id.main_layout)
     LinearLayout mainLayout;
+    @BindView(R.id.image_1)
+    ImageView imageView;
+    @BindView(R.id.image_2)
+    ImageView imageView2;
 
     private DatabaseReference mDatabase;
     private ArrayList<Book> arrayList = new ArrayList<>();
@@ -82,6 +88,9 @@ public class OrganizationFragment extends Fragment {
 
         //initialize FireBase and retrieve data
         initFireBase();
+
+        Glide.with(this).load(R.drawable.arman).into(imageView2);
+        Glide.with(this).load(R.drawable.andrei).into(imageView);
 
     }
 

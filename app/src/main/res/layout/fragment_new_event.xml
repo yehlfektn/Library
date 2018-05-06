@@ -53,6 +53,7 @@
                 android:id="@+id/chooseLocation"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center"
                 android:text="Выбрать место"/>
 
     <!--        <mehdi.sakout.fancybuttons.FancyButton
@@ -71,7 +72,8 @@
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Создать"/>
+                android:text="Создать"
+                android:layout_gravity="center"/>
 
             <!--<mehdi.sakout.fancybuttons.FancyButton
                 android:layout_width="wrap_content"

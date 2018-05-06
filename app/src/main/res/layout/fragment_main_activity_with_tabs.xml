@@ -285,7 +285,8 @@
             android:id="@+id/map_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Проложить маршрут"/>
+            android:text="Проложить маршрут"
+            android:layout_gravity="center"/>
 
        <!--     <mehdi.sakout.fancybuttons.FancyButton
                 android:id="@+id/map_button"

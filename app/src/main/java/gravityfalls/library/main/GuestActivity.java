@@ -57,8 +57,6 @@ public class GuestActivity extends AppCompatActivity {
         }
     }
 
-
-
     @Override
     protected void onDestroy() {
         unbinder.unbind();

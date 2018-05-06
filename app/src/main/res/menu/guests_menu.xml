@@ -1,0 +1,13 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item android:title="Добавить гостя" app:showAsAction="never"
+        android:id="@+id/menu_add_new"/>
+
+    <item android:title="Отправить уведомления" app:showAsAction="never"
+        android:id="@+id/menu_send_notif"/>
+
+    <item android:title="Получить пригласительную ссылку" app:showAsAction="never"
+        android:id="@+id/menu_get_link"/>
+
+</menu>

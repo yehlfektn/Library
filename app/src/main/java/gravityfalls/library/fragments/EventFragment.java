@@ -35,6 +35,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
 import gravityfalls.library.R;
+import gravityfalls.library.main.GuestActivity;
 import gravityfalls.library.objects.Book;
 import gravityfalls.library.utils.Helper;
 
@@ -208,11 +209,11 @@ public class EventFragment extends Fragment implements OnMapReadyCallback{
         }
     }
 
-   /* @OnClick(R.id.guests2)
-    void onMapClicked(){
-        startActivity(new Intent(getActivity(),MapsActivity.class));
+    @OnClick(R.id.guests_layout)
+    void onGuestsClicked(){
+        startActivity(new Intent(getActivity(), GuestActivity.class));
     }
-*/
+
     @Override
     public void onMapReady(GoogleMap map) {
         googleMap = map;

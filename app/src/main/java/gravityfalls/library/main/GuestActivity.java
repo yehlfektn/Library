@@ -37,6 +37,7 @@ public class GuestActivity extends AppCompatActivity {
 
         unbinder = ButterKnife.bind(this);
 
+        setTitle("");
         ((TextView) mToolbar.findViewById(R.id.title)).setText("Список гостей");
         setSupportActionBar(mToolbar);
         initList();

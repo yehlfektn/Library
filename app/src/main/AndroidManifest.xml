@@ -79,8 +79,10 @@
         <activity
             android:name=".main.MapsActivity"
             android:label="@string/title_activity_maps" />
-        <activity android:name=".main.GuestActivity" />
-        <activity android:name=".main.GuestDetailsActivity"></activity>
+        <activity android:name=".main.GuestActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".main.GuestDetailsActivity"
+            android:theme="@style/AppTheme.NoActionBar" ></activity>
     </application>
 
 </manifest>

@@ -123,7 +123,7 @@ public class EventFragment extends Fragment implements OnMapReadyCallback{
 
 
     private void loadImages() {
-        Glide.with(this).load(R.drawable.event_background).into(imageTitle);
+        Glide.with(this).load(R.drawable.wedding).into(imageTitle);
     }
 
     private void initFireBase() {

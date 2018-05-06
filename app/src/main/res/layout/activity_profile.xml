@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
     <include layout="@layout/toolbar" />
 
     <LinearLayout
@@ -11,14 +13,14 @@
         android:orientation="vertical">
 
         <TextView
-            android:layout_marginTop="@dimen/spacing_m"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/info_about_user"
-            android:textColor="@color/colorPrimary"
+            android:layout_marginTop="@dimen/spacing_m"
             android:paddingLeft="16dp"
             android:paddingRight="16dp"
-            android:textSize="16sp"/>
+            android:text="@string/info_about_user"
+            android:textColor="@color/colorPrimary"
+            android:textSize="16sp" />
 
 
         <LinearLayout
@@ -29,31 +31,31 @@
 
             <TextView
                 android:id="@+id/name"
-                android:layout_marginTop="8dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/unknown"
-                android:textColor="@color/black"
+                android:layout_marginTop="8dp"
                 android:paddingLeft="16dp"
                 android:paddingRight="16dp"
-                android:textSize="16sp"/>
+                android:text="@string/unknown"
+                android:textColor="@color/black"
+                android:textSize="16sp" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/name"
                 android:paddingLeft="16dp"
                 android:paddingRight="16dp"
-                android:textSize="16sp"/>
+                android:text="@string/name"
+                android:textSize="16sp" />
         </LinearLayout>
 
 
         <View
-            android:layout_marginTop="@dimen/spacing_xs"
-            android:layout_marginBottom="@dimen/spacing_xs"
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:background="@color/divider"/>
+            android:layout_marginBottom="@dimen/spacing_xs"
+            android:layout_marginTop="@dimen/spacing_xs"
+            android:background="@color/divider" />
 
         <LinearLayout
             android:id="@+id/family_layout"
@@ -61,55 +63,119 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/family_name"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/unknown"
-            android:textColor="@color/black"
-            android:paddingLeft="16dp"
-            android:paddingRight="16dp"
-            android:textSize="16sp"/>
+            <TextView
+                android:id="@+id/family_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft="16dp"
+                android:paddingRight="16dp"
+                android:text="@string/unknown"
+                android:textColor="@color/black"
+                android:textSize="16sp" />
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/family_name"
-            android:paddingLeft="16dp"
-            android:paddingRight="16dp"
-            android:textSize="16sp"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft="16dp"
+                android:paddingRight="16dp"
+                android:text="@string/family_name"
+                android:textSize="16sp" />
         </LinearLayout>
 
         <View
-            android:layout_marginTop="@dimen/spacing_xs"
-            android:layout_marginBottom="@dimen/spacing_xs"
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:background="@color/divider"/>
+            android:layout_marginBottom="@dimen/spacing_xs"
+            android:layout_marginTop="@dimen/spacing_xs"
+            android:background="@color/divider" />
 
         <TextView
             android:id="@+id/profile_email"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="nurdaulet2009@mail.ru"
-            android:textColor="@color/black"
             android:paddingLeft="16dp"
             android:paddingRight="16dp"
-            android:textSize="16sp"/>
+            android:text="nurdaulet2009@mail.ru"
+            android:textColor="@color/black"
+            android:textSize="16sp" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Email"
             android:paddingLeft="16dp"
             android:paddingRight="16dp"
-            android:textSize="16sp"/>
+            android:text="Email"
+            android:textSize="16sp" />
 
         <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginBottom="@dimen/spacing_xs"
             android:layout_marginTop="@dimen/spacing_xs"
+            android:background="@color/divider" />
+
+        <LinearLayout
+            android:id="@+id/role_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/profile_role"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft="16dp"
+                android:paddingRight="16dp"
+                android:text=""
+                android:textColor="@color/black"
+                android:textSize="16sp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft="16dp"
+                android:paddingRight="16dp"
+                android:text="Роль"
+                android:textSize="16sp" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginBottom="@dimen/spacing_xs"
+            android:layout_marginTop="@dimen/spacing_xs"
+            android:background="@color/divider" />
+
+        <LinearLayout
+            android:id="@+id/about_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/profile_about"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft="16dp"
+                android:paddingRight="16dp"
+                android:text=""
+                android:textColor="@color/black"
+                android:textSize="16sp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft="16dp"
+                android:paddingRight="16dp"
+                android:text="О себе"
+                android:textSize="16sp" />
+        </LinearLayout>
+
+        <View
             android:layout_width="match_parent"
             android:layout_height="2dp"
-            android:background="@color/colorAccent"/>
+            android:layout_marginTop="@dimen/spacing_xs"
+            android:background="@color/colorAccent" />
 
         <ListView
             android:id="@+id/listView"

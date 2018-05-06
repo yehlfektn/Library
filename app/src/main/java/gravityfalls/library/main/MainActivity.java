@@ -43,6 +43,7 @@ import butterknife.Unbinder;
 import gravityfalls.library.R;
 import gravityfalls.library.adapters.SectionsPagerAdapter;
 import gravityfalls.library.fragments.EventFragment;
+import gravityfalls.library.fragments.NewEventFragment;
 import gravityfalls.library.login.LoginActivity;
 import gravityfalls.library.objects.User;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
@@ -148,7 +149,7 @@ public class MainActivity extends AppCompatActivity implements EventFragment.OnI
         try {
             mDrawer = mDrawerBuilder.withAccountHeader(headerBuilder.build()).addDrawerItems(new ProfileDrawerItem().withName(R.string.private_cab)
                             .withTypeface(Typeface.defaultFromStyle(Typeface.BOLD)).withIcon(R.drawable.man), new ProfileDrawerItem().withName("Той Динки")
-                            .withTypeface(Typeface.defaultFromStyle(Typeface.NORMAL)).withIcon(R.drawable.love), new ProfileDrawerItem().withName("День Рождения Эли")
+                            .withTypeface(Typeface.defaultFromStyle(Typeface.BOLD)).withIcon(R.drawable.love), new ProfileDrawerItem().withName("День Рождения Эли")
                             .withTypeface(Typeface.defaultFromStyle(Typeface.BOLD)).withIcon(R.drawable.cake), new ProfileDrawerItem().withName("Добавить новое событие")
                             .withTypeface(Typeface.defaultFromStyle(Typeface.NORMAL)).withIcon(R.drawable.add_new), new DividerDrawerItem(),
                     new PrimaryDrawerItem().withName(R.string.exit)
@@ -192,8 +193,8 @@ public class MainActivity extends AppCompatActivity implements EventFragment.OnI
                                     AlertDialog dialog = builder.create();
                                     dialog.show();
                                     break;
-                                default:
-                                    EventFragment newFragment = EventFragment.newInstance(position);
+                                case 4:
+                                    NewEventFragment newFragment = NewEventFragment.newInstance(position);
                                     android.support.v4.app.FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
 
                                     transaction.replace(R.id.container_cat, newFragment);
@@ -201,15 +202,7 @@ public class MainActivity extends AppCompatActivity implements EventFragment.OnI
 
                                     transaction.commit();
 
-                                    String title = getString(R.string.library);
-                                    switch (position) {
-                                        case 3:
-                                            title = getString(R.string.fantasy);
-                                            break;
-                                        case 4:
-                                            title = getString(R.string.detective);
-                                            break;
-                                    }
+                                    String title = "Создать новое событие";
                                     ((TextView)mToolbar.findViewById(R.id.title)).setText(title);
 
                                     tabLayout.setVisibility(View.GONE);

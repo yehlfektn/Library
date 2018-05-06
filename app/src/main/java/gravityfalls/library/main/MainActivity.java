@@ -304,7 +304,6 @@ public class MainActivity extends AppCompatActivity implements EventFragment.OnI
 
     @Override
     public void onImageClick(int position) {
-        Log.e(TAG,"From EventFragment position: "+position);
         mViewPager.setCurrentItem(position);
     }
 }

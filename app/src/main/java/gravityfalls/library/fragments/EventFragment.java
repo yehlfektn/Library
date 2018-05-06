@@ -2,6 +2,8 @@ package gravityfalls.library.fragments;
 
 
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -14,6 +16,13 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import com.bumptech.glide.Glide;
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.MapView;
+import com.google.android.gms.maps.MapsInitializer;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
@@ -32,7 +41,7 @@ import gravityfalls.library.utils.Helper;
 /**
  * A placeholder fragment containing a simple view.
  */
-public class EventFragment extends Fragment {
+public class EventFragment extends Fragment implements OnMapReadyCallback{
     /**
      * The fragment argument representing the section number for this
      * fragment.
@@ -47,17 +56,8 @@ public class EventFragment extends Fragment {
     FrameLayout progressOverlay;
     @BindView(R.id.main_layout)
     LinearLayout mainLayout;
-    @BindView(R.id.image_chats)
-    ImageView imageChats;
-    @BindView(R.id.image_5)
-    ImageView imageCortege;
     @BindView(R.id.image_1)
     ImageView imageTitle;
-    @BindView(R.id.guests)
-    ImageView imageGuests;
-    @BindView(R.id.image_3)
-    ImageView imageOrganization;
-
 
     private DatabaseReference mDatabase;
     private ArrayList<Book> arrayList = new ArrayList<>();
@@ -65,6 +65,9 @@ public class EventFragment extends Fragment {
     private FirebaseUser user;
 
     private OnImageClickListener mListener;
+
+    MapView mMapView;
+    private GoogleMap googleMap;
 
 
     public EventFragment() {
@@ -95,6 +98,19 @@ public class EventFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         unbinder = ButterKnife.bind(this, rootView);
 
+        mMapView =  rootView.findViewById(R.id.mapView);
+        mMapView.onCreate(savedInstanceState);
+
+        mMapView.onResume(); // needed to get the map to display immediately
+
+        try {
+            MapsInitializer.initialize(getActivity().getApplicationContext());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        mMapView.getMapAsync(this);
+
         showLoad(false);
 
         //initialize FireBase and retrieve data
@@ -104,12 +120,9 @@ public class EventFragment extends Fragment {
 
     }
 
+
     private void loadImages() {
-        Glide.with(this).load(R.drawable.chats).into(imageChats);
-        Glide.with(this).load(R.drawable.cortege).into(imageCortege);
         Glide.with(this).load(R.drawable.event_background).into(imageTitle);
-        Glide.with(this).load(R.drawable.background_2).into(imageGuests);
-        Glide.with(this).load(R.drawable.background_2).into(imageOrganization);
     }
 
     private void initFireBase() {
@@ -181,18 +194,39 @@ public class EventFragment extends Fragment {
         }
     }
 
-    @OnClick(R.id.image_chats)
+    @OnClick(R.id.chats_layout)
     void onChatsClick(){
         if (mListener!=null){
             mListener.onImageClick(1);
         }
     }
 
-    @OnClick(R.id.image_3)
+    @OnClick(R.id.organization_layout)
     void onOrganizationClick(){
         if (mListener!=null){
             mListener.onImageClick(2);
         }
+    }
+
+   /* @OnClick(R.id.guests2)
+    void onMapClicked(){
+        startActivity(new Intent(getActivity(),MapsActivity.class));
+    }
+*/
+    @Override
+    public void onMapReady(GoogleMap map) {
+        googleMap = map;
+
+        // Add a marker in Sydney and move the camera
+        LatLng astana = new LatLng(51.0939563, 71.3987141);
+        googleMap.addMarker(new MarkerOptions().position(astana).title("Технопарк"));
+        //googleMap.animateCamera(CameraUpdateFactory.newLatLng(astana));
+
+        googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(astana,15));
+        // Zoom in, animating the camera.
+        googleMap.animateCamera(CameraUpdateFactory.zoomIn());
+        // Zoom out to zoom level 10, animating with a duration of 2 seconds.
+        googleMap.animateCamera(CameraUpdateFactory.zoomTo(15), 2000, null);
     }
 
     public interface OnImageClickListener {
@@ -210,6 +244,13 @@ public class EventFragment extends Fragment {
         }
     }
 
+    @OnClick(R.id.map_button)
+    void onMapButtonClicked(){
+        Intent intent = new Intent(android.content.Intent.ACTION_VIEW,
+                Uri.parse("http://maps.google.com/maps?daddr=51.0939563,71.3987141"));
+        startActivity(intent);
+    }
+
     @Override
     public void onDetach() {
         super.onDetach();
@@ -223,14 +264,28 @@ public class EventFragment extends Fragment {
         unbinder.unbind();
     }
 
-    @Override
-    public void onPause() {
-        super.onPause();
-    }
 
     @Override
     public void onResume() {
         super.onResume();
+        mMapView.onResume();
+    }
 
+    @Override
+    public void onPause() {
+        super.onPause();
+        mMapView.onPause();
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        mMapView.onDestroy();
+    }
+
+    @Override
+    public void onLowMemory() {
+        super.onLowMemory();
+        mMapView.onLowMemory();
     }
 }

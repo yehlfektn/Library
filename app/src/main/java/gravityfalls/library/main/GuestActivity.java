@@ -51,7 +51,7 @@ public class GuestActivity extends AppCompatActivity {
             view.findViewById(R.id.lesson_layout).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Intent i = new Intent(getApplicationContext(), GuestDetailsActivity.class);
+                    startActivity(new Intent(getApplicationContext(), GuestDetailsActivity.class));
                 }
             });
             mList.addView(view);

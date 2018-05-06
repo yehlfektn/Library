@@ -29,7 +29,6 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
 import gravityfalls.library.R;
-import gravityfalls.library.adapters.ProfileBooksAdapter;
 import gravityfalls.library.objects.Book;
 import gravityfalls.library.objects.User;
 import gravityfalls.library.utils.SnackbarHelper;
@@ -60,7 +59,7 @@ public class ProfileActivity extends AppCompatActivity {
     private DatabaseReference mDatabase;
     private FirebaseUser user;
     private ArrayList<Book> arrayList = new ArrayList<>();
-    private ProfileBooksAdapter adapter;
+    //private ProfileBooksAdapter adapter;
 
     private String TAG = "ProfileActivity";
 
@@ -102,6 +101,12 @@ public class ProfileActivity extends AppCompatActivity {
                     if (user.getFamily_name() != null){
                         ((TextView) findViewById(R.id.family_name)).setText(user.getFamily_name());
                     }
+                    if (user.getRole() != null){
+                        ((TextView) findViewById(R.id.profile_role)).setText(user.getRole());
+                    }
+                    if (user.getFamily_name() != null){
+                        ((TextView) findViewById(R.id.profile_about)).setText(user.getAbout());
+                    }
                 }
             }
 
@@ -117,7 +122,7 @@ public class ProfileActivity extends AppCompatActivity {
     }
 
     private void setAdapter() {
-        try {
+ /*       try {
             adapter = new ProfileBooksAdapter(arrayList, this, new ProfileBooksAdapter.BooksListener() {
                 @Override
                 public void onBookReturned(int position) {
@@ -129,11 +134,11 @@ public class ProfileActivity extends AppCompatActivity {
             listView.setAdapter(adapter);
         }catch (Exception e){
             e.printStackTrace();
-        }
+        }*/
     }
 
     private void updateListView() {
-        ValueEventListener booksListener = new ValueEventListener() {
+      /*  ValueEventListener booksListener = new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 arrayList.clear();
@@ -156,7 +161,7 @@ public class ProfileActivity extends AppCompatActivity {
                     SnackbarHelper.getSnackBar(mainLayout,getString(R.string.can_not_load_data));
             }
         };
-        mDatabase.child("books").addValueEventListener(booksListener);
+        mDatabase.child("books").addValueEventListener(booksListener);*/
     }
 
     @OnClick(R.id.name_layout)
@@ -168,6 +173,18 @@ public class ProfileActivity extends AppCompatActivity {
     void onFamilyNameChanged(){
         showAlertDialog("Изменить Фамилию", "family_name");
     }
+
+    @OnClick(R.id.role_layout)
+    void onRoleNameChanged(){
+        showAlertDialog("Изменить Роль", "role");
+    }
+
+    @OnClick(R.id.about_layout)
+    void onAboutNameChanged(){
+        showAlertDialog("Изменить информацию о себе", "about");
+    }
+
+
 
     private void showAlertDialog(String title, final String type) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -199,7 +216,6 @@ public class ProfileActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         unbinder.unbind();
-        adapter = null;
         super.onDestroy();
     }
 

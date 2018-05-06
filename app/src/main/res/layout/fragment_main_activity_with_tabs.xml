@@ -286,6 +286,19 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Проложить маршрут"/>
+
+       <!--     <mehdi.sakout.fancybuttons.FancyButton
+                android:id="@+id/map_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginBottom="16dp"
+                android:text="Выбрать место"
+                android:textSize="20sp"
+                fancy:fb_defaultColor="@color/colorAccent"
+                fancy:fb_focusColor="@color/colorPrimary"
+                fancy:fb_radius="5dp"
+                fancy:fb_textFont="fonts/ProximaNova-Regular.ttf" />-->
         </LinearLayout>
     </LinearLayout>
 </android.support.v4.widget.NestedScrollView>

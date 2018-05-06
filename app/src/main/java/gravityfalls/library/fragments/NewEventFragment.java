@@ -1,6 +1,7 @@
 package gravityfalls.library.fragments;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -20,8 +21,10 @@ import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import butterknife.Unbinder;
 import gravityfalls.library.R;
+import gravityfalls.library.main.MapsActivity;
 import gravityfalls.library.objects.Book;
 import gravityfalls.library.utils.Helper;
 
@@ -85,11 +88,7 @@ public class NewEventFragment extends Fragment{
         //initFireBase();
 
         //loadImages();
-
-
-
     }
-
 
     private void loadImages() {
         //Glide.with(this).load(R.drawable.event_background).into(imageTitle);
@@ -110,6 +109,11 @@ public class NewEventFragment extends Fragment{
     public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();
+    }
+
+    @OnClick(R.id.chooseLocation)
+    void onChooseLocationClicked(){
+        startActivity(new Intent(getActivity(), MapsActivity.class));
     }
 
 }

@@ -50,10 +50,40 @@
             </android.support.design.widget.TextInputLayout>
 
             <Button
+                android:id="@+id/chooseLocation"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Выбрать место"/>
+
+    <!--        <mehdi.sakout.fancybuttons.FancyButton
+                android:id="@+id/chooseLocation"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginBottom="16dp"
+                android:text="Выбрать место"
+                android:textSize="20sp"
+                fancy:fb_defaultColor="@color/colorAccent"
+                fancy:fb_focusColor="@color/colorPrimary"
+                fancy:fb_radius="5dp"
+                fancy:fb_textFont="fonts/ProximaNova-Regular.ttf" />-->
+
+            <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Создать"/>
 
+            <!--<mehdi.sakout.fancybuttons.FancyButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginBottom="16dp"
+                android:text="Создать"
+                android:textSize="20sp"
+                fancy:fb_defaultColor="@color/colorAccent"
+                fancy:fb_focusColor="@color/colorPrimary"
+                fancy:fb_radius="5dp"
+                fancy:fb_textFont="fonts/ProximaNova-Regular.ttf" />-->
         </LinearLayout>
     </LinearLayout>
 </android.support.v4.widget.NestedScrollView>
